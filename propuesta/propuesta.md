@@ -24,9 +24,9 @@ para facilitar la gestión y búsqueda de compañeros de juego
 
 ## Objetivos generales
 
-* Objetivo: Crear una aplicación web dedicada a la búsqueda de jugadores de League of Legends.
+Objetivo: Crear una aplicación web dedicada a la búsqueda de jugadores de League of Legends.
 
-* Casos de uso:
+Casos de uso:
 
 **Para el Invitado:**
 
