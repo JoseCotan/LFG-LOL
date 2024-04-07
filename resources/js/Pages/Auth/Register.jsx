@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import BotonLogueoGoogle from '@/Components/BotonLogueoGoogle';
+import 'tailwindcss/tailwind.css';
+
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -14,6 +17,9 @@ export default function Register() {
         password_confirmation: '',
     });
 
+    const [showPassword, setShowPassword] = useState(false); // Estado para controlar si se muestra la contraseña
+    const [showConfirmationPassword, setShowConfirmationPassword] = useState(false); // Estado para controlar si se muestra la confirmación de la contraseña
+
     useEffect(() => {
         return () => {
             reset('password', 'password_confirmation');
@@ -22,7 +28,6 @@ export default function Register() {
 
     const submit = (e) => {
         e.preventDefault();
-
         post(route('register'));
     };
 
@@ -32,7 +37,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Nombre de usuario" />
 
                     <TextInput
                         id="name"
@@ -49,7 +54,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Correo electrónico" />
 
                     <TextInput
                         id="email"
@@ -66,52 +71,100 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Contraseña" />
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
+                    <div className="relative">
+                        <TextInput
+                            id="password"
+                            type={showPassword ? 'text' : 'password'} // Cambia el tipo del input según el estado
+                            name="password"
+                            value={data.password}
+                            className="mt-1 block w-full pr-10"
+                            autoComplete="new-password"
+                            onChange={(e) => setData('password', e.target.value)}
+                            required
+                        />
+
+                        { /* Añadido botón para mostrar/ocultar la contraseña */}
+                        <button
+                            type="button"
+                            /* Añadido botón para mostrar/ocultar la contraseña */
+                            className="absolute inset-y-0 right-0 pr-3" // Coloca correctamente el icono a la derecha del input, dejando un pequeño margen
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                <img
+                                    src="/storage/imagenes/eye-solid.svg"
+                                    alt="Icono de ojo abierto"
+                                    className="h-6 w-6"
+                                />
+                            ) : (
+                                <img
+                                    src="/storage/imagenes/eye-slash-solid.svg"
+                                    alt="Icono de ojo cerrado"
+                                    className="h-6 w-6"
+                                />
+                            )}
+                        </button>
+                    </div>
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+                    <InputLabel htmlFor="password_confirmation" value="Confirmar contraseña" />
 
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        required
-                    />
+                    <div className="relative">
+                        <TextInput
+                            id="password_confirmation"
+                            type={showConfirmationPassword ? 'text' : 'password'} // Cambia el tipo del input según el estado
+                            name="password_confirmation"
+                            value={data.password_confirmation}
+                            className="mt-1 block w-full pr-10"
+                            autoComplete="new-password"
+                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                            required
+                        />
+
+                        { /* Añadido botón para mostrar/ocultar la confirmación de la contraseña */}
+                        <button
+                            type="button"
+                            /* Añadido botón para mostrar/ocultar la confirmación de la contraseña */
+                            className="absolute inset-y-0 right-0 pr-3" // Coloca correctamente el icono a la derecha del input, dejando un pequeño margen
+                            onClick={() => setShowConfirmationPassword(!showConfirmationPassword)}
+                        >
+                            {showConfirmationPassword ? (
+                                <img
+                                    src="/storage/imagenes/eye-solid.svg"
+                                    alt="Icono de ojo abierto"
+                                    className="h-6 w-6"
+                                />
+                            ) : (
+                                <img
+                                    src="/storage/imagenes/eye-slash-solid.svg"
+                                    alt="Icono de ojo cerrado"
+                                    className="h-6 w-6"
+                                />
+                            )}
+                        </button>
+                    </div>
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
+                <div className="flex items-center justify-between mt-4 flex-col md:flex-row">
+                <PrimaryButton className="w-full ml-auto" disabled={processing}>
+                        REGISTRARSE
                     </PrimaryButton>
                 </div>
             </form>
+
+            <div className="flex justify-center mt-6 mb-6">
+                <p className="text-gray-600">Registrarse con Google</p>
+            </div>
+
+            {/* Botón de inicio de sesión con Google */}
+            <BotonLogueoGoogle />
         </GuestLayout>
     );
 }

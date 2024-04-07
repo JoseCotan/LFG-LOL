@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import BotonLogueoGoogle from '@/Components/BotonLogueoGoogle';
 import 'tailwindcss/tailwind.css';
 
 export default function Login({ status, canResetPassword }) {
@@ -15,7 +16,7 @@ export default function Login({ status, canResetPassword }) {
         remember: false,
     });
 
-    const [showPassword, setShowPassword] = useState(false); // Estado para controlar si se muestra la contraseña
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         return () => {
@@ -58,7 +59,7 @@ export default function Login({ status, canResetPassword }) {
                     <div className="relative">
                         <TextInput
                             id="password"
-                            type={showPassword ? 'text' : 'password'} // Cambia el tipo del input según el estado
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
                             value={data.password}
                             className="mt-1 block w-full pr-10"
@@ -66,11 +67,9 @@ export default function Login({ status, canResetPassword }) {
                             onChange={(e) => setData('password', e.target.value)}
                         />
 
-                        { /* Añadido botón para mostrar/ocultar la contraseña */}
                         <button
                             type="button"
-                            /* Añadido botón para mostrar/ocultar la contraseña */
-                            className="absolute inset-y-0 right-0 pr-3" // Coloca correctamente el icono a la derecha del input, dejando un pequeño margen
+                            className="absolute inset-y-0 right-0 pr-3"
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? (
@@ -117,6 +116,13 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
+
+            <div className="flex justify-center mt-6 mb-6">
+                <p className="text-gray-600">Iniciar sesión con Google</p>
+            </div>
+
+            {/* Botón de inicio de sesión con Google */}
+            <BotonLogueoGoogle />
         </GuestLayout>
     );
 }
