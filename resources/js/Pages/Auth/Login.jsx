@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
@@ -15,6 +15,8 @@ export default function Login({ status, canResetPassword }) {
         remember: false,
     });
 
+    const [showPassword, setShowPassword] = useState(false); // Estado para controlar si se muestra la contraseña
+
     useEffect(() => {
         return () => {
             reset('password');
@@ -23,7 +25,6 @@ export default function Login({ status, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-
         post(route('login'));
     };
 
@@ -54,15 +55,39 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="Contraseña" />
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
+                    <div className="relative">
+                        <TextInput
+                            id="password"
+                            type={showPassword ? 'text' : 'password'} // Cambia el tipo del input según el estado
+                            name="password"
+                            value={data.password}
+                            className="mt-1 block w-full pr-10"
+                            autoComplete="current-password"
+                            onChange={(e) => setData('password', e.target.value)}
+                        />
+
+                        { /* Añadido botón para mostrar/ocultar la contraseña */}
+                        <button
+                            type="button"
+                            /* Añadido botón para mostrar/ocultar la contraseña */
+                            className="absolute inset-y-0 right-0 pr-3" // Coloca correctamente el icono a la derecha del input, dejando un pequeño margen
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                <img
+                                    src="/storage/imagenes/eye-solid.svg"
+                                    alt="Icono de ojo abierto"
+                                    className="h-6 w-6"
+                                />
+                            ) : (
+                                <img
+                                    src="/storage/imagenes/eye-slash-solid.svg"
+                                    alt="Icono de ojo cerrado"
+                                    className="h-6 w-6"
+                                />
+                            )}
+                        </button>
+                    </div>
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
@@ -87,10 +112,10 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="flex justify-end mt-4">
-    <PrimaryButton className="w-full ml-auto" disabled={processing}>
-        Iniciar sesión
-    </PrimaryButton>
-</div>
+                    <PrimaryButton className="w-full ml-auto" disabled={processing}>
+                        Iniciar sesión
+                    </PrimaryButton>
+                </div>
             </form>
         </GuestLayout>
     );
