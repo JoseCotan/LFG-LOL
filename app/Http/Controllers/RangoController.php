@@ -13,7 +13,9 @@ class RangoController extends Controller
      */
     public function index()
     {
-        //
+        return view('rangos.index', [
+            'rangos' => Rango::all(),
+        ]);
     }
 
     /**
