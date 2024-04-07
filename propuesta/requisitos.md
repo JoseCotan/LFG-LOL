@@ -8,7 +8,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [1](https://github.com/JoseCotan/LFG-LOL/issues/1) |
 
 | **R2**     | **Código fuente**         |
 | --------------: | :------------------- |
@@ -17,7 +17,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [2](https://github.com/JoseCotan/LFG-LOL/issues/2) |
 
 | **R3**     | **Estilo del código**         |
 | --------------: | :------------------- |
@@ -26,7 +26,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [3](https://github.com/JoseCotan/LFG-LOL/issues/3) |
 
 | **R4**     | **Tres lanzamientos**         |
 | --------------: | :------------------- |
@@ -35,7 +35,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [4](https://github.com/JoseCotan/LFG-LOL/issues/4) |
 
 | **R5**     | **README.md**         |
 | --------------: | :------------------- |
@@ -44,7 +44,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [5](https://github.com/JoseCotan/LFG-LOL/issues/5) |
 
 | **R6**     | **Documentación**         |
 | --------------: | :------------------- |
@@ -53,7 +53,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [6](https://github.com/JoseCotan/LFG-LOL/issues/6) |
 
 | **R7**     | **Incidencias en GitHub**         |
 | --------------: | :------------------- |
@@ -62,7 +62,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [7](https://github.com/JoseCotan/LFG-LOL/issues/7) |
 
 | **R8**     | **Etiquetas e hitos**         |
 | --------------: | :------------------- |
@@ -71,7 +71,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [8](https://github.com/JoseCotan/LFG-LOL/issues/8) |
 
 | **R9**     | **Rama master**         |
 | --------------: | :------------------- |
@@ -80,7 +80,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [9](https://github.com/JoseCotan/LFG-LOL/issues/9) |
 
 | **R10**     | **Gestión del proyecto**         |
 | --------------: | :------------------- |
@@ -89,7 +89,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [10](https://github.com/JoseCotan/LFG-LOL/issues/10) |
 
 | **R11**     | **Final de cada iteración**         |
 | --------------: | :------------------- |
@@ -98,7 +98,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [11](https://github.com/JoseCotan/LFG-LOL/issues/11) |
 
 | **R12**     | **Validación de formularios**         |
 | --------------: | :------------------- |
@@ -107,7 +107,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [12](https://github.com/JoseCotan/LFG-LOL/issues/12) |
 
 | **R13**     | **Gestión de ventanas**         |
 | --------------: | :------------------- |
@@ -116,7 +116,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [13](https://github.com/JoseCotan/LFG-LOL/issues/13) |
 
 | **R14**     | **Manejo de eventos**         |
 | --------------: | :------------------- |
@@ -125,7 +125,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [14](https://github.com/JoseCotan/LFG-LOL/issues/14) |
 
 | **R15**     | **DOM**         |
 | --------------: | :------------------- |
@@ -134,7 +134,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [15](https://github.com/JoseCotan/LFG-LOL/issues/15) |
 
 | **R16**     | **Almacenamiento en el lado del cliente**         |
 | --------------: | :------------------- |
@@ -143,7 +143,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [16](https://github.com/JoseCotan/LFG-LOL/issues/16) |
 
 | **R17**     | **React**         |
 | --------------: | :------------------- |
@@ -152,7 +152,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [17](https://github.com/JoseCotan/LFG-LOL/issues/17) |
 
 | **R18**     | **Plugin no trabajado en clase**         |
 | --------------: | :------------------- |
@@ -161,7 +161,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [18](https://github.com/JoseCotan/LFG-LOL/issues/18) |
 
 | **R19**     | **Utilización de AJAX**         |
 | --------------: | :------------------- |
@@ -170,7 +170,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [19](https://github.com/JoseCotan/LFG-LOL/issues/19) |
 
 | **R20**     | **ECMAScript2015 (ES6)**         |
 | --------------: | :------------------- |
@@ -179,7 +179,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [20](https://github.com/JoseCotan/LFG-LOL/issues/20) |
 
 | **R21**     | **PHP**         |
 | --------------: | :------------------- |
@@ -188,7 +188,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [21](https://github.com/JoseCotan/LFG-LOL/issues/21) |
 
 | **R22**     | **Laravel Framework**         |
 | --------------: | :------------------- |
@@ -197,7 +197,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [22](https://github.com/JoseCotan/LFG-LOL/issues/22) |
 
 | **R23**     | **PostgreSQL**         |
 | --------------: | :------------------- |
@@ -206,7 +206,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [23](https://github.com/JoseCotan/LFG-LOL/issues/23) |
 
 | **R24**     | **Cloud computing**         |
 | --------------: | :------------------- |
@@ -215,7 +215,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [24](https://github.com/JoseCotan/LFG-LOL/issues/24) |
 
 | **R25**     | **Pruebas funcionales**         |
 | --------------: | :------------------- |
@@ -224,7 +224,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [25](https://github.com/JoseCotan/LFG-LOL/issues/25) |
 
 | **R26**     | **Aplicación escalable**         |
 | --------------: | :------------------- |
@@ -233,7 +233,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [26](https://github.com/JoseCotan/LFG-LOL/issues/26) |
 
 | **R27**     | **Etiquetas semánticas de HTML5**         |
 | --------------: | :------------------- |
@@ -242,7 +242,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [27](https://github.com/JoseCotan/LFG-LOL/issues/27) |
 
 | **R28**     | **Presentación mediante CSS**         |
 | --------------: | :------------------- |
@@ -251,7 +251,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [28](https://github.com/JoseCotan/LFG-LOL/issues/28) |
 
 | **R29**     | **Transiciones, transformaciones, animaciones y contenido multimedia**         |
 | --------------: | :------------------- |
@@ -260,7 +260,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [29](https://github.com/JoseCotan/LFG-LOL/issues/29) |
 
 | **R30**     | **Uso de microdatos**         |
 | --------------: | :------------------- |
@@ -269,7 +269,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [30](https://github.com/JoseCotan/LFG-LOL/issues/30) |
 
 | **R31**     | **Validación HTML5, CSS3 y accesibilidad**         |
 | --------------: | :------------------- |
@@ -278,7 +278,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [31](https://github.com/JoseCotan/LFG-LOL/issues/31) |
 
 | **R32**     | **Diseño para varias resoluciones**         |
 | --------------: | :------------------- |
@@ -287,7 +287,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [32](https://github.com/JoseCotan/LFG-LOL/issues/32) |
 
 | **R33**     | **Leyes de UX**         |
 | --------------: | :------------------- |
@@ -296,7 +296,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [33](https://github.com/JoseCotan/LFG-LOL/issues/33) |
 
 | **R34**     | **Accesibilidad**         |
 | --------------: | :------------------- |
@@ -305,7 +305,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [34](https://github.com/JoseCotan/LFG-LOL/issues/34) |
 
 | **R35**     | **Varios navegadores**         |
 | --------------: | :------------------- |
@@ -314,7 +314,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [35](https://github.com/JoseCotan/LFG-LOL/issues/35) |
 
 | **R36**     | **Realizar el despliegue de la aplicación en un servidor virtual (Virtualizando MMVV)**         |
 | --------------: | :------------------- |
@@ -323,7 +323,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [36](https://github.com/JoseCotan/LFG-LOL/issues/36) |
 
 | **R37**     | **Comprobar configuración del servidor virtual**         |
 | --------------: | :------------------- |
@@ -332,7 +332,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [37](https://github.com/JoseCotan/LFG-LOL/issues/37) |
 
 | **R38**     | **Registro**         |
 | --------------: | :------------------- |
@@ -341,7 +341,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [38](https://github.com/JoseCotan/LFG-LOL/issues/38) |
 
 | **R39**     | **Inicio de sesión**         |
 | --------------: | :------------------- |
@@ -350,7 +350,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [39](https://github.com/JoseCotan/LFG-LOL/issues/39) |
 
 | **R40**     | **Cerrar sesión**         |
 | --------------: | :------------------- |
@@ -359,7 +359,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [40](https://github.com/JoseCotan/LFG-LOL/issues/40) |
 
 | **R41**     | **Inicio de sesión / Registro por Gmail**         |
 | --------------: | :------------------- |
@@ -368,7 +368,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [41](https://github.com/JoseCotan/LFG-LOL/issues/41) |
 
 | **R42**     | **Eliminar usuario**         |
 | --------------: | :------------------- |
@@ -377,7 +377,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [42](https://github.com/JoseCotan/LFG-LOL/issues/42) |
 
 | **R43**     | **Ver perfil**         |
 | --------------: | :------------------- |
@@ -386,7 +386,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [43](https://github.com/JoseCotan/LFG-LOL/issues/43) |
 
 | **R44**     | **Editar perfil**         |
 | --------------: | :------------------- |
@@ -395,7 +395,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [44](https://github.com/JoseCotan/LFG-LOL/issues/44) |
 
 | **R45**     | **Subir foto de perfil**         |
 | --------------: | :------------------- |
@@ -404,7 +404,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [45](https://github.com/JoseCotan/LFG-LOL/issues/45) |
 
 | **R46**     | **Ver resto de perfiles**         |
 | --------------: | :------------------- |
@@ -413,7 +413,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [46](https://github.com/JoseCotan/LFG-LOL/issues/46) |
 
 | **R47**     | **Crear equipo**         |
 | --------------: | :------------------- |
@@ -422,7 +422,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [47](https://github.com/JoseCotan/LFG-LOL/issues/47) |
 
 | **R48**     | **Crear publicación para jugar**         |
 | --------------: | :------------------- |
@@ -431,7 +431,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [48](https://github.com/JoseCotan/LFG-LOL/issues/48) |
 
 | **R49**     | **Editar publicación**         |
 | --------------: | :------------------- |
@@ -440,7 +440,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [49](https://github.com/JoseCotan/LFG-LOL/issues/49) |
 
 | **R50**     | **Crear partida personalizada**         |
 | --------------: | :------------------- |
@@ -449,7 +449,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [50](https://github.com/JoseCotan/LFG-LOL/issues/50) |
 
 | **R51**     | **Editar partida personalizada**         |
 | --------------: | :------------------- |
@@ -458,7 +458,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [51](https://github.com/JoseCotan/LFG-LOL/issues/51) |
 
 | **R52**     | **Búsqueda de jugadores**         |
 | --------------: | :------------------- |
@@ -467,7 +467,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [52](https://github.com/JoseCotan/LFG-LOL/issues/52) |
 
 | **R53**     | **Filtro de búsqueda de jugadores**         |
 | --------------: | :------------------- |
@@ -476,7 +476,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [53](https://github.com/JoseCotan/LFG-LOL/issues/53) |
 
 | **R54**     | **Ordenación de búsqueda de jugadores**         |
 | --------------: | :------------------- |
@@ -485,7 +485,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [54](https://github.com/JoseCotan/LFG-LOL/issues/54) |
 
 | **R55**     | **Añadir amigos**         |
 | --------------: | :------------------- |
@@ -494,7 +494,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [55](https://github.com/JoseCotan/LFG-LOL/issues/55) |
 
 | **R56**     | **Eliminar amigos**         |
 | --------------: | :------------------- |
@@ -503,7 +503,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [56](https://github.com/JoseCotan/LFG-LOL/issues/56) |
 
 | **R57**     | **Uso de la API de Riot Games**         |
 | --------------: | :------------------- |
@@ -512,7 +512,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [57](https://github.com/JoseCotan/LFG-LOL/issues/57) |
 
 | **R58**     | **Agregar nickname en el perfil**         |
 | --------------: | :------------------- |
@@ -521,7 +521,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [58](https://github.com/JoseCotan/LFG-LOL/issues/58) |
 
 | **R59**     | **Sistema VIP**         |
 | --------------: | :------------------- |
@@ -530,7 +530,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [59](https://github.com/JoseCotan/LFG-LOL/issues/59) |
 
 | **R60**     | **Método de pago PayPal**         |
 | --------------: | :------------------- |
@@ -539,7 +539,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [60](https://github.com/JoseCotan/LFG-LOL/issues/60) |
 
 | **R61**     | **Borrado de publicación**         |
 | --------------: | :------------------- |
@@ -548,7 +548,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [61](https://github.com/JoseCotan/LFG-LOL/issues/61) |
 
 | **R62**     | **Borrado de evento**         |
 | --------------: | :------------------- |
@@ -557,7 +557,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [62](https://github.com/JoseCotan/LFG-LOL/issues/62) |
 
 | **R63**     | **Reputación**         |
 | --------------: | :------------------- |
@@ -566,7 +566,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [63](https://github.com/JoseCotan/LFG-LOL/issues/63) |
 
 | **R64**     | **Recuperación de contraseña**         |
 | --------------: | :------------------- |
@@ -575,7 +575,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [64](https://github.com/JoseCotan/LFG-LOL/issues/64) |
 
 | **R65**     | **Correos**         |
 | --------------: | :------------------- |
@@ -584,7 +584,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [65](https://github.com/JoseCotan/LFG-LOL/issues/65) |
 
 | **R66**     | **Chat en tiempo real**         |
 | --------------: | :------------------- |
@@ -593,7 +593,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [66](https://github.com/JoseCotan/LFG-LOL/issues/66) |
 
 | **R67**     | **Actualización de modos de juego**         |
 | --------------: | :------------------- |
@@ -602,7 +602,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [67](https://github.com/JoseCotan/LFG-LOL/issues/67) |
 
 | **R68**     | **Actualización de rangos**         |
 | --------------: | :------------------- |
@@ -611,7 +611,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [68](https://github.com/JoseCotan/LFG-LOL/issues/68) |
 
 | **R69**     | **Comentarios en los perfiles**         |
 | --------------: | :------------------- |
@@ -620,7 +620,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [69](https://github.com/JoseCotan/LFG-LOL/issues/69) |
 
 | **R70**     | **Comentarios en los eventos**         |
 | --------------: | :------------------- |
@@ -629,7 +629,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [70](https://github.com/JoseCotan/LFG-LOL/issues/70) |
 
 | **R71**     | **Generador de equipos aleatorios**         |
 | --------------: | :------------------- |
@@ -638,81 +638,81 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [71](https://github.com/JoseCotan/LFG-LOL/issues/71) |
 
 
 ## Cuadro resumen
 
-| **Requisito** | **Prioridad** | **Tipo** | **Complejidad** | **Entrega** |
-| :------------ | :-----------: | :------: | :-------------: | :---------: |
-| (**R1**) Requisitos como incidencias | Mínimo | Técnico | Fácil | v1 | 
-| (**R2**) Código fuente | Mínimo | Técnico | Fácil | v1 | 
-| (**R3**) Estilo del código | Mínimo | Técnico | Fácil | v1 | 
-| (**R4**) Tres lanzamientos | Mínimo | Técnico | Fácil | v1 | 
-| (**R5**) README.md | Mínimo | Técnico | Fácil | v1 | 
-| (**R6**) Documentación | Mínimo | Técnico | Fácil | v1 | 
-| (**R7**) Incidencias en GitHub | Mínimo | Técnico | Fácil | v1 | 
-| (**R8**) Etiquetas e hitos | Mínimo | Técnico | Fácil | v1 | 
-| (**R9**) Rama master | Mínimo | Técnico | Fácil | v1 | 
-| (**R10**) Gestión del proyecto | Mínimo | Técnico | Fácil | v1 | 
-| (**R11**) Final de cada iteración | Mínimo | Técnico | Fácil | v1 | 
-| (**R12**) Validación de formularios | Mínimo | Técnico | Fácil | v1 | 
-| (**R13**) Gestión de ventanas | Mínimo | Técnico | Fácil | v1 | 
-| (**R14**) Manejo de eventos | Mínimo | Técnico | Fácil | v1 | 
-| (**R15**) DOM | Mínimo | Técnico | Fácil | v1 | 
-| (**R16**) Almacenamiento en el lado del cliente | Mínimo | Técnico | Fácil | v1 | 
-| (**R17**) React | Mínimo | Técnico | Fácil | v1 | 
-| (**R18**) Plugin no trabajado en clase | Mínimo | Técnico | Fácil | v1 | 
-| (**R19**) Utilización de AJAX | Mínimo | Técnico | Fácil | v1 | 
-| (**R20**) ECMAScript2015 (ES6) | Mínimo | Técnico | Fácil | v1 | 
-| (**R21**) PHP | Mínimo | Técnico | Fácil | v1 | 
-| (**R22**) Laravel Framework | Mínimo | Técnico | Fácil | v1 | 
-| (**R23**) PostgreSQL | Mínimo | Técnico | Fácil | v1 | 
-| (**R24**) Cloud computing | Mínimo | Técnico | Fácil | v1 | 
-| (**R25**) Pruebas funcionales | Mínimo | Técnico | Fácil | v1 | 
-| (**R26**) Aplicación escalable | Mínimo | Técnico | Fácil | v1 | 
-| (**R27**) Etiquetas semánticas de HTML5 | Mínimo | Técnico | Fácil | v1 | 
-| (**R28**) Presentación mediante CSS | Mínimo | Técnico | Fácil | v1 | 
-| (**R29**) Transiciones, transformaciones, animaciones y contenido multimedia | Mínimo | Técnico | Fácil | v1 | 
-| (**R30**) Uso de microdatos | Mínimo | Técnico | Fácil | v1 | 
-| (**R31**) Validación HTML5, CSS3 y accesibilidad | Mínimo | Técnico | Fácil | v1 | 
-| (**R32**) Diseño para varias resoluciones | Mínimo | Técnico | Fácil | v1 | 
-| (**R33**) Leyes de UX | Mínimo | Técnico | Fácil | v1 | 
-| (**R34**) Accesibilidad | Mínimo | Técnico | Fácil | v1 | 
-| (**R35**) Varios navegadores | Mínimo | Técnico | Fácil | v1 | 
-| (**R36**) Realizar el despliegue de la aplicación en un servidor virtual (Virtualizando MMVV) | Mínimo | Técnico | Fácil | v1 | 
-| (**R37**) Comprobar configuración del servidor virtual | Mínimo | Técnico | Fácil | v1 | 
-| (**R38**) Registro | Importante | Funcional | Fácil | v1 | 
-| (**R39**) Inicio de sesión | Importante | Funcional | Fácil | v1 | 
-| (**R40**) Cerrar sesión | Importante | Funcional | Fácil | v1 | 
-| (**R41**) Inicio de sesión / Registro por Gmail | Importante | Funcional | Media | v1 | 
-| (**R42**) Eliminar usuario | Importante | Funcional | Fácil | v1 | 
-| (**R43**) Ver perfil | Importante | Funcional | Fácil | v1 | 
-| (**R44**) Editar perfil | Importante | Funcional | Fácil | v1 | 
-| (**R45**) Subir foto de perfil | Importante | Funcional | Media | v1 | 
-| (**R46**) Ver resto de perfiles | Importante | Funcional | Fácil | v1 | 
-| (**R47**) Crear equipo | Importante | Funcional | Fácil | v1 | 
-| (**R48**) Crear publicación para jugar | Importante | Funcional | Fácil | v1 | 
-| (**R49**) Editar publicación | Importante | Funcional | Fácil | v1 | 
-| (**R50**) Crear partida personalizada | Importante | Funcional | Media | v1 | 
-| (**R51**) Editar partida personalizada | Importante | Funcional | Fácil | v1 | 
-| (**R52**) Búsqueda de jugadores | Importante | Funcional | Media | v2 | 
-| (**R53**) Filtro de búsqueda de jugadores | Importante | Funcional | Difícil | v2 | 
-| (**R54**) Ordenación de búsqueda de jugadores | Importante | Funcional | Media | v2 | 
-| (**R55**) Añadir amigos | Importante | Funcional | Media | v2 | 
-| (**R56**) Eliminar amigos | Importante | Funcional | Fácil | v2 | 
-| (**R57**) Uso de la API de Riot Games | Importante | Funcional | Difícil | v2 | 
-| (**R58**) Agregar nickname en el perfil | Importante | Funcional | Difícil | v2 | 
-| (**R59**) Sistema VIP | Importante | Funcional | Difícil | v3 | 
-| (**R60**) Método de pago PayPal | Importante | Funcional | Difícil | v3 | 
-| (**R61**) Borrado de publicación | Importante | Funcional | Fácil | v1 | 
-| (**R62**) Borrado de evento | Importante | Funcional | Fácil | v1 | 
-| (**R63**) Reputación | Importante | Funcional | Difícil | v3 | 
-| (**R64**) Recuperación de contraseña | Importante | Funcional | Fácil | v1 | 
-| (**R65**) Correos | Importante | Funcional | Difícil | v3 | 
-| (**R66**) Chat en tiempo real | Opcional | Funcional | Difícil | v3 | 
-| (**R67**) Actualización de modos de juego | Importante | Funcional | Fácil | v3 | 
-| (**R68**) Actualización de rangos | Importante | Funcional | Fácil | v3 | 
-| (**R69**) Comentarios en los perfiles | Importante | Funcional | Media | v3 | 
-| (**R70**) Comentarios en los eventos | Importante | Funcional | Media | v3 | 
-| (**R71**) Generador de equipos aleatorios | Opcional | Funcional | Difícil | v3 | 
+| **Requisito** | **Prioridad** | **Tipo** | **Complejidad** | **Entrega** | **Incidencia** |
+| :------------ | :-----------: | :------: | :-------------: | :---------: | :------------: |
+| (**R1**) Requisitos como incidencias | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [1](https://github.com/JoseCotan/LFG-LOL/issues/1) |
+| (**R2**) Código fuente | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [2](https://github.com/JoseCotan/LFG-LOL/issues/2) |
+| (**R3**) Estilo del código | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [3](https://github.com/JoseCotan/LFG-LOL/issues/3) |
+| (**R4**) Tres lanzamientos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [4](https://github.com/JoseCotan/LFG-LOL/issues/4) |
+| (**R5**) README.md | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [5](https://github.com/JoseCotan/LFG-LOL/issues/5) |
+| (**R6**) Documentación | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [6](https://github.com/JoseCotan/LFG-LOL/issues/6) |
+| (**R7**) Incidencias en GitHub | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [7](https://github.com/JoseCotan/LFG-LOL/issues/7) |
+| (**R8**) Etiquetas e hitos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [8](https://github.com/JoseCotan/LFG-LOL/issues/8) |
+| (**R9**) Rama master | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [9](https://github.com/JoseCotan/LFG-LOL/issues/9) |
+| (**R10**) Gestión del proyecto | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [10](https://github.com/JoseCotan/LFG-LOL/issues/10) |
+| (**R11**) Final de cada iteración | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [11](https://github.com/JoseCotan/LFG-LOL/issues/11) |
+| (**R12**) Validación de formularios | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [12](https://github.com/JoseCotan/LFG-LOL/issues/12) |
+| (**R13**) Gestión de ventanas | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [13](https://github.com/JoseCotan/LFG-LOL/issues/13) |
+| (**R14**) Manejo de eventos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [14](https://github.com/JoseCotan/LFG-LOL/issues/14) |
+| (**R15**) DOM | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [15](https://github.com/JoseCotan/LFG-LOL/issues/15) |
+| (**R16**) Almacenamiento en el lado del cliente | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [16](https://github.com/JoseCotan/LFG-LOL/issues/16) |
+| (**R17**) React | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [17](https://github.com/JoseCotan/LFG-LOL/issues/17) |
+| (**R18**) Plugin no trabajado en clase | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [18](https://github.com/JoseCotan/LFG-LOL/issues/18) |
+| (**R19**) Utilización de AJAX | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [19](https://github.com/JoseCotan/LFG-LOL/issues/19) |
+| (**R20**) ECMAScript2015 (ES6) | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [20](https://github.com/JoseCotan/LFG-LOL/issues/20) |
+| (**R21**) PHP | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [21](https://github.com/JoseCotan/LFG-LOL/issues/21) |
+| (**R22**) Laravel Framework | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [22](https://github.com/JoseCotan/LFG-LOL/issues/22) |
+| (**R23**) PostgreSQL | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [23](https://github.com/JoseCotan/LFG-LOL/issues/23) |
+| (**R24**) Cloud computing | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [24](https://github.com/JoseCotan/LFG-LOL/issues/24) |
+| (**R25**) Pruebas funcionales | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [25](https://github.com/JoseCotan/LFG-LOL/issues/25) |
+| (**R26**) Aplicación escalable | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [26](https://github.com/JoseCotan/LFG-LOL/issues/26) |
+| (**R27**) Etiquetas semánticas de HTML5 | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [27](https://github.com/JoseCotan/LFG-LOL/issues/27) |
+| (**R28**) Presentación mediante CSS | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [28](https://github.com/JoseCotan/LFG-LOL/issues/28) |
+| (**R29**) Transiciones, transformaciones, animaciones y contenido multimedia | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [29](https://github.com/JoseCotan/LFG-LOL/issues/29) |
+| (**R30**) Uso de microdatos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [30](https://github.com/JoseCotan/LFG-LOL/issues/30) |
+| (**R31**) Validación HTML5, CSS3 y accesibilidad | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [31](https://github.com/JoseCotan/LFG-LOL/issues/31) |
+| (**R32**) Diseño para varias resoluciones | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [32](https://github.com/JoseCotan/LFG-LOL/issues/32) |
+| (**R33**) Leyes de UX | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [33](https://github.com/JoseCotan/LFG-LOL/issues/33) |
+| (**R34**) Accesibilidad | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [34](https://github.com/JoseCotan/LFG-LOL/issues/34) |
+| (**R35**) Varios navegadores | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [35](https://github.com/JoseCotan/LFG-LOL/issues/35) |
+| (**R36**) Realizar el despliegue de la aplicación en un servidor virtual (Virtualizando MMVV) | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [36](https://github.com/JoseCotan/LFG-LOL/issues/36) |
+| (**R37**) Comprobar configuración del servidor virtual | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [37](https://github.com/JoseCotan/LFG-LOL/issues/37) |
+| (**R38**) Registro | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [38](https://github.com/JoseCotan/LFG-LOL/issues/38) |
+| (**R39**) Inicio de sesión | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [39](https://github.com/JoseCotan/LFG-LOL/issues/39) |
+| (**R40**) Cerrar sesión | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [40](https://github.com/JoseCotan/LFG-LOL/issues/40) |
+| (**R41**) Inicio de sesión / Registro por Gmail | Importante | Funcional | Media | v1 | | **Incidencia**  | [41](https://github.com/JoseCotan/LFG-LOL/issues/41) |
+| (**R42**) Eliminar usuario | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [42](https://github.com/JoseCotan/LFG-LOL/issues/42) |
+| (**R43**) Ver perfil | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [43](https://github.com/JoseCotan/LFG-LOL/issues/43) |
+| (**R44**) Editar perfil | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [44](https://github.com/JoseCotan/LFG-LOL/issues/44) |
+| (**R45**) Subir foto de perfil | Importante | Funcional | Media | v1 | | **Incidencia**  | [45](https://github.com/JoseCotan/LFG-LOL/issues/45) |
+| (**R46**) Ver resto de perfiles | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [46](https://github.com/JoseCotan/LFG-LOL/issues/46) |
+| (**R47**) Crear equipo | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [47](https://github.com/JoseCotan/LFG-LOL/issues/47) |
+| (**R48**) Crear publicación para jugar | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [48](https://github.com/JoseCotan/LFG-LOL/issues/48) |
+| (**R49**) Editar publicación | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [49](https://github.com/JoseCotan/LFG-LOL/issues/49) |
+| (**R50**) Crear partida personalizada | Importante | Funcional | Media | v1 | | **Incidencia**  | [50](https://github.com/JoseCotan/LFG-LOL/issues/50) |
+| (**R51**) Editar partida personalizada | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [51](https://github.com/JoseCotan/LFG-LOL/issues/51) |
+| (**R52**) Búsqueda de jugadores | Importante | Funcional | Media | v2 | | **Incidencia**  | [52](https://github.com/JoseCotan/LFG-LOL/issues/52) |
+| (**R53**) Filtro de búsqueda de jugadores | Importante | Funcional | Difícil | v2 | | **Incidencia**  | [53](https://github.com/JoseCotan/LFG-LOL/issues/53) |
+| (**R54**) Ordenación de búsqueda de jugadores | Importante | Funcional | Media | v2 | | **Incidencia**  | [54](https://github.com/JoseCotan/LFG-LOL/issues/54) |
+| (**R55**) Añadir amigos | Importante | Funcional | Media | v2 | | **Incidencia**  | [55](https://github.com/JoseCotan/LFG-LOL/issues/55) |
+| (**R56**) Eliminar amigos | Importante | Funcional | Fácil | v2 | | **Incidencia**  | [56](https://github.com/JoseCotan/LFG-LOL/issues/56) |
+| (**R57**) Uso de la API de Riot Games | Importante | Funcional | Difícil | v2 | | **Incidencia**  | [57](https://github.com/JoseCotan/LFG-LOL/issues/57) |
+| (**R58**) Agregar nickname en el perfil | Importante | Funcional | Difícil | v2 | | **Incidencia**  | [58](https://github.com/JoseCotan/LFG-LOL/issues/58) |
+| (**R59**) Sistema VIP | Importante | Funcional | Difícil | v3 | | **Incidencia**  | [59](https://github.com/JoseCotan/LFG-LOL/issues/59) |
+| (**R60**) Método de pago PayPal | Importante | Funcional | Difícil | v3 | | **Incidencia**  | [60](https://github.com/JoseCotan/LFG-LOL/issues/60) |
+| (**R61**) Borrado de publicación | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [61](https://github.com/JoseCotan/LFG-LOL/issues/61) |
+| (**R62**) Borrado de evento | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [62](https://github.com/JoseCotan/LFG-LOL/issues/62) |
+| (**R63**) Reputación | Importante | Funcional | Difícil | v3 | | **Incidencia**  | [63](https://github.com/JoseCotan/LFG-LOL/issues/63) |
+| (**R64**) Recuperación de contraseña | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [64](https://github.com/JoseCotan/LFG-LOL/issues/64) |
+| (**R65**) Correos | Importante | Funcional | Difícil | v3 | | **Incidencia**  | [65](https://github.com/JoseCotan/LFG-LOL/issues/65) |
+| (**R66**) Chat en tiempo real | Opcional | Funcional | Difícil | v3 | | **Incidencia**  | [66](https://github.com/JoseCotan/LFG-LOL/issues/66) |
+| (**R67**) Actualización de modos de juego | Importante | Funcional | Fácil | v3 | | **Incidencia**  | [67](https://github.com/JoseCotan/LFG-LOL/issues/67) |
+| (**R68**) Actualización de rangos | Importante | Funcional | Fácil | v3 | | **Incidencia**  | [68](https://github.com/JoseCotan/LFG-LOL/issues/68) |
+| (**R69**) Comentarios en los perfiles | Importante | Funcional | Media | v3 | | **Incidencia**  | [69](https://github.com/JoseCotan/LFG-LOL/issues/69) |
+| (**R70**) Comentarios en los eventos | Importante | Funcional | Media | v3 | | **Incidencia**  | [70](https://github.com/JoseCotan/LFG-LOL/issues/70) |
+| (**R71**) Generador de equipos aleatorios | Opcional | Funcional | Difícil | v3 | | **Incidencia**  | [71](https://github.com/JoseCotan/LFG-LOL/issues/71) |
