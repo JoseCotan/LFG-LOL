@@ -28,7 +28,7 @@ Route::get('/google-auth/callback', function () {
     $user = User::updateOrCreate([
         'google_id' => $user_google->id,
     ], [
-        'name' => $user_google->name,
+        'name' => obtenerNombre(),
         'email' => $user_google->email,
     ]);
 

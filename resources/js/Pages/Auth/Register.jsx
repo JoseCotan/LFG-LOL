@@ -5,6 +5,9 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import BotonLogueoGoogle from '@/Components/BotonLogueoGoogle';
+import 'tailwindcss/tailwind.css';
+
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -150,18 +153,18 @@ export default function Register() {
                 </div>
 
                 <div className="flex items-center justify-between mt-4 flex-col md:flex-row">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        ¿Actualmente registrado?
-                    </Link>
-
-                    <PrimaryButton className="w-full md:w-auto mt-4 md:mt-0" disabled={processing}>
-                        Register
+                <PrimaryButton className="w-full ml-auto" disabled={processing}>
+                        REGISTRARSE
                     </PrimaryButton>
                 </div>
             </form>
+
+            <div className="flex justify-center mt-6 mb-6">
+                <p className="text-gray-600">Iniciar sesión con Google</p>
+            </div>
+
+            {/* Botón de inicio de sesión con Google */}
+            <BotonLogueoGoogle />
         </GuestLayout>
     );
 }
