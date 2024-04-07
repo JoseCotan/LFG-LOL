@@ -160,7 +160,7 @@ export default function Register() {
             </form>
 
             <div className="flex justify-center mt-6 mb-6">
-                <p className="text-gray-600">Iniciar sesión con Google</p>
+                <p className="text-gray-600">Registrarse con Google</p>
             </div>
 
             {/* Botón de inicio de sesión con Google */}

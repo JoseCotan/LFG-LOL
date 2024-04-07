@@ -23,12 +23,18 @@ Route::get('/google-auth/redirect', function () {
 });
 
 Route::get('/google-auth/callback', function () {
+    // Se obtiene del usuario logueado con GMAIL
     $user_google = Socialite::driver('google')->user();
 
+    // Verifica si el usuario existe en la base de datos utilizando el ID de Google
+    $usuarioExiste = User::where('google_id', $user_google->id)->first();
+
+    // Crea o actualiza el usuario en la base de datos
     $user = User::updateOrCreate([
         'google_id' => $user_google->id,
     ], [
-        'name' => obtenerNombre(),
+        // Se obtiene un nombre aleatorio si el usuario no tiene nombre en la base de datos
+        'name' => ($usuarioExiste && !empty($usuarioExiste->name)) ? $usuarioExiste->name : obtenerNombre(),
         'email' => $user_google->email,
     ]);
 
