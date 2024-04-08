@@ -10,7 +10,10 @@
                         Rango
                     </th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Acciones
+                        Editar rango
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Borrar rango
                     </th>
                 </tr>
             </thead>
@@ -18,13 +21,15 @@
                 @foreach ($rangos as $rango)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $rango->imagen }}</div>
+                        <img src="{{ asset($rango->imagen) }}" alt="Imagen del rango" class="h-16 w-16 object-cover">
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">{{ $rango->nombre }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <a href="{{ route('rangos.edit', $rango->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-2">Editar</a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <form action="{{ route('rangos.destroy', $rango->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
