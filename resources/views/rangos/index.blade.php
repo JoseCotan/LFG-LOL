@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="relative overflow-x-auto w-5/6 mt-6 mx-auto shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-auto w-full sm:w-5/6 mt-6 mx-auto shadow-md sm:rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
@@ -21,7 +21,13 @@
                 @foreach ($rangos as $rango)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <img src="{{ asset($rango->imagen) }}" alt="Imagen del rango" class="h-16 w-16 object-cover">
+                        <!-- Imagen responsive -->
+                        <picture>
+                            <source srcset="{{ asset($rango->imagenPC) }}" media="(min-width: 1200px)">
+                            <source srcset="{{ asset($rango->imagenTablet) }}" media="(min-width: 768px)">
+                            <source srcset="{{ asset($rango->imagenMovil) }}" media="(min-width: 768px)">
+                            <img src="{{ asset($rango->imagen) }}" alt="Imagen del rango" class="h-16 w-16 object-cover">
+                        </picture>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900">{{ $rango->nombre }}</div>
