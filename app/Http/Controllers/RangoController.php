@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRangoRequest;
 use App\Http\Requests\UpdateRangoRequest;
 use App\Models\Rango;
+use Illuminate\Http\Request;
 
 class RangoController extends Controller
 {
@@ -23,15 +24,24 @@ class RangoController extends Controller
      */
     public function create()
     {
-        //
+        return view('rangos.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRangoRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string',
+        ]);
+
+        $rango = new Rango();
+        $rango->nombre = $request->input('nombre');
+        $rango->save();
+
+        return redirect()->route('rangos.index');
+        
     }
 
     /**

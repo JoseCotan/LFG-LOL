@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('rangos', function (Blueprint $table) {
             $table->id();
-            $table->string('rango');
+            $table->string('nombre');
             $table->string('imagen')->nullable();
             $table->timestamps();
         });
