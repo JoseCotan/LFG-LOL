@@ -25,8 +25,8 @@
                         <picture>
                             <source srcset="{{ asset($rango->imagenPC) }}" media="(min-width: 1200px)">
                             <source srcset="{{ asset($rango->imagenTablet) }}" media="(min-width: 768px)">
-                            <source srcset="{{ asset($rango->imagenMovil) }}" media="(min-width: 768px)">
-                            <img src="{{ asset($rango->imagen) }}" alt="Imagen del rango" class="h-16 w-16 object-cover">
+                            <source srcset="{{ asset($rango->imagenMovil) }}" media="(max-width: 768px)">
+                            <img src="{{ asset($rango->imagenPC) }}" alt="Imagen del rango" class="h-16 w-16">
                         </picture>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
