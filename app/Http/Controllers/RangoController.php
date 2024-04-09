@@ -6,6 +6,9 @@ use App\Http\Requests\StoreRangoRequest;
 use App\Http\Requests\UpdateRangoRequest;
 use App\Models\Rango;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class RangoController extends Controller
 {
@@ -31,21 +34,66 @@ class RangoController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|string',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048'
-        ]);
-        $nombreImagen = $request->nombre . '.' . $request->imagen->extension();
-        $request->imagen->move(public_path('images'), $nombreImagen);
-        $rango = new Rango();
-        $rango->nombre = $request->input('nombre');
-        $rango->imagen = 'images/' . $nombreImagen;
-        $rango->save();
+{
+    $request->validate([
+        'nombre' => 'required|string',
+        'imagen' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048'
+    ]);
 
-        return redirect()->route('rangos.index')
-            ->with('success', 'Rango creado correctamente.');
+    // Verifica si la carpeta images/rangos existe
+    $rutaCarpeta = public_path('images/rangos');
+    if (!File::isDirectory($rutaCarpeta)) {
+        File::makeDirectory($rutaCarpeta);
     }
+
+    // Crear una nueva instancia de ImageManager
+    $manager = new ImageManager(new Driver());
+
+    $extension = $request->imagen->extension();
+
+    $nombreImagen = $request->nombre . '.' . $extension;
+
+    // Ruta de almacenamiento para cada versión de la imagen
+    $rutaPC = public_path('images/rangos/imagenPC_' . $nombreImagen);
+    $rutaTablet = public_path('images/rangos/imagenTablet_' . $nombreImagen);
+    $rutaMovil = public_path('images/rangos/imagenMovil_' . $nombreImagen);
+
+    // Abrir la imagen con ImageManager
+    $imagen = $manager->read($request->imagen->path());
+
+    // Redimensionar para PC
+    $imagen->resize(800, 800, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+    $imagen->save($rutaPC);
+
+    // Redimensionar para Tablet
+    $imagen->resize(600, 600, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+    $imagen->save($rutaTablet);
+
+    // Redimensionar para Móvil
+    $imagen->resize(400, 400, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+    $imagen->save($rutaMovil);
+
+    // Crear una nueva instancia de Rango
+    $rango = new Rango();
+
+    // Asignar valores
+    $rango->nombre = $request->input('nombre');
+    $rango->imagenPC = 'images/rangos/imagenPC_' . $nombreImagen;
+    $rango->imagenTablet = 'images/rangos/imagenTablet_' . $nombreImagen;
+    $rango->imagenMovil = 'images/rangos/imagenMovil_' . $nombreImagen;
+
+    // Guardar en la base de datos
+    $rango->save();
+
+    return redirect()->route('rangos.index')
+        ->with('success', 'Rango creado correctamente.');
+}
 
     /**
      * Display the specified resource.

@@ -25,7 +25,7 @@ Route::get('/google-auth/redirect', function () {
 
 Route::get('/google-auth/callback', function () {
     // Se obtiene del usuario logueado con GMAIL
-    $user_google = Socialite::driver('google')->user();
+    $user_google = Socialite::driver('google')->stateless()->user();
 
     // Verifica si el usuario existe en la base de datos utilizando el ID de Google
     $usuarioExiste = User::where('google_id', $user_google->id)->first();
