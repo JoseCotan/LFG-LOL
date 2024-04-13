@@ -16,7 +16,12 @@
             <!-- Imagen actual -->
             <div class="mt-4">
                 <x-input-label for="imagen_actual" :value="'Imagen actual'" />
-                <img src="{{ asset($rango->imagen) }}" alt="Imagen actual" class="mt-1 h-20 w-20 rounded object-cover">
+                <picture>
+                    <source srcset="{{ asset($rango->imagenPC) }}" media="(min-width: 1200px)">
+                    <source srcset="{{ asset($rango->imagenTablet) }}" media="(min-width: 768px)">
+                    <source srcset="{{ asset($rango->imagenMovil) }}" media="(max-width: 768px)">
+                    <img src="{{ asset($rango->imagenPC) }}" alt="Imagen del rango" class="h-16 w-16">
+                </picture>
             </div>
 
             <!-- Nueva imagen -->
