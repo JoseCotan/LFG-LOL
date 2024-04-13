@@ -74,15 +74,15 @@ export default function Login({ status, canResetPassword }) {
                         >
                             {showPassword ? (
                                 <img
-                                    src="/storage/imagenes/eye-solid.svg"
+                                    src="/storage/imagenes/eye-regular.png"
                                     alt="Icono de ojo abierto"
-                                    className="h-6 w-6"
+                                    className="h-5 w-6"
                                 />
                             ) : (
                                 <img
-                                    src="/storage/imagenes/eye-slash-solid.svg"
+                                    src="/storage/imagenes/eye-slash-regular.png"
                                     alt="Icono de ojo cerrado"
-                                    className="h-6 w-6"
+                                    className="h-5 w-6"
                                 />
                             )}
                         </button>
@@ -98,12 +98,12 @@ export default function Login({ status, canResetPassword }) {
                             checked={data.remember}
                             onChange={(e) => setData('remember', e.target.checked)}
                         />
-                        <span className="ms-2 text-sm text-gray-600">Recuérdame</span>
+                        <span className="ms-2 text-sm text-white">Recuérdame</span>
                     </label>
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="underline text-sm text-white hover:text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             ¿Olvidaste la contraseña?
                         </Link>
@@ -118,7 +118,7 @@ export default function Login({ status, canResetPassword }) {
             </form>
 
             <div className="flex justify-center mt-6 mb-6">
-                <p className="text-gray-600">Iniciar sesión con Google</p>
+                <p className="text-white">Iniciar sesión con Google</p>
             </div>
 
             {/* Botón de inicio de sesión con Google */}
