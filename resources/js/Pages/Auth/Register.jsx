@@ -132,7 +132,7 @@ export default function Register() {
                     <div className='relative'>
                         <TextInput
                             id='password'
-                            type={showPassword ? 'text' : 'password'} // Cambia el tipo del input según el estado
+                            type={showPassword ? 'text' : 'password'}
                             name='password'
                             value={data.password}
                             className='mt-1 block w-full pr-10'
@@ -145,7 +145,7 @@ export default function Register() {
                         <button
                             type='button'
                             /* Añadido botón para mostrar/ocultar la contraseña */
-                            className='absolute inset-y-0 right-0 pr-3' // Coloca correctamente el icono a la derecha del input, dejando un pequeño margen
+                            className='absolute inset-y-0 right-0 pr-3'
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? (
