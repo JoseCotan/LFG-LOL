@@ -150,15 +150,15 @@ export default function Register() {
                         >
                             {showPassword ? (
                                 <img
-                                    src='/storage/imagenes/eye-solid.svg'
+                                    src='/storage/imagenes/eye-regular.png'
                                     alt='Icono de ojo abierto'
-                                    className='h-6 w-6'
+                                    className='h-5 w-6'
                                 />
                             ) : (
                                 <img
-                                    src='/storage/imagenes/eye-slash-solid.svg'
+                                    src='/storage/imagenes/eye-slash-regular.png'
                                     alt='Icono de ojo cerrado'
-                                    className='h-6 w-6'
+                                    className='h-5 w-6'
                                 />
                             )}
                         </button>
@@ -191,15 +191,15 @@ export default function Register() {
                         >
                             {showConfirmationPassword ? (
                                 <img
-                                    src='/storage/imagenes/eye-solid.svg'
+                                    src='/storage/imagenes/eye-regular.png'
                                     alt='Icono de ojo abierto'
-                                    className='h-6 w-6'
+                                    className='h-5 w-6'
                                 />
                             ) : (
                                 <img
-                                    src='/storage/imagenes/eye-slash-solid.svg'
+                                    src='/storage/imagenes/eye-slash-regular.png'
                                     alt='Icono de ojo cerrado'
-                                    className='h-6 w-6'
+                                    className='h-5 w-6'
                                 />
                             )}
                         </button>
@@ -216,7 +216,7 @@ export default function Register() {
             </form>
 
             <div className='flex justify-center mt-6 mb-6'>
-                <p className='text-gray-600'>Registrarse con Google</p>
+                <p className='text-white'>Registrarse con Google</p>
             </div>
 
             {/* Botón de inicio de sesión con Google */}
