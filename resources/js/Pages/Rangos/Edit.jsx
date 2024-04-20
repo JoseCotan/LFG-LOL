@@ -5,7 +5,7 @@ import InputLabel from '@/Components/InputLabel';
 import Input from '@/Components/Input';
 import Button from '@/Components/Button';
 
-const EditRango = () => {
+const RangosEdit = () => {
     const { rango } = usePage().props;
     const [nombre, setNombre] = useState(rango.nombre);
     const [imagen, setImagen] = useState(null);
@@ -39,4 +39,4 @@ const EditRango = () => {
     );
 };
 
-export default EditRango;
+export default RangosEdit;
