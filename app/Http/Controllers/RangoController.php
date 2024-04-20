@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateRangoRequest;
 use App\Models\Rango;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Inertia\Inertia;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -17,17 +18,16 @@ class RangoController extends Controller
      */
     public function index()
     {
-        return view('rangos.index', [
-            'rangos' => Rango::all(),
+        return Inertia::render('Rangos/Index', [
+            'rangos' => Rango::all()
         ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('rangos.create');
+        return Inertia::render('Rangos/Create');
     }
 
     /**
@@ -84,8 +84,7 @@ class RangoController extends Controller
 
         $rango->save();
 
-        return redirect()->route('rangos.index')
-            ->with('success', 'Rango creado correctamente.');
+        return Inertia::location(route('rangos.index'));
     }
 
     /**
@@ -101,7 +100,7 @@ class RangoController extends Controller
      */
     public function edit(Rango $rango)
     {
-        return view('rangos.edit', [
+        return Inertia::render('Rangos/Edit', [
             'rango' => $rango,
         ]);
     }
@@ -110,59 +109,58 @@ class RangoController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Rango $rango)
-{
-    $request->validate([
-        'nombre' => 'required|string',
-        'imagen_nueva' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-    ]);
+    {
+        $request->validate([
+            'nombre' => 'required|string',
+            'imagen_nueva' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
 
-    // Guardar la imagen si se proporciona una nueva
-    if ($request->hasFile('imagen_nueva')) {
-        // Verifica si la carpeta images/rangos existe
-        $rutaCarpeta = public_path('images/rangos');
-        if (!File::isDirectory($rutaCarpeta)) {
-            File::makeDirectory($rutaCarpeta);
+        // Guardar la imagen si se proporciona una nueva
+        if ($request->hasFile('imagen_nueva')) {
+            // Verifica si la carpeta images/rangos existe
+            $rutaCarpeta = public_path('images/rangos');
+            if (!File::isDirectory($rutaCarpeta)) {
+                File::makeDirectory($rutaCarpeta);
+            }
+
+            // Crear una nueva instancia de ImageManager
+            $manager = new ImageManager(new Driver());
+
+            $extension = $request->imagen_nueva->extension();
+            $nombreImagen = $request->nombre . '.' . $extension;
+
+            // Ruta de almacenamiento para cada versión de la imagen
+            $rutaPC = public_path('images/rangos/imagenPC_' . $nombreImagen);
+            $rutaTablet = public_path('images/rangos/imagenTablet_' . $nombreImagen);
+            $rutaMovil = public_path('images/rangos/imagenMovil_' . $nombreImagen);
+
+            // Abrir la imagen con ImageManager
+            $imagen = $manager->read($request->imagen_nueva->path());
+
+            // Redimensionar para PC
+            $imagen->resize(800, 800);
+            $imagen->save($rutaPC);
+
+            // Redimensionar para Tablet
+            $imagen->resize(600, 600);
+            $imagen->save($rutaTablet);
+
+            // Redimensionar para Móvil
+            $imagen->resize(400, 400);
+            $imagen->save($rutaMovil);
+
+            // Actualizar las columnas de imagen en la base de datos
+            $rango->imagenPC = 'images/rangos/imagenPC_' . $nombreImagen;
+            $rango->imagenTablet = 'images/rangos/imagenTablet_' . $nombreImagen;
+            $rango->imagenMovil = 'images/rangos/imagenMovil_' . $nombreImagen;
         }
 
-        // Crear una nueva instancia de ImageManager
-        $manager = new ImageManager(new Driver());
+        // Actualizar otros campos del rango
+        $rango->nombre = $request->input('nombre');
+        $rango->save();
 
-        $extension = $request->imagen_nueva->extension();
-        $nombreImagen = $request->nombre . '.' . $extension;
-
-        // Ruta de almacenamiento para cada versión de la imagen
-        $rutaPC = public_path('images/rangos/imagenPC_' . $nombreImagen);
-        $rutaTablet = public_path('images/rangos/imagenTablet_' . $nombreImagen);
-        $rutaMovil = public_path('images/rangos/imagenMovil_' . $nombreImagen);
-
-        // Abrir la imagen con ImageManager
-        $imagen = $manager->read($request->imagen_nueva->path());
-
-        // Redimensionar para PC
-        $imagen->resize(800, 800);
-        $imagen->save($rutaPC);
-
-        // Redimensionar para Tablet
-        $imagen->resize(600, 600);
-        $imagen->save($rutaTablet);
-
-        // Redimensionar para Móvil
-        $imagen->resize(400, 400);
-        $imagen->save($rutaMovil);
-
-        // Actualizar las columnas de imagen en la base de datos
-        $rango->imagenPC = 'images/rangos/imagenPC_' . $nombreImagen;
-        $rango->imagenTablet = 'images/rangos/imagenTablet_' . $nombreImagen;
-        $rango->imagenMovil = 'images/rangos/imagenMovil_' . $nombreImagen;
+        return Inertia::location(route('rangos.index'));
     }
-
-    // Actualizar otros campos del rango
-    $rango->nombre = $request->input('nombre');
-    $rango->save();
-
-    return redirect()->route('rangos.index')
-        ->with('success', 'Rango actualizado correctamente.');
-}
 
 
     /**
@@ -171,6 +169,6 @@ class RangoController extends Controller
     public function destroy(Rango $rango)
     {
         $rango->delete();
-        return redirect()->route('rangos.index');
+        return Inertia::location(route('rangos.index'));
     }
 }
