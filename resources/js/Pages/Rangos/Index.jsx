@@ -1,6 +1,6 @@
 import React from 'react';
 import { Inertia } from '@inertiajs/inertia';
-import { Link, usePage, Head } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DangerButton from '@/Components/DangerButton';
 import ImagenResponsive from '@/Components/ImagenResponsive';

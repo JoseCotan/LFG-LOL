@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+
 
 const RangosCreate = () => {
+    const { auth } = usePage().props;
     const [nombre, setNombre] = useState('');
     const [imagen, setImagen] = useState(null);
 
@@ -24,6 +27,9 @@ const RangosCreate = () => {
     };
 
     return (
+        <AuthenticatedLayout
+            user={auth.user}
+        >
         <div className="max-w-4xl mx-auto p-8">
             <form onSubmit={handleSubmit}>
                 <div className="mb-6">
@@ -38,6 +44,7 @@ const RangosCreate = () => {
                 <Link href={route('rangos.index')} className="text-white bg-gray-500 hover:bg-gray-600 ml-4 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancelar</Link>
             </form>
         </div>
+        </AuthenticatedLayout>
     );
 };
 
