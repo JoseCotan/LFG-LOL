@@ -19,8 +19,8 @@ const RangosIndex = () => {
         >
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-200">
+                    <div className="bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg">
+                        <table className="min-w-full divide-y divide-gray-600">
                             <thead className="bg-gray-900 text-white">
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Imagen</th>
@@ -29,7 +29,7 @@ const RangosIndex = () => {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Eliminar</th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-gray-800 text-white divide-y divide-gray-200">
+                            <tbody className="bg-gray-800 text-white divide-y divide-gray-700">
                                 {rangos.map(rango => (
                                     <tr key={rango.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
@@ -45,17 +45,17 @@ const RangosIndex = () => {
                                             <div className="text-sm text-white">{rango.nombre}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <Link href={route('rangos.edit', rango.id)} className="text-indigo-600 hover:text-indigo-900">Editar</Link>
+                                            <Link href={route('rangos.edit', rango.id)} className="text-green-500 hover:text-green-200">Editar</Link>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <DangerButton onClick={() => handleDelete(rango.id)}>Eliminar</DangerButton>
+                                            <DangerButton onClick={() => handleDelete(rango.id)} className="text-red-600 hover:text-red-400">Eliminar</DangerButton>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                         <div className="flex justify-center mt-4 mb-4">
-                            <Link href={route('rangos.create')} className="inline-flex items-center px-4 py-2 bg-emerald-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-600 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 disabled:opacity-25 transition">
+                            <Link href={route('rangos.create')} className="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-600 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 disabled:opacity-25 transition">
                                 Añadir Nuevo Rango
                             </Link>
                         </div>
