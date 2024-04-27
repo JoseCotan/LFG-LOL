@@ -12,7 +12,7 @@ export default function Authenticated({ user, header, children }) {
 
     return (
         <div className="min-h-screen bg-black"> {/*bg-gradient-to-b from-100% from-black to-green-950*/}
-            <nav className="border-gray-100">
+            <nav className="bg-gradient-to-b from-green-950 to-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
