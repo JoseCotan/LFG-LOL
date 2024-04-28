@@ -18,6 +18,9 @@ return new class extends Migration
             $table->date('nac')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('foto_perfil_PC')->nullable();
+            $table->string('foto_perfil_Tablet')->nullable();
+            $table->string('foto_perfil_Movil')->nullable();
             $table->string('google_id')->nullable();
             $table->string('nombreLOL')->nullable();
             $table->boolean('VIP')->default(false);

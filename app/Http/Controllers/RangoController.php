@@ -125,7 +125,6 @@ class RangoController extends Controller
 
             // Crear una nueva instancia de ImageManager
             $manager = new ImageManager(new Driver());
-
             $extension = $request->imagen_nueva->extension();
             $nombreImagen = $request->nombre . '.' . $extension;
 
