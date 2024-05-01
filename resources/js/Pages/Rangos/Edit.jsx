@@ -18,11 +18,12 @@ const RangosEdit = () => {
         formData.append('nombre', nombre);
         if (imagen) {
             formData.append('imagen_nueva', imagen, imagen.name);
-            formData.append('_method', 'PUT');
         }
+        formData.append('_method', 'PUT');
 
         Inertia.post(route('rangos.update', rango.id), formData);
     };
+
 
     return (
         <AuthenticatedLayout
