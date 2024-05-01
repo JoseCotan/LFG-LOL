@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/photo', [ProfileController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 });
 
+Route::get('/users/{name}', [ProfileController::class, 'show'])->name('users.show');
+
 Route::resource('rangos', RangoController::class)
     ->middleware('auth');
 
