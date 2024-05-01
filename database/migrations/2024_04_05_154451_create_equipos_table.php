@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('miembro_3')->nullable()->unique()->constrained('users');
             $table->foreignId('miembro_4')->nullable()->unique()->constrained('users');
             $table->foreignId('miembro_5')->nullable()->unique()->constrained('users');
+            $table->boolean('privado')->nullable();
             $table->foreignId('modo_juego_preferente')->nullable()->constrained('modos');
             $table->timestamps();
         });

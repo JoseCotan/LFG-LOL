@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RangoController;
 use App\Models\User;
@@ -60,4 +61,7 @@ Route::get('/users/{name}', [ProfileController::class, 'show'])->name('users.sho
 Route::resource('rangos', RangoController::class)
     ->middleware('auth');
 
-require __DIR__.'/auth.php';
+Route::resource('equipos', EquipoController::class)
+    ->middleware('auth');
+
+require __DIR__ . '/auth.php';
