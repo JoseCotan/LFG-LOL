@@ -9,6 +9,12 @@ class Amigo extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'usuario_id',
+        'amigo_id',
+        'estado'
+    ];
+
     public function amigoAgregado()
     {
         return $this->belongsTo(User::class);
