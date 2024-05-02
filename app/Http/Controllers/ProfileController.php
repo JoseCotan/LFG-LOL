@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Amigo;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -68,7 +69,18 @@ class ProfileController extends Controller
     public function show($name)
     {
         $user = User::where('name', $name)->firstOrFail();
-        return Inertia::render('Users/Show', ['user' => $user]);
+        $authUser = auth()->user();
+
+        $amistad = Amigo::where(function ($query) use ($authUser, $user) {
+            $query->where('usuario_id', $authUser->id)->where('amigo_id', $user->id);
+        })->orWhere(function ($query) use ($authUser, $user) {
+            $query->where('usuario_id', $user->id)->where('amigo_id', $authUser->id);
+        })->first();
+
+        return Inertia::render('Users/Show', [
+            'user' => $user,
+            'amistad' => $amistad
+        ]);
     }
 
     public function updateProfilePhoto(Request $request)

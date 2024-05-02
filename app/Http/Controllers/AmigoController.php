@@ -68,40 +68,50 @@ class AmigoController extends Controller
         //
     }
 
-    public function enviarSolicitud(Request $request, $userId)
+    public function enviarSolicitud($amistadId)
     {
         $amigo = new Amigo([
-            'usuario_id' => auth()->id(),
-            'amigo_id' => $userId,
+            'usuario_id' => Auth::user()->id,
+            'amigo_id' => $amistadId,
             'estado' => 'pendiente',
         ]);
         $amigo->save();
 
-        $user = User::findOrFail($userId);
+        $user = User::findOrFail($amistadId);
         $userName = $user->name;
 
         return Inertia::location(route('users.show', ['name' => $userName]));
     }
 
-    public function aceptarSolicitud($id)
+    public function cancelarSolicitud($amistadId)
     {
-        $solicitud = Amigo::where('id', $id)
-            ->where('amigo_id', Auth::id())
-            ->firstOrFail();
+        $amistad = Amigo::with('amigoAgregado')->findOrFail($amistadId);
+        $userName = $amistad->amigoAgregado->name;
+        $amistad->delete();
 
-        $solicitud->update(['estado' => 'aceptado']);
-
-        return redirect()->back()->with('success', 'Solicitud de amistad aceptada.');
+        return Inertia::location(route('users.show', ['name' => $userName]));
     }
 
-    public function rechazarSolicitud($id)
+    public function aceptarSolicitud($amistadId)
     {
-        $solicitud = Amigo::where('id', $id)
-            ->where('amigo_id', Auth::id())
-            ->firstOrFail();
+        $amistad = Amigo::findOrFail($amistadId);
+        $amistad->estado = 'aceptado';
+        $amistad->save();
 
-        $solicitud->update(['estado' => 'rechazado']);
+        return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
+    }
 
-        return redirect()->back()->with('success', 'Solicitud de amistad rechazada.');
+    public function rechazarSolicitud($amistadId)
+    {
+        $amistad = Amigo::findOrFail($amistadId);
+        if ($amistad->amigo_id === Auth::user()->id) {
+            $amistad->estado = 'rechazado';
+            $amistad->save();
+
+            $userName = $amistad->amigoAgregador->name;
+            return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
+        }
+
+        return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
     }
 }

@@ -59,10 +59,11 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/users/{name}', [ProfileController::class, 'show'])->name('users.show');
 
-Route::post('/amigos/enviar', [AmigoController::class, 'enviarSolicitud'])->name('amigos.enviar');
-Route::patch('/amigos/aceptar/{id}', [AmigoController::class, 'aceptarSolicitud'])->name('amigos.aceptar');
-Route::patch('/amigos/rechazar/{id}', [AmigoController::class, 'rechazarSolicitud'])->name('amigos.rechazar');
-Route::post('/amigos/enviar/{userId}', [AmigoController::class, 'enviarSolicitud'])->name('amigos.enviar');
+Route::post('/amigos/enviar/{amistadId}', [AmigoController::class, 'enviarSolicitud'])->name('amigos.enviar');
+Route::patch('/amigos/aceptar/{amistadId}', [AmigoController::class, 'aceptarSolicitud'])->name('amigos.aceptar');
+Route::patch('/amigos/rechazar/{amistadId}', [AmigoController::class, 'rechazarSolicitud'])->name('amigos.rechazar');
+Route::delete('/amigos/cancelar/{amistadId}', [AmigoController::class, 'cancelarSolicitud'])->name('amigos.cancelar');
+
 
 
 Route::resource('rangos', RangoController::class)
