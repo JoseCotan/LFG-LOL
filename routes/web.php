@@ -63,8 +63,7 @@ Route::post('/amigos/enviar/{amistadId}', [AmigoController::class, 'enviarSolici
 Route::patch('/amigos/aceptar/{amistadId}', [AmigoController::class, 'aceptarSolicitud'])->name('amigos.aceptar');
 Route::patch('/amigos/rechazar/{amistadId}', [AmigoController::class, 'rechazarSolicitud'])->name('amigos.rechazar');
 Route::delete('/amigos/cancelar/{amistadId}', [AmigoController::class, 'cancelarSolicitud'])->name('amigos.cancelar');
-
-
+Route::delete('/amigos/eliminar/{amistadId}', [AmigoController::class, 'eliminarAmistad'])->name('amigos.eliminar');
 
 Route::resource('rangos', RangoController::class)
     ->middleware('auth');

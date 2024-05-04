@@ -52,16 +52,6 @@ class User extends Authenticatable
         return $this->hasMany(Publicacion::class);
     }
 
-    public function amigosAgregados()
-    {
-        return $this->hasMany(Amigo::class);
-    }
-
-    public function amigosAgregadores()
-    {
-        return $this->hasMany(Amigo::class);
-    }
-
     public function comentarios()
     {
         return $this->morphMany(Comentario::class, 'comentable');

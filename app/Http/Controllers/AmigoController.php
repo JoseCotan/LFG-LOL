@@ -78,18 +78,16 @@ class AmigoController extends Controller
         $amigo->save();
 
         $user = User::findOrFail($amistadId);
-        $userName = $user->name;
 
-        return Inertia::location(route('users.show', ['name' => $userName]));
+        return Inertia::location(route('users.show', ['name' => $user->name]));
     }
 
     public function cancelarSolicitud($amistadId)
     {
         $amistad = Amigo::with('amigoAgregado')->findOrFail($amistadId);
-        $userName = $amistad->amigoAgregado->name;
         $amistad->delete();
 
-        return Inertia::location(route('users.show', ['name' => $userName]));
+        return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregado->name]));
     }
 
     public function aceptarSolicitud($amistadId)
@@ -107,11 +105,19 @@ class AmigoController extends Controller
         if ($amistad->amigo_id === Auth::user()->id) {
             $amistad->estado = 'rechazado';
             $amistad->save();
-
-            $userName = $amistad->amigoAgregador->name;
             return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
         }
-
         return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
+    }
+
+    public function eliminarAmistad($amistadId)
+    {
+        $amistad = Amigo::findOrFail($amistadId);
+        $amistad->delete();
+
+        if (Auth::user()->id === $amistad->amigoAgregado->id) {
+            return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
+        }
+        return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregado->name]));
     }
 }
