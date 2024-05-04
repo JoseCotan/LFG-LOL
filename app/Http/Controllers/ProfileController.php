@@ -69,7 +69,7 @@ class ProfileController extends Controller
     public function show($name)
     {
         $user = User::where('name', $name)->firstOrFail();
-        $authUser = auth()->user();
+        $authUser = Auth::user();
 
         $amistad = Amigo::where(function ($query) use ($authUser, $user) {
             $query->where('usuario_id', $authUser->id)->where('amigo_id', $user->id);
@@ -77,11 +77,23 @@ class ProfileController extends Controller
             $query->where('usuario_id', $user->id)->where('amigo_id', $authUser->id);
         })->first();
 
+        $amigos = Amigo::with(['amigoAgregador', 'amigoAgregado'])
+            ->where(function ($query) use ($user) {
+                $query->where('usuario_id', $user->id)->orWhere('amigo_id', $user->id);
+            })
+            ->whereIn('estado', ['aceptado'])
+            ->get();
+
         return Inertia::render('Users/Show', [
             'user' => $user,
-            'amistad' => $amistad
+            'amistad' => $amistad,
+            'amigos' => $amigos
         ]);
     }
+
+
+
+
 
     public function updateProfilePhoto(Request $request)
     {
@@ -117,7 +129,7 @@ class ProfileController extends Controller
             $imagen->resize(600, 600);
             $imagen->save($rutaTablet);
 
-            // Redimensionar para Móvil
+            // Redimensionar para Móvil610700070
             $imagen->resize(400, 400);
             $imagen->save($rutaMovil);
 
