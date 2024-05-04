@@ -70,5 +70,7 @@ Route::resource('rangos', RangoController::class)
 
 Route::resource('equipos', EquipoController::class)
     ->middleware('auth');
+Route::post('/equipos/unirse/{id}', [EquipoController::class, 'unirse'])->name('equipos.unirse')->middleware('auth');
+
 
 require __DIR__ . '/auth.php';

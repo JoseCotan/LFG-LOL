@@ -25,7 +25,8 @@ class EquipoController extends Controller
                 return [
                     'id' => $equipo->id,
                     'nombre_equipo' => $equipo->nombre_equipo,
-                    'lider_id' => $equipo->lider->name,
+                    'miembro_1' => $equipo->miembro1,
+                    'lider' => $equipo->lider,
                     'modo' => $equipo->modo->nombre,
                     'privado' => $equipo->privado
                 ];
@@ -52,15 +53,16 @@ class EquipoController extends Controller
         $request->validate([
             'nombre_equipo' => 'required|string',
             'modo_juego_preferente' => 'nullable|exists:modos,id',
-            'privado' => 'required|boolean', // Asegura que privado sea enviado como booleano
+            'privado' => 'required|boolean',
         ]);
 
         $equipo = new Equipo();
 
         $equipo->nombre_equipo = $request->nombre_equipo;
-        $equipo->modo_juego_preferente = $request->modo_juego_preferente ?? 1; // Modo predeterminado si es nulo
-        $equipo->privado = $request->privado; // Asigna directamente el valor booleano de 'privado'
-        $equipo->lider_id = Auth::user()->id; // Asume que quieres asignar el líder basado en el usuario autenticado
+        $equipo->modo_juego_preferente = $request->modo_juego_preferente ?? 1;
+        $equipo->privado = $request->privado;
+        $equipo->lider_id = Auth::user()->id;
+        $equipo->miembro_1 = Auth::user()->id;
 
         $equipo->save();
 
@@ -72,7 +74,21 @@ class EquipoController extends Controller
      */
     public function show(Equipo $equipo)
     {
-        //
+        $equipo->load(
+            [
+                'lider',
+                'modo',
+                'miembro1',
+                'miembro2',
+                'miembro3',
+                'miembro4',
+                'miembro5'
+            ]
+        ); // Carga anticipada, evitando el problema de n+1
+
+        return Inertia::render('Equipos/Show', [
+            'equipo' => $equipo
+        ]);
     }
 
     /**
@@ -80,7 +96,12 @@ class EquipoController extends Controller
      */
     public function edit($id)
     {
-        $equipo = Equipo::with('modo', 'lider', 'miembro1', 'miembro2', 'miembro3', 'miembro4', 'miembro5')->findOrFail($id);
+        $equipo = Equipo::with('modo')->findOrFail($id);
+
+        if (Auth::user()->id !== $equipo->lider_id) {
+            abort(403, 'No estás autorizado para editar este equipo.');
+        }
+
         $modos = Modo::all();
         $usuarios = User::all();
 
@@ -93,20 +114,22 @@ class EquipoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $equipo = Equipo::findOrFail($id);
+
+        if (Auth::user()->id !== $equipo->lider_id) {
+            abort(403, 'No estás autorizado para actualizar este equipo.');
+        }
+
         $request->validate([
             'nombre_equipo' => 'required|string|unique:equipos,nombre_equipo,' . $id,
             'modo_juego_preferente' => 'nullable|exists:modos,id',
             'privado' => 'required|boolean',
-            // Valida otros miembros aquí
         ]);
-
-        $equipo = Equipo::findOrFail($id);
 
         $equipo->update([
             'nombre_equipo' => $request->nombre_equipo,
             'modo_juego_preferente' => $request->modo_juego_preferente,
             'privado' => $request->privado,
-            // Actualiza otros miembros aquí
         ]);
 
         return redirect()->route('equipos.index');
@@ -119,5 +142,26 @@ class EquipoController extends Controller
     public function destroy(Equipo $equipo)
     {
         //
+    }
+
+    public function unirse($id)
+    {
+        $equipo = Equipo::findOrFail($id);
+
+        if ($equipo->privado) {
+            return Inertia::location(route('equipos.show', ['equipo' => $id]));
+        }
+
+        $user_id = Auth::user()->id;
+
+        if (!$equipo->miembro_1) $equipo->miembro_1 = $user_id;
+        elseif (!$equipo->miembro_2) $equipo->miembro_2 = $user_id;
+        elseif (!$equipo->miembro_3) $equipo->miembro_3 = $user_id;
+        elseif (!$equipo->miembro_4) $equipo->miembro_4 = $user_id;
+        elseif (!$equipo->miembro_5) $equipo->miembro_5 = $user_id;
+
+        $equipo->save();
+
+        return Inertia::location(route('equipos.show', ['equipo' => $id]));
     }
 }
