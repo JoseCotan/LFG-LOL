@@ -4,6 +4,7 @@ import { usePage, Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import Button from '@/Components/Button';
 
+
 const EquipoShow = () => {
     const { equipo, auth } = usePage().props;
 
@@ -29,6 +30,14 @@ const EquipoShow = () => {
         Inertia.post(route('equipos.unirse', equipo.id));
     };
 
+    const handleExpulsarMiembro = (miembroId) => {
+        Inertia.post(route('equipos.expulsarMiembro', { equipoId: equipo.id, miembroId }));
+    };
+
+    const handleAbandonarEquipo = () => {
+        Inertia.post(route('equipos.abandonarEquipo', equipo.id));
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -41,14 +50,51 @@ const EquipoShow = () => {
                             <li><strong>Privacidad:</strong> {equipo.privado ? 'Privado' : 'Público'}</li>
                             <li><strong>Miembro 1:</strong> {equipo.miembro1 ? equipo.miembro1.name : 'No asignado'}</li>
                             <li><strong>Miembro 2:</strong> {equipo.miembro2 ? equipo.miembro2.name : 'No asignado'}</li>
+                            {equipo.lider.id === auth.user.id && (
+                                <>
+                                    {equipo.miembro2 && (
+                                        <Button onClick={() => handleExpulsarMiembro(equipo.miembro2.id)}>Expulsar Miembro 2</Button>
+                                    )}
+
+                                </>
+                            )}
                             <li><strong>Miembro 3:</strong> {equipo.miembro3 ? equipo.miembro3.name : 'No asignado'}</li>
+                            {equipo.lider.id === auth.user.id && (
+                                <>
+                                    {equipo.miembro3 && (
+                                        <Button onClick={() => handleExpulsarMiembro(equipo.miembro3.id)}>Expulsar Miembro 3</Button>
+                                    )}
+
+                                </>
+                            )}
                             <li><strong>Miembro 4:</strong> {equipo.miembro4 ? equipo.miembro4.name : 'No asignado'}</li>
+                            {equipo.lider.id === auth.user.id && (
+                                <>
+                                    {equipo.miembro4 && (
+                                        <Button onClick={() => handleExpulsarMiembro(equipo.miembro4.id)}>Expulsar Miembro 4</Button>
+                                    )}
+
+                                </>
+                            )}
                             <li><strong>Miembro 5:</strong> {equipo.miembro5 ? equipo.miembro5.name : 'No asignado'}</li>
+                            {equipo.lider.id === auth.user.id && (
+                                <>
+                                    {equipo.miembro5 && (
+                                        <Button onClick={() => handleExpulsarMiembro(equipo.miembro5.id)}>Expulsar Miembro 5</Button>
+                                    )}
+
+                                </>
+                            )}
                         </ul>
-                        {/* Mostrar el botón solo si el equipo no está lleno y el usuario no es miembro */}
+                        {/* Muestra el botón solo si el equipo no está lleno y el usuario no es miembro */}
                         {!esMiembro && !equipoLleno && (
                             <Button onClick={handleUnirseEquipo}>
                                 Unirse al Equipo
+                            </Button>
+                        )}
+                        {auth.user.id !== equipo.lider.id && esMiembro && (
+                            <Button onClick={handleAbandonarEquipo}>
+                                Abandonar Equipo
                             </Button>
                         )}<br></br>
                         <Link href={route('equipos.index')} className="text-indigo-600 hover:text-indigo-900">

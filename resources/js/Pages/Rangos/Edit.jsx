@@ -5,6 +5,8 @@ import InputLabel from '@/Components/InputLabel';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Input from '@/Components/Input';
 import Button from '@/Components/Button';
+import TextInput from '@/Components/TextInput';
+
 
 const RangosEdit = () => {
     const { rango, auth } = usePage().props;
@@ -32,10 +34,10 @@ const RangosEdit = () => {
         <div className="max-w-4xl mx-auto p-8">
             <form onSubmit={handleSubmit}>
                 <InputLabel value="Nombre del Rango" />
-                <Input id="nombre" value={nombre} onChange={e => setNombre(e.target.value)} required />
+                <TextInput id="nombre" value={nombre} onChange={e => setNombre(e.target.value)} required />
 
                 <InputLabel value="Cambiar Imagen" />
-                <Input type="file" id="imagen_nueva" onChange={e => setImagen(e.target.files[0])} />
+                <TextInput type="file" id="imagen_nueva" onChange={e => setImagen(e.target.files[0])} /><br></br>
 
                 <Button type="submit">Actualizar Rango</Button>
                 <Link href={route('rangos.index')} className="text-white bg-gray-500 hover:bg-gray-600 ml-4 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancelar</Link>

@@ -23,10 +23,18 @@ const RangosIndex = () => {
                         <table className="min-w-full divide-y divide-gray-600">
                             <thead className="bg-gray-900 text-white">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Imagen</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Rango</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Editar</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Eliminar</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                        Imagen
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                        Rango
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                        Editar
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                        Eliminar
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="bg-gray-800 text-white divide-y divide-gray-700">

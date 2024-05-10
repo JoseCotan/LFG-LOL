@@ -1,10 +1,12 @@
 import React from 'react';
 import { useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import Button from '@/Components/Button';
+import Input from '@/Components/Input';
 import Checkbox from '@/Components/Checkbox';
 import Select from '@/Components/Select';
+import InputLabel from '@/Components/InputLabel';
+
 
 const EquiposEdit = () => {
     const { auth, equipo, modos, usuarios } = usePage().props;
@@ -25,14 +27,14 @@ const EquiposEdit = () => {
         >
             <div className="max-w-4xl mx-auto p-8">
                 <form onSubmit={handleSubmit}>
-                    <TextInput
-                        label="Nombre del Equipo"
+                    <InputLabel value="Nombre del Equipo" />
+                    <Input
                         name="nombre_equipo"
                         value={data.nombre_equipo}
                         onChange={e => setData('nombre_equipo', e.target.value)}
                     />
+                    <InputLabel value="Modo de juego preferente" />
                     <Select
-                        label="Modo de Juego Preferente"
                         name="modo_juego_preferente"
                         value={data.modo_juego_preferente}
                         onChange={e => setData('modo_juego_preferente', e.target.value)}
@@ -41,15 +43,15 @@ const EquiposEdit = () => {
                             label: modo.nombre
                         }))}
                     />
+                    <InputLabel value="Equipo privado" />
                     <Checkbox
-                        label="Equipo Privado"
                         name="privado"
                         checked={data.privado}
                         onChange={e => setData('privado', e.target.checked)}
                     />
-                    <PrimaryButton disabled={processing}>
+                    <Button disabled={processing}>
                         Actualizar Equipo
-                    </PrimaryButton>
+                    </Button>
                 </form>
             </div>
         </AuthenticatedLayout>
