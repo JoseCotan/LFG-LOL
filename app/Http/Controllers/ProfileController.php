@@ -68,17 +68,24 @@ class ProfileController extends Controller
 
     public function show($name)
     {
+        // Encuentra al usuario por su nombre. Si no lo encuentra, lanza un error.
         $user = User::where('name', $name)->firstOrFail();
+
         $authUser = Auth::user();
 
+        // Busca si existe una relación de amistad entre el usuario autenticado y el usuario cuyo perfil se está visitando.
         $amistad = Amigo::where(function ($query) use ($authUser, $user) {
+            // Verifica si el usuario autenticado ha enviado una solicitud al usuario del perfil.
             $query->where('usuario_id', $authUser->id)->where('amigo_id', $user->id);
         })->orWhere(function ($query) use ($authUser, $user) {
+            // Verifica si el usuario del perfil ha enviado una solicitud al usuario autenticado.
             $query->where('usuario_id', $user->id)->where('amigo_id', $authUser->id);
         })->first();
 
+        // Obtiene una lista de todos los amigos del usuario cuyo perfil se está viendo, que se hayan "aceptado".
         $amigos = Amigo::with(['amigoAgregador', 'amigoAgregado'])
             ->where(function ($query) use ($user) {
+                // Busca todas las amistades donde el usuario del perfil es el agregador o agregado.
                 $query->where('usuario_id', $user->id)->orWhere('amigo_id', $user->id);
             })
             ->whereIn('estado', ['aceptado'])
@@ -90,6 +97,7 @@ class ProfileController extends Controller
             'amigos' => $amigos
         ]);
     }
+
 
 
 

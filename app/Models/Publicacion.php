@@ -11,6 +11,17 @@ class Publicacion extends Model
 
     protected $table = 'publicaciones';
 
+    protected $fillable = [
+        'titulo',
+        'descripcion',
+        'hora_preferente_inicio',
+        'hora_preferente_final',
+        'modo_id',
+        'rol_id',
+        'rango_id',
+        'usuario_id'
+    ];
+
     public function usuario()
     {
         return $this->belongsTo(User::class);

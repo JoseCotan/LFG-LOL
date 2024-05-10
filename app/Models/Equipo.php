@@ -52,4 +52,9 @@ class Equipo extends Model
     {
         return $this->belongsTo(Modo::class, 'modo_juego_preferente');
     }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'team_members', 'team_id', 'user_id');
+    }
 }

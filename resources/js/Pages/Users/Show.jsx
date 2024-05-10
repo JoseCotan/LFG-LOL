@@ -28,10 +28,10 @@ const UserShow = ({ user, amistad, amigos }) => {
         Inertia.delete(route('amigos.eliminar', { amistadId: amistad.id }));
     };
 
-    console.log(amigos)
-
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout
+            user={auth.user}
+        >
             <div className="text-white">
                 <h1>Perfil de Usuario</h1>
                 <p>Nombre: {user.name}</p>
@@ -41,7 +41,7 @@ const UserShow = ({ user, amistad, amigos }) => {
                     <ul>
                         {amigos.map(amigo => (
                             <li key={amigo.id}>
-                                {amigo.amigo_id === auth.user.id
+                                {amigo.usuario_id === user.id
                                     ? amigo.amigo_agregado.name
                                     : amigo.amigo_agregador.name}
                             </li>
@@ -62,7 +62,7 @@ const UserShow = ({ user, amistad, amigos }) => {
                         <DangerButton onClick={handleCancelarSolicitud}>Cancelar Solicitud</DangerButton>
                     ) : null
                 )}
-                <Link href="/">Volver al inicio</Link>
+                <p><Link href="/dashboard">Volver al inicio</Link></p>
             </div>
         </AuthenticatedLayout>
     );

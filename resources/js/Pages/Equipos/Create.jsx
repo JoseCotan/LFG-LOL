@@ -4,6 +4,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import Checkbox from '@/Components/Checkbox';
+import InputLabel from '@/Components/InputLabel';
+
 
 const EquiposCreate = () => {
     const { auth, modos } = usePage().props;
@@ -30,7 +32,7 @@ const EquiposCreate = () => {
             <div className="max-w-4xl mx-auto p-8">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-6">
-                        <label htmlFor="nombre_equipo" className="block mb-2 text-sm font-medium text-white">Nombre del Equipo</label>
+                    <InputLabel value="Nombre del Equipo" />
                         <TextInput
                             id="nombre_equipo"
                             type="text"
@@ -41,7 +43,7 @@ const EquiposCreate = () => {
                         />
                     </div>
                     <div className="mb-6">
-                        <label htmlFor="modo_juego_preferente" className="block mb-2 text-sm font-medium text-white">Modo de Juego Preferente</label>
+                    <InputLabel value="Modo de juego preferente" />
                         <select
                             id="modo_juego_preferente"
                             value={data.modo_juego_preferente}
@@ -54,14 +56,13 @@ const EquiposCreate = () => {
                         </select>
                     </div>
                     <div className="mb-6">
-                        <label htmlFor="privado" className="flex items-center space-x-2 text-sm font-medium text-white">
+                    <InputLabel value="Equipo privado" />
                             <Checkbox
                                 id="privado"
                                 checked={data.privado}
                                 onChange={(e) => setData('privado', e.target.checked)}
                             />
                             <span>Equipo Privado</span>
-                        </label>
                     </div>
                     <div className="flex items-center justify-between">
                         <PrimaryButton disabled={processing}>Crear Equipo</PrimaryButton>
