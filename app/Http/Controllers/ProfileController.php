@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Amigo;
+use App\Models\Reputacion;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -91,17 +92,18 @@ class ProfileController extends Controller
             ->whereIn('estado', ['aceptado'])
             ->get();
 
+        $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
+        $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
+        $reputacion = $likes - $dislikes;
+
         return Inertia::render('Users/Show', [
             'user' => $user,
             'amistad' => $amistad,
-            'amigos' => $amigos
+            'amigos' => $amigos,
+            'reputacion' => $reputacion,
+
         ]);
     }
-
-
-
-
-
 
     public function updateProfilePhoto(Request $request)
     {
@@ -137,7 +139,7 @@ class ProfileController extends Controller
             $imagen->resize(600, 600);
             $imagen->save($rutaTablet);
 
-            // Redimensionar para Móvil610700070
+            // Redimensionar para Móvil
             $imagen->resize(400, 400);
             $imagen->save($rutaMovil);
 
@@ -149,5 +151,55 @@ class ProfileController extends Controller
 
         $user->save();
         return Inertia::location(route('profile.edit'));
+    }
+
+    public function like($id)
+    {
+        $user = User::findOrFail($id);
+        $authUser = Auth::user();
+
+        $existeValoracion = Reputacion::where('usuario_id', $user->id)
+            ->where('valorador_id', $authUser->id)
+            ->first();
+
+        if ($existeValoracion) {
+            if ($existeValoracion->valoracion === 'like') {
+                return Inertia::location(route('users.show', ['name' => $user->name]));
+            } else {
+                $existeValoracion->update(['valoracion' => 'like']);
+            }
+        } else {
+            Reputacion::create([
+                'usuario_id' => $user->id,
+                'valorador_id' => $authUser->id,
+                'valoracion' => 'like',
+            ]);
+        }
+        return Inertia::location(route('users.show', ['name' => $user->name]));
+    }
+
+    public function dislike($id)
+    {
+        $user = User::findOrFail($id);
+        $authUser = Auth::user();
+
+        $existeValoracion = Reputacion::where('usuario_id', $user->id)
+            ->where('valorador_id', $authUser->id)
+            ->first();
+
+        if ($existeValoracion) {
+            if ($existeValoracion->valoracion === 'dislike') {
+                return Inertia::location(route('users.show', ['name' => $user->name]));
+            } else {
+                $existeValoracion->update(['valoracion' => 'dislike']);
+            }
+        } else {
+            Reputacion::create([
+                'usuario_id' => $user->id,
+                'valorador_id' => $authUser->id,
+                'valoracion' => 'dislike',
+            ]);
+        }
+        return Inertia::location(route('users.show', ['name' => $user->name]));
     }
 }
