@@ -4,7 +4,6 @@ import { Link, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DangerButton from '@/Components/DangerButton';
 
-
 const EquiposIndex = () => {
     const { equipos, auth, esLider } = usePage().props;
 
@@ -56,7 +55,7 @@ const EquiposIndex = () => {
                                             <div className="text-sm text-white">{equipo.lider.name}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-white">{equipo.modo}</div>
+                                            <div className="text-sm text-white">{equipo.modo.nombre}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-white">{equipo.privado ? 'Privado' : 'Público'}</div>
