@@ -19,19 +19,14 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        $equipos = Equipo::all();
-        $esLider = Equipo::where('lider_id', Auth::id())->exists(); // Verifica si el usuario logueado es líder de algún equipo.
+        // Se obtiene todos los equipos y carga las relaciones 'lider' y 'modo' de una vez.
+        $equipos = Equipo::with(['lider', 'modo'])->get();
+
+        // Verifica si el usuario logueado es líder de algún equipo.
+        $esLider = Equipo::where('lider_id', Auth::id())->exists();
 
         return Inertia::render('Equipos/Index', [
-            'equipos' => $equipos->map(function ($equipo) {
-                return [
-                    'id' => $equipo->id,
-                    'nombre_equipo' => $equipo->nombre_equipo,
-                    'lider' => $equipo->lider, // Información del líder del equipo.
-                    'modo' => $equipo->modo->nombre, // Modo de juego.
-                    'privado' => $equipo->privado // Si el equipo es privado o no.
-                ];
-            }),
+            'equipos' => $equipos,
             'esLider' => $esLider
         ]);
     }

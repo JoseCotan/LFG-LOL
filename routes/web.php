@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AmigoController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RangoController;
+use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +71,13 @@ Route::delete('/amigos/eliminar/{amistadId}', [AmigoController::class, 'eliminar
 Route::resource('rangos', RangoController::class)
     ->middleware('auth');
 
+Route::resource('eventos', EventoController::class)
+    ->middleware('auth');
+Route::post('eventos/{evento}/unirse', [EventoController::class, 'unirse'])->name('eventos.unirse')->middleware('auth');
+Route::post('eventos/{evento}/abandonar', [EventoController::class, 'abandonar'])->name('eventos.abandonar')->middleware('auth');
+
+
+
 Route::resource('equipos', EquipoController::class)
     ->middleware('auth');
 Route::post('/equipos/unirse/{id}', [EquipoController::class, 'unirse'])->name('equipos.unirse')->middleware('auth');
@@ -76,8 +85,9 @@ Route::post('/equipos/{equipoId}/expulsar/{miembroId}', [EquipoController::class
 Route::post('/equipos/{id}/abandonar', [EquipoController::class, 'abandonarEquipo'])->name('equipos.abandonarEquipo')->middleware('auth');
 
 
-Route::resource('publicaciones', PublicacionController::class)
-    ->middleware('auth');
+Route::resource('publicaciones', PublicacionController::class)->parameters([
+    'publicaciones' => 'publicacion'
+])->middleware('auth');
 
 
 require __DIR__ . '/auth.php';

@@ -9,12 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('evento_user', function (Blueprint $table) {
-            $table->foreignId('evento_id')->constrained('eventos');
-            $table->foreignId('usuario_id')->constrained('users');
-            $table->primary(['evento_id', 'usuario_id']);
+        Schema::create('evento_usuario', function (Blueprint $table) {
+            $table->foreignId('evento_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->primary(['evento_id', 'user_id']);
             $table->timestamps();
         });
     }

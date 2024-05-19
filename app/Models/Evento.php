@@ -9,6 +9,15 @@ class Evento extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'titulo',
+        'descripcion',
+        'acceso_publico',
+        'acceso_amigos',
+        'acceso_miembros_equipo',
+        'creador_evento',
+    ];
+
     public function usuarios()
     {
         return $this->belongsToMany(User::class, 'evento_usuario', 'evento_id', 'user_id');
@@ -16,7 +25,7 @@ class Evento extends Model
 
     public function creador()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'creador_evento');
     }
 
     public function comentarios()

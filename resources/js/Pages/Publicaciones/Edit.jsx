@@ -6,33 +6,21 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 
-const CreatePublicacion = () => {
-    const { auth, modos, roles, rangos } = usePage().props;
-    const { data, setData, post, processing, errors, setError } = useForm({
-        titulo: '',
-        descripcion: '',
-        modo_id: '',
-        rol_id: '',
-        rango_id: '',
-        hora_preferente_inicio: '',
-        hora_preferente_final: ''
+const EditPublicacion = () => {
+    const { auth, modos, roles, rangos, publicacion } = usePage().props;
+    const { data, setData, put, processing, errors, setError } = useForm({
+        titulo: publicacion.titulo || '',
+        descripcion: publicacion.descripcion || '',
+        modo_id: publicacion.modo_id || '',
+        rol_id: publicacion.rol_id || '',
+        rango_id: publicacion.rango_id || '',
+        hora_preferente_inicio: publicacion.hora_preferente_inicio || '',
+        hora_preferente_final: publicacion.hora_preferente_final || ''
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('publicaciones.store'), data, {
-            onSuccess: () => {
-                setData({
-                    titulo: '',
-                    descripcion: '',
-                    modo_id: '',
-                    rol_id: '',
-                    rango_id: '',
-                    hora_preferente_inicio: '',
-                    hora_preferente_final: ''
-                });
-            }
-        });
+        put(route('publicaciones.update', publicacion.id));
     };
 
     return (
@@ -50,7 +38,6 @@ const CreatePublicacion = () => {
                             autoComplete="titulo"
                             required
                             onBlur={(e) => {
-                                // Comprueba que el título no pueda estar vacío.
                                 if (e.target.value === '') {
                                     setError('titulo', 'El título no puede estar vacío.');
                                 } else {
@@ -121,7 +108,6 @@ const CreatePublicacion = () => {
                             value={data.hora_preferente_inicio}
                             onChange={(e) => setData('hora_preferente_inicio', e.target.value)}
                             onBlur={() => {
-                                // Comprueba si la hora de inicio es antes que la hora final.
                                 if (data.hora_preferente_final && data.hora_preferente_inicio >= data.hora_preferente_final) {
                                     setError('hora_preferente_inicio', 'La hora de inicio debe ser menor que la hora final.');
                                 } else {
@@ -142,7 +128,6 @@ const CreatePublicacion = () => {
                             value={data.hora_preferente_final}
                             onChange={(e) => setData('hora_preferente_final', e.target.value)}
                             onBlur={() => {
-                                // Comprueba si la hora final es antes que la hora de inicio.
                                 if (data.hora_preferente_inicio && data.hora_preferente_inicio >= data.hora_preferente_final) {
                                     setError('hora_preferente_final', 'La hora final debe ser mayor que la hora de inicio.');
                                 } else {
@@ -156,7 +141,7 @@ const CreatePublicacion = () => {
                     </div>
 
                     <div className="flex items-center justify-between">
-                        <PrimaryButton disabled={processing}>Crear publicación</PrimaryButton>
+                        <PrimaryButton disabled={processing ? 'true' : undefined}>Actualizar Publicación</PrimaryButton>
                         <Link href={route('publicaciones.index')} className="text-sm text-blue-600 hover:text-blue-800">Cancelar</Link>
                     </div>
                 </form>
@@ -165,4 +150,4 @@ const CreatePublicacion = () => {
     );
 };
 
-export default CreatePublicacion;
+export default EditPublicacion;
