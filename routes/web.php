@@ -3,6 +3,7 @@
 use App\Http\Controllers\AmigoController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\MensajeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RangoController;
@@ -91,6 +92,9 @@ Route::post('/equipos/{id}/abandonar', [EquipoController::class, 'abandonarEquip
 Route::resource('publicaciones', PublicacionController::class)->parameters([
     'publicaciones' => 'publicacion'
 ])->middleware('auth');
+
+Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'enviarMensaje'])->name('enviarMensaje');
+
 
 
 require __DIR__ . '/auth.php';
