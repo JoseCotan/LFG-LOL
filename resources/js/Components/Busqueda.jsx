@@ -26,8 +26,9 @@ function Busqueda() {
 
     useEffect(() => {
         if (mostrarInput) {
+            inputRef.current.focus();
             document.addEventListener('mousedown', manejarClickFuera);
-        }});
+        }}, [mostrarInput]);
 
     return (
         <form ref={formularioRef} onSubmit={manejarBusqueda} className="formulario-busqueda">
