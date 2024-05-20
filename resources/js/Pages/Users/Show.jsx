@@ -5,7 +5,7 @@ import { Inertia } from '@inertiajs/inertia';
 import Button from '@/Components/Button';
 import DangerButton from '@/Components/DangerButton';
 
-const UserShow = ({ user, amistad, amigos }) => {
+const UserShow = ({ user, amistad, amigos, reputacion }) => {
     const { auth } = usePage().props;
 
     const handleAnyadirAmigo = () => {
@@ -28,14 +28,27 @@ const UserShow = ({ user, amistad, amigos }) => {
         Inertia.delete(route('amigos.eliminar', { amistadId: amistad.id }));
     };
 
+    const handleLike = () => {
+        Inertia.post(route('users.like', { id: user.id }));
+    };
+
+    const handleDislike = () => {
+        Inertia.post(route('users.dislike', { id: user.id }));
+    };
+
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-        >
+        <AuthenticatedLayout user={auth.user}>
             <div className="text-white">
                 <h1>Perfil de Usuario</h1>
                 <p>Nombre: {user.name}</p>
                 <p>Email: {user.email}</p>
+                <p>Reputación: {reputacion}</p>
+                {auth.user.id !== user.id && (
+                <div>
+                    <Button onClick={handleLike}>Like</Button>
+                    <DangerButton onClick={handleDislike}>Dislike</DangerButton>
+                </div>
+                )}
                 <div>
                     <h2>Amigos:</h2>
                     <ul>

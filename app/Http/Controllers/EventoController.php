@@ -125,6 +125,7 @@ class EventoController extends Controller
     {
         $user_id = Auth::user()->id;
 
+        // Log details for debugging
         Log::info('Detalles del evento:', $evento->toArray());
 
         // Verificar si el evento ya tiene 10 usuarios o si el usuario ya está unido
