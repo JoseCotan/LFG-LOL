@@ -4,6 +4,8 @@ import { Link, usePage } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import Button from '@/Components/Button';
 import DangerButton from '@/Components/DangerButton';
+import EnviarMensajeForm from '@/Components/EnviarMensajeForm';
+
 
 const UserShow = ({ user, amistad, amigos, reputacion }) => {
     const { auth } = usePage().props;
@@ -74,6 +76,9 @@ const UserShow = ({ user, amistad, amigos, reputacion }) => {
                     ) : amistad.estado === 'pendiente' && amistad.usuario_id === auth.user.id ? (
                         <DangerButton onClick={handleCancelarSolicitud}>Cancelar Solicitud</DangerButton>
                     ) : null
+                )}
+                {auth.user.id !== user.id && (
+                    <EnviarMensajeForm destinatarioId={user.id} />
                 )}
                 <p><Link href="/dashboard">Volver al inicio</Link></p>
             </div>
