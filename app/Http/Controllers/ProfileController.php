@@ -202,4 +202,17 @@ class ProfileController extends Controller
         }
         return Inertia::location(route('users.show', ['name' => $user->name]));
     }
+
+    public function updateLeagueOfLegendsNick(Request $request)
+    {
+        $request->validate([
+            'nombreLOL' => 'required|string|max:30',
+        ]);
+
+        $user = Auth::user();
+        $user->nombreLOL = $request->nombreLOL;
+        $request->user()->save();
+
+        return Inertia::location(route('profile.edit'));
+    }
 }

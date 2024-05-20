@@ -57,7 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/profile/photo', [ProfileController::class, 'updateProfilePhoto'])->name('profile.photo.update');
+    Route::post('/profile/photo', [ProfileController::class, 'updateProfilePhoto'])->name('profile.photo');
+    Route::post('/profile/nickLOL', [ProfileController::class, 'updateLeagueOfLegendsNick'])->name('profile.updateLeagueOfLegendsNick');
     Route::post('/users/{id}/like', [ProfileController::class, 'like'])->name('users.like');
     Route::post('/users/{id}/dislike', [ProfileController::class, 'dislike'])->name('users.dislike');
 });
