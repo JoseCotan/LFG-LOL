@@ -24,13 +24,13 @@ export default function Authenticated({ user, header, children }) {
                                 </Link>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Jugadores
+                                <NavLink href={route('publicaciones.index')} active={route().current('publicaciones.index')}>
+                                    Publicaciones
                                 </NavLink>
                                 <NavLink href={route('equipos.index')} active={route().current('equipos.index')}>
                                     Equipos
                                 </NavLink>
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                <NavLink href={route('eventos.index')} active={route().current('eventos.index')}>
                                     Eventos
                                 </NavLink>
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
