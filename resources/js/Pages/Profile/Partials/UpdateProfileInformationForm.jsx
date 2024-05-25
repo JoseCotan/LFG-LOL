@@ -52,12 +52,15 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="email"
                         type="email"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full bg-gray-100 border-0"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required
                         autoComplete="username"
+                        readOnly
+                        style={{ color: 'gray' }}
                     />
+
 
                     <InputError className="mt-2" message={errors.email} />
                 </div>

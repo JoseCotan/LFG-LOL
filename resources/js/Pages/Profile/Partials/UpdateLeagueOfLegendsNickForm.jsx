@@ -7,7 +7,8 @@ import InputError from '@/Components/InputError';
 
 export default function UpdateLeagueOfLegendsNickForm() {
     const { data, setData, post, errors, processing } = useForm({
-        nombreLOL: '',
+        nick: '',
+        tag: '',
     });
 
     const handleSubmit = (e) => {
@@ -18,18 +19,29 @@ export default function UpdateLeagueOfLegendsNickForm() {
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-                <InputLabel htmlFor="nombreLOL" value="Nombre de League of Legends" />
+                <InputLabel htmlFor="nick" value="Nombre de League of Legends" />
                 <TextInput
-                    id="nombreLOL"
+                    id="nick"
                     type="text"
-                    value={data.nombreLOL}
-                    onChange={(e) => setData('nombreLOL', e.target.value)}
+                    value={data.nick}
+                    onChange={(e) => setData('nick', e.target.value)}
                     required
                 />
-                <InputError message={errors.nombreLOL} />
+                <InputError message={errors.nick} />
+            </div>
+            <div>
+                <InputLabel htmlFor="tag" value="Tag del nombre de League of Legends" />
+                <TextInput
+                    id="tag"
+                    type="text"
+                    value={data.tag}
+                    onChange={(e) => setData('tag', e.target.value)}
+                    required
+                />
+                <InputError message={errors.tag} />
             </div>
             <div className="flex items-center mt-4">
-                <PrimaryButton disabled={processing || !data.nombreLOL}>
+                <PrimaryButton disabled={processing || !data.nick || !data.tag}>
                     Guardar nick
                 </PrimaryButton>
             </div>

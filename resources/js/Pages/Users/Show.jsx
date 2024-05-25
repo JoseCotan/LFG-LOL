@@ -4,6 +4,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import Button from '@/Components/Button';
 import DangerButton from '@/Components/DangerButton';
+import RiotData from '@/Components/RiotData';
 import EnviarMensajeForm from '@/Components/EnviarMensajeForm';
 
 
@@ -42,7 +43,7 @@ const UserShow = ({ user, amistad, amigos, reputacion }) => {
         <AuthenticatedLayout user={auth.user}>
             <div className="text-white">
                 <h1>Perfil de Usuario</h1>
-                <p>Nombre: {user.name}</p>
+                <p>Nombre: {user.nombreLOL}</p>
                 <p>Email: {user.email}</p>
                 <p>Reputación: {reputacion}</p>
                 {auth.user.id !== user.id && (
@@ -81,6 +82,7 @@ const UserShow = ({ user, amistad, amigos, reputacion }) => {
                     <EnviarMensajeForm destinatarioId={user.id} />
                 )}
                 <p><Link href="/dashboard">Volver al inicio</Link></p>
+                <RiotData />
             </div>
         </AuthenticatedLayout>
     );

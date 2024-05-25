@@ -7,6 +7,7 @@ use App\Http\Controllers\MensajeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RangoController;
+use App\Http\Controllers\RiotController;
 use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -94,6 +95,8 @@ Route::resource('publicaciones', PublicacionController::class)->parameters([
 ])->middleware('auth');
 
 Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'enviarMensaje'])->name('enviarMensaje');
+
+Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
 
 

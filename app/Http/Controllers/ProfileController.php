@@ -37,6 +37,10 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:users,name']
+        ]);
+
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
@@ -101,7 +105,7 @@ class ProfileController extends Controller
             'amistad' => $amistad,
             'amigos' => $amigos,
             'reputacion' => $reputacion,
-
+            'name' => $user->name
         ]);
     }
 
@@ -206,11 +210,12 @@ class ProfileController extends Controller
     public function updateLeagueOfLegendsNick(Request $request)
     {
         $request->validate([
-            'nombreLOL' => 'required|string|max:30',
+            'nick' => 'required|string|max:30',
+            'tag' => 'required|string|max:6',
         ]);
 
         $user = Auth::user();
-        $user->nombreLOL = $request->nombreLOL;
+        $user->nombreLOL = $request->nick . '#' . $request->tag;
         $request->user()->save();
 
         return Inertia::location(route('profile.edit'));
