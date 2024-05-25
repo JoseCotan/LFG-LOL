@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../../css/Busqueda.css';
 
-function Busqueda() {
+function Busqueda({ onToggle }) {
     const [mostrarInput, setMostrarInput] = useState(false);
     const [nickBusqueda, setNickBusqueda] = useState('');
     const inputRef = useRef(null);
@@ -9,6 +9,7 @@ function Busqueda() {
 
     const alternarInput = () => {
         setMostrarInput(true);
+        onToggle(true);
     };
 
     const manejarBusqueda = (e) => {
@@ -21,6 +22,7 @@ function Busqueda() {
     const manejarClickFuera = (e) => {
         if (formularioRef.current && !formularioRef.current.contains(e.target)) {
             setMostrarInput(false);
+            onToggle(false);
         }
     };
 
@@ -28,7 +30,10 @@ function Busqueda() {
         if (mostrarInput) {
             inputRef.current.focus();
             document.addEventListener('mousedown', manejarClickFuera);
-        }}, [mostrarInput]);
+        } else {
+            document.removeEventListener('mousedown', manejarClickFuera);
+        }
+    }, [mostrarInput]);
 
     return (
         <form ref={formularioRef} onSubmit={manejarBusqueda} className="formulario-busqueda">

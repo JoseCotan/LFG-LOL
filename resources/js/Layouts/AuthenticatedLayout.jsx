@@ -7,13 +7,12 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
 
-
-
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [hideNavLinks, setHideNavLinks] = useState(false);
 
     return (
-        <div className="min-h-screen bg-black"> {/*bg-gradient-to-b from-100% from-black to-green-950*/}
+        <div className="min-h-screen bg-black">
             <nav className="bg-gradient-to-b from-50% from-sky-950 to-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -23,20 +22,27 @@ export default function Authenticated({ user, header, children }) {
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
+                            <div className="flex sm:hidden ml-8">
+                                <Busqueda/>
+                            </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('publicaciones.index')} active={route().current('publicaciones.index')}>
-                                    Publicaciones
-                                </NavLink>
-                                <NavLink href={route('equipos.index')} active={route().current('equipos.index')}>
-                                    Equipos
-                                </NavLink>
-                                <NavLink href={route('eventos.index')} active={route().current('eventos.index')}>
-                                    Eventos
-                                </NavLink>
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    VIP
-                                </NavLink>
-                                <Busqueda />
+                                <Busqueda onToggle={setHideNavLinks} />
+                                {!hideNavLinks && (
+                                    <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                        <NavLink href={route('publicaciones.index')} active={route().current('publicaciones.index')}>
+                                            Publicaciones
+                                        </NavLink>
+                                        <NavLink href={route('equipos.index')} active={route().current('equipos.index')}>
+                                            Equipos
+                                        </NavLink>
+                                        <NavLink href={route('eventos.index')} active={route().current('eventos.index')}>
+                                            Eventos
+                                        </NavLink>
+                                        <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                            VIP
+                                        </NavLink>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -91,8 +97,17 @@ export default function Authenticated({ user, header, children }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink href={route('publicaciones.index')} active={route().current('publicaciones.index')}>
+                            Publicaciones
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('equipos.index')} active={route().current('equipos.index')}>
+                            Equipos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('eventos.index')} active={route().current('eventos.index')}>
+                            Eventos
+                        </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Principal
+                            VIP
                         </ResponsiveNavLink>
                     </div>
 
