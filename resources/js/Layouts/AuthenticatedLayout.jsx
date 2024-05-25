@@ -11,6 +11,11 @@ export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     const [hideNavLinks, setHideNavLinks] = useState(false);
 
+    const handleVipClick = (e) => {
+        e.preventDefault();
+        window.open(route('vip'), '_blank', 'width=650,height=900');
+    };
+
     return (
         <div className="min-h-screen bg-black">
             <nav className="bg-gradient-to-b from-50% from-sky-950 to-black">
@@ -23,7 +28,7 @@ export default function Authenticated({ user, header, children }) {
                                 </Link>
                             </div>
                             <div className="flex sm:hidden ml-8">
-                                <Busqueda/>
+                                <Busqueda />
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <Busqueda onToggle={setHideNavLinks} />
@@ -38,7 +43,7 @@ export default function Authenticated({ user, header, children }) {
                                         <NavLink href={route('eventos.index')} active={route().current('eventos.index')}>
                                             Eventos
                                         </NavLink>
-                                        <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                        <NavLink href={route('vip')} onClick={handleVipClick} active={route().current('vip')}>
                                             VIP
                                         </NavLink>
                                     </div>
@@ -106,7 +111,7 @@ export default function Authenticated({ user, header, children }) {
                         <ResponsiveNavLink href={route('eventos.index')} active={route().current('eventos.index')}>
                             Eventos
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink href={route('vip')} onClick={handleVipClick} active={route().current('vip')}>
                             VIP
                         </ResponsiveNavLink>
                     </div>

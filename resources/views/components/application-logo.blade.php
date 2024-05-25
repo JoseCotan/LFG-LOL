@@ -1,1 +1,1 @@
-<img class="h-12 w-12" src="/images/logo.png" alt="Logo de la aplicación">
+<img class="h-24 w-24" src="/images/logo.png" alt="Logo de la aplicación">

@@ -4,6 +4,7 @@ use App\Http\Controllers\AmigoController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\MensajeController;
+use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RangoController;
@@ -99,5 +100,8 @@ Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'envia
 Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
 
-
+Route::get('/vip', [PaypalController::class, 'index'])->name('vip');
+Route::post('/paypal', [PaypalController::class, 'paypal'])->name('paypal');
+Route::get('/success', [PaypalController::class, 'success'])->name('success');
+Route::get('/cancel', [PaypalController::class, 'cancel'])->name('cancel');
 require __DIR__ . '/auth.php';
