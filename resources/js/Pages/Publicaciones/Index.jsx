@@ -39,7 +39,7 @@ const PublicacionesIndex = () => {
                             value={filtroModo}
                             onChange={(e) => setFiltroModo(e.target.value)}
                         >
-                            <option value="">Todos los Modos</option>
+                            <option value="">Modos</option>
                             {modos.map((modo) => (
                                 <option key={modo.id} value={modo.id}>
                                     {modo.nombre}
@@ -54,7 +54,7 @@ const PublicacionesIndex = () => {
                             value={filtroRango}
                             onChange={(e) => setFiltroRango(e.target.value)}
                         >
-                            <option value="">Todos los Rangos</option>
+                            <option value="">Rangos</option>
                             {rangos.map((rango) => (
                                 <option key={rango.id} value={rango.id}>
                                     {rango.nombre}
@@ -69,7 +69,7 @@ const PublicacionesIndex = () => {
                             value={filtroRol}
                             onChange={(e) => setFiltroRol(e.target.value)}
                         >
-                            <option value="">Todos los Roles</option>
+                            <option value="">Roles</option>
                             {roles.map((rol) => (
                                 <option key={rol.id} value={rol.id}>
                                     {rol.nombre}
