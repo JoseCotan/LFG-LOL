@@ -1,0 +1,35 @@
+.tarjeta {
+    width: 350px;
+    height: 150px;
+    border: 1px solid #cccccc;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.imagen-rango {
+    width: 150px;
+    height: 150px;
+    background-color: #f0f0f0;
+}
+
+.tarjeta-info {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #ccc;
+}
+
+.tarjeta-info h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.tarjeta-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}

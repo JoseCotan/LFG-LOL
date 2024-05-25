@@ -96,7 +96,7 @@ Route::resource('publicaciones', PublicacionController::class)->parameters([
 
 Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'enviarMensaje'])->name('enviarMensaje');
 
-Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData'])->name('riot.data');
+Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
 
 
