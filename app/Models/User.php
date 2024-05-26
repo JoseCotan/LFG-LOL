@@ -22,6 +22,7 @@ class User extends Authenticatable
         'nac',
         'password',
         'google_id',
+        'VIP',
     ];
 
     /**
