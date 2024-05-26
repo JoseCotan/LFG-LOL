@@ -21,7 +21,7 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        $publicaciones = Publicacion::with(['modo', 'rango', 'rol'])
+        $publicaciones = Publicacion::with(['modo', 'rango', 'rol', 'usuario'])
             ->join('users', 'publicaciones.usuario_id', '=', 'users.id')
             ->orderBy('users.VIP', 'DESC')
             ->orderBy('publicaciones.created_at', 'DESC')

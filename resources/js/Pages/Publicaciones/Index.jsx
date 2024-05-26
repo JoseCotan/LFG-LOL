@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Link, usePage } from '@inertiajs/react';
 import Button from '@/Components/Button';
+import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
 
 
 const PublicacionesIndex = () => {
@@ -103,19 +104,12 @@ const PublicacionesIndex = () => {
                     </Button>
                 </div>
                 <div className="w-3/4 p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <Link href={route('publicaciones.create')} className="btn btn-primary">
+                    <Button href={route('publicaciones.create')}>
                         Crear Publicación
-                    </Link>
+                    </Button>
                     <div className="mt-6">
                         {publicacionesFiltradas.map((publicacion) => (
-                            <div key={publicacion.id} className="mt-4">
-                                <h2 className="text-lg font-bold">{publicacion.titulo}</h2>
-                                <p>{publicacion.descripcion}</p>
-                                <div>Horario: {publicacion.hora_preferente_inicio} - {publicacion.hora_preferente_final}</div>
-                                <div>Modo: {publicacion.modo.nombre}</div>
-                                <div>Rol: {publicacion.rol.nombre}</div>
-                                <div>Rango: {publicacion.rango.nombre}</div>
-                            </div>
+                            <TarjetaPublicacion key={publicacion.id} publicacion={publicacion} />
                         ))}
                     </div>
                     <div className="flex justify-center space-x-1">
