@@ -165,7 +165,7 @@ class RiotController extends Controller
 
                 // Calcular el CS total y el porcentaje de participación en kills
                 $csTotal = $participante['neutralMinionsKilled'] + $participante['totalMinionsKilled'];
-                $participacionKills = round(($participante['kills'] + $participante['assists']) / $sumaKills * 100);
+                $participacionKills = $sumaKills > 0 ? round(($participante['kills'] + $participante['assists']) / $sumaKills * 100) : 0;
 
                 // Calcular hace cuánto tiempo fue la partida
                 $timestampFinPartida = (int)($datosInvocadorMatchv5Partida['info']['gameEndTimestamp'] / 1000);

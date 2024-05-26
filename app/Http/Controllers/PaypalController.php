@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
-use App\Models\User; // Asegúrate de importar la clase User
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
