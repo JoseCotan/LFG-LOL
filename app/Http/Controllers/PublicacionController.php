@@ -22,7 +22,9 @@ class PublicacionController extends Controller
     public function index()
     {
         $publicaciones = Publicacion::with(['modo', 'rango', 'rol'])
-            ->orderBy('created_at', 'desc')
+            ->join('users', 'publicaciones.usuario_id', '=', 'users.id')
+            ->orderBy('users.VIP', 'DESC')
+            ->orderBy('publicaciones.created_at', 'DESC')
             ->paginate(20);
 
         $existePublicacion = Publicacion::where('usuario_id', Auth::id())->exists();

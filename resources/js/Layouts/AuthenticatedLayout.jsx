@@ -28,7 +28,7 @@ export default function Authenticated({ user, header, children }) {
                                 </Link>
                             </div>
                             <div className="flex sm:hidden ml-8">
-                                <Busqueda />
+                                <Busqueda onToggle={setHideNavLinks} />
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <Busqueda onToggle={setHideNavLinks} />
