@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\User; // Asegúrate de importar la clase User
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-use LDAP\Result;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
-
 
 class PaypalController extends Controller
 {
     /**
      * Display a listing of the resources
      */
-
     public function index()
     {
         return view('paypal');
@@ -41,7 +38,7 @@ class PaypalController extends Controller
                 ]
             ]
         ]);
-        //dd($response);
+
         if (isset($response['id']) && $response['id'] != null) {
             foreach ($response['links'] as $link) {
                 if ($link['rel'] == 'approve') {
@@ -61,10 +58,11 @@ class PaypalController extends Controller
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request->token);
-        //dd($response);
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+            /** @var User $user **/
             $user = Auth::user();
+
             $payment = new Payment;
             $payment->payment_id = $response['id'];
             $payment->product_name = session()->get('product_name');
@@ -80,7 +78,7 @@ class PaypalController extends Controller
             $user->save();
             $payment->save();
 
-            return "El pago se realizó correctamente";
+            return view('payment.success');
         } else {
             return redirect()->route('cancel');
         }
@@ -88,6 +86,6 @@ class PaypalController extends Controller
 
     public function cancel()
     {
-        return "El pago fue cancelado.";
+        return view('payment.cancel');
     }
 }
