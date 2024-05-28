@@ -1,0 +1,39 @@
+#jinx-background {
+    position: absolute;
+    inset: 0;
+    background: url('/images/jinxx.jpg');
+    background-size: cover;
+    background-position: right;
+    z-index: -1;
+}
+
+
+@media (max-width: 1200px) {
+    #jinx-background {
+        opacity: 0.9;
+    }
+}
+
+@media (max-width: 1050px) {
+    #jinx-background {
+        opacity: 0.6;
+    }
+}
+
+@media (max-width: 900px) {
+    #jinx-background {
+        opacity: 0.4;
+    }
+}
+
+@media (max-width: 750px) {
+    #jinx-background {
+        opacity: 0.2;
+    }
+}
+
+@media (max-width: 639px) {
+    #jinx-background {
+        opacity: 0;
+    }
+}

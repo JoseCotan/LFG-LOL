@@ -6,6 +6,7 @@ import Busqueda from '@/Components/Busqueda';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
+import './../../css/imagenFondo.css'
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -17,12 +18,8 @@ export default function Authenticated({ user, header, children }) {
     };
 
     return (
-        <div className="h-screen" style={{
-            backgroundImage: `url('/images/jinxx.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'right',
-            backgroundRepeat: 'no-repeat',
-        }}>
+        <div className="relative">
+            <div id="jinx-background"></div>
             <nav className="bg-gradient-to-b from-50% from-sky-950 to-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
