@@ -9,19 +9,21 @@ function Footer() {
             <footer className="bg-gradient-to-b from-black to-sky-950 text-white py-4">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <p className="text-center text-sm mb-4">&copy; 2024 LFG-LOL. Todos los derechos reservados.</p>
-                    <div className="flex justify-center space-x-4">
-                        <a href="#" className="text-white hover:text-gray-400 mt-2">Discord</a>
-                        <a href="#" className="text-white hover:text-gray-400 mt-2">Contacto</a>
-                        <a href="#" className="text-white hover:text-gray-400 mt-2">Sobre nosotros</a>
+                    <div className="flex flex-col items-center space-y-4">
                         <img
                             className="h-10 w-10 align-middle cursor-pointer"
                             src="/images/info.png"
                             alt="Icono de información"
                             onClick={() => setVentanaInfoOpen(true)}
                         />
-                        <a href="#" className="text-white hover:text-gray-400 mt-2">FAQ</a>
-                        <a href="#" className="text-white hover:text-gray-400 mt-2">Sugerencias</a>
-                        <a href="#" className="text-white hover:text-gray-400 mt-2">Términos y condiciones</a>
+                        <div className="flex justify-center space-x-4 flex-wrap">
+                            <a href="#" className="text-white hover:text-gray-400 mt-2">Discord</a>
+                            <a href="#" className="text-white hover:text-gray-400 mt-2">Contacto</a>
+                            <a href="#" className="text-white hover:text-gray-400 mt-2">Sobre nosotros</a>
+                            <a href="#" className="text-white hover:text-gray-400 mt-2">FAQ</a>
+                            <a href="#" className="text-white hover:text-gray-400 mt-2">Sugerencias</a>
+                            <a href="#" className="text-white hover:text-gray-400 mt-2">Términos y condiciones</a>
+                        </div>
                     </div>
                 </div>
             </footer>

@@ -7,11 +7,13 @@ use App\Http\Requests\UpdatePublicacionRequest;
 use App\Models\Modo;
 use App\Models\Publicacion;
 use App\Models\Rango;
+use App\Models\Reputacion;
 use App\Models\Rol;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class PublicacionController extends Controller
@@ -20,43 +22,56 @@ class PublicacionController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $publicaciones = Publicacion::with(['modo', 'rango', 'rol'])
-            ->join('users', 'publicaciones.usuario_id', '=', 'users.id')
-            ->orderBy('users.VIP', 'DESC')
-            ->orderBy('publicaciones.created_at', 'DESC')
-            ->paginate(20);
+{
+    $publicaciones = Publicacion::with(['modo', 'rango', 'rol', 'usuario'])
+        ->join('users', 'publicaciones.usuario_id', '=', 'users.id')
+        ->orderBy('users.VIP', 'DESC')
+        ->orderBy('publicaciones.created_at', 'DESC')
+        ->paginate(20);
 
-        $existePublicacion = Publicacion::where('usuario_id', Auth::id())->exists();
+    // Verifica la reputación del usuario y obtiene la imagen correspondiente
+    foreach ($publicaciones as $publicacion) {
+        $user = $publicacion->usuario;
+        $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
+        $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
+        $reputacion = $likes - $dislikes;
 
-        return Inertia::render('Publicaciones/Index', [
-            'publicaciones' => $publicaciones,
-            'modos' => Modo::all(),
-            'rangos' => Rango::all(),
-            'roles' => Rol::all(),
-            'existePublicacion' => $existePublicacion,
-        ]);
+        // Agrega una propiedad reputacion_img al objeto de la publicación
+        $publicacion->reputacion_img = $reputacion > 0;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $userId = Auth::id();
+    $existePublicacion = Publicacion::where('usuario_id', Auth::id())->exists();
 
-        $existePublicacion = Publicacion::where('usuario_id', $userId)->exists();
+    return Inertia::render('Publicaciones/Index', [
+        'publicaciones' => $publicaciones,
+        'modos' => Modo::all(),
+        'rangos' => Rango::all(),
+        'roles' => Rol::all(),
+        'existePublicacion' => $existePublicacion,
+        'flash' => session('error'),
+    ]);
+}
 
-        if ($existePublicacion) {
-            return Inertia::location(route('publicaciones.index'));
-        }
+/**
+ * Show the form for creating a new resource.
+ */
+public function create()
+{
+    $userId = Auth::id();
 
-        return Inertia::render('Publicaciones/Create', [
-            'modos' => Modo::all(),
-            'roles' => Rol::all(),
-            'rangos' => Rango::all()
-        ]);
-    }
+    $existePublicacion = Publicacion::where('usuario_id', $userId)->exists();
+
+    if ($existePublicacion) {
+        Session::flash('error', 'No puedes crear más de una publicación.');
+        return Inertia::location(route('publicaciones.index'));    }
+
+    return Inertia::render('Publicaciones/Create', [
+        'modos' => Modo::all(),
+        'roles' => Rol::all(),
+        'rangos' => Rango::all()
+    ]);
+}
+
 
     /**
      * Store a newly created resource in storage.

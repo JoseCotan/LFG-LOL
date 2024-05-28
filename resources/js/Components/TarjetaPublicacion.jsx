@@ -1,0 +1,72 @@
+import React from 'react';
+import Button from './Button';
+
+const TarjetaPublicacion = ({ publicacion }) => {
+    const convertirRango = (nombreRango) => {
+        const rangos = {
+            "Hierro": "IRON",
+            "Bronce": "BRONZE",
+            "Plata": "SILVER",
+            "Oro": "GOLD",
+            "Platino": "PLATINUM",
+            "Esmeralda": "EMERALD",
+            "Diamante": "DIAMOND",
+            "Maestro": "MASTER",
+            "Gran Maestro": "GRANDMASTER",
+            "Aspirante": "CHALLENGER"
+        };
+        return rangos[nombreRango] || nombreRango;
+    };
+
+    const convertirRol = (nombreRol) => {
+        const roles = {
+            "Top": "TOP",
+            "Jungla": "JUNGLE",
+            "Medio": "MIDDLE",
+            "ADC": "BOTTOM",
+            "Soporte": "UTILITY",
+        };
+        return roles[nombreRol] || nombreRol;
+    };
+
+    const handlePerfilClick = () => {
+        if (publicacion.usuario && publicacion.usuario.name) {
+            window.location.href = `/users/${publicacion.usuario.name.trim()}`;
+        }
+    };
+
+    const imagenReputacionPositiva = '/images/rammus_okay.png';
+
+    return (
+        <div className="flex w-380 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 bg-blue-100 relative" style={{ maxWidth: '400px' }}>
+            <div className="w-24 h-full flex flex-col items-center p-2 border-r border-gray-300">
+                <div className="w-20 h-1/2">
+                    <img src={`/images/posiciones/${convertirRol(publicacion.rol.nombre)}.webp`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
+                </div>
+                <div className="w-20 h-1/2">
+                    <img src={`/images/rangos/${convertirRango(publicacion.rango.nombre)}.png`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
+                </div>
+            </div>
+            <div className="flex flex-col justify-center p-2 text-sm overflow-hidden pr-16">
+                <h2 className="text-lg font-bold mb-2">{publicacion.titulo}</h2>
+                <div className="mb-2">Horario: {publicacion.hora_preferente_inicio} - {publicacion.hora_preferente_final}</div>
+                <div className="mb-2">Modo: {publicacion.modo.nombre}</div>
+                <Button onClick={handlePerfilClick}>
+                    Ver perfil
+                </Button>
+            </div>
+            {publicacion.reputacion_img && (
+                <img
+                    src={imagenReputacionPositiva}
+                    alt="Reputación positiva"
+                    className="w-16 h-16 mb-2 absolute right-2 top-2"
+                />
+            )}
+        </div>
+
+
+
+    );
+};
+
+export default TarjetaPublicacion;
