@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Link, usePage } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
-
+import MensajeError from '@/Components/MensajeError';
 
 const PublicacionesIndex = () => {
-    const { publicaciones, modos, roles, rangos, auth } = usePage().props;
+    const { publicaciones, modos, roles, rangos, auth, flash } = usePage().props;
     const [filtroModo, setFiltroModo] = useState('');
     const [filtroRango, setFiltroRango] = useState('');
     const [filtroRol, setFiltroRol] = useState('');
     const [horaInicio, setHoraInicio] = useState('');
     const [horaFin, setHoraFin] = useState('');
+    const [error, setError] = useState('');
 
     const resetearFiltros = () => {
         setFiltroModo('');
@@ -29,14 +30,20 @@ const PublicacionesIndex = () => {
             (!horaFin || p.hora_preferente_final <= horaFin);
     });
 
+    useEffect(() => {
+        if (flash) {
+            setError(flash);
+        }
+    }, [flash]);
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="flex">
-                <div className="w-1/4 bg-white p-4">
+                <div className="w-1/4 p-4">
                     <div className="mb-4">
                         <h3 className="font-bold text-lg mb-2">Filtrar por Modo</h3>
                         <select
-                            className="block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value={filtroModo}
                             onChange={(e) => setFiltroModo(e.target.value)}
                         >
@@ -51,7 +58,7 @@ const PublicacionesIndex = () => {
                     <div className="mb-4">
                         <h3 className="font-bold text-lg mb-2">Filtrar por Rango</h3>
                         <select
-                            className="block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value={filtroRango}
                             onChange={(e) => setFiltroRango(e.target.value)}
                         >
@@ -66,7 +73,7 @@ const PublicacionesIndex = () => {
                     <div className="mb-4">
                         <h3 className="font-bold text-lg mb-2">Filtrar por Rol</h3>
                         <select
-                            className="block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             value={filtroRol}
                             onChange={(e) => setFiltroRol(e.target.value)}
                         >
@@ -87,7 +94,7 @@ const PublicacionesIndex = () => {
                                 id="horaInicio"
                                 value={horaInicio}
                                 onChange={(e) => setHoraInicio(e.target.value)}
-                                className="mb-2 mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="mb-2 mt-1 block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             />
                             <label htmlFor="horaFin">Hasta:</label>
                             <input
@@ -95,7 +102,7 @@ const PublicacionesIndex = () => {
                                 id="horaFin"
                                 value={horaFin}
                                 onChange={(e) => setHoraFin(e.target.value)}
-                                className="mt-1 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                className="mt-1 block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             />
                         </div>
                     </div>
@@ -103,10 +110,15 @@ const PublicacionesIndex = () => {
                         Resetear Filtros
                     </Button>
                 </div>
-                <div className="w-3/4 p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <Button href={route('publicaciones.create')}>
-                        Crear Publicación
-                    </Button>
+                <div className="w-3/4 p-6 overflow-hidden sm:rounded-lg">
+                    {error && (
+                        <MensajeError message={error} onClose={() => setError('')} />
+                    )}
+                    <Link href={route('publicaciones.create')}>
+                        <Button>
+                            Crear Publicación
+                        </Button>
+                    </Link>
                     <div className="mt-6">
                         {publicacionesFiltradas.map((publicacion) => (
                             <TarjetaPublicacion key={publicacion.id} publicacion={publicacion} />
@@ -124,7 +136,6 @@ const PublicacionesIndex = () => {
                             />
                         ))}
                     </div>
-
                 </div>
             </div>
         </AuthenticatedLayout>

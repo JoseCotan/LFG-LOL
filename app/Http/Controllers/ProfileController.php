@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -105,7 +106,8 @@ class ProfileController extends Controller
             'amistad' => $amistad,
             'amigos' => $amigos,
             'reputacion' => $reputacion,
-            'name' => $user->name
+            'name' => $user->name,
+            'perfilNombreLOL' => $user->nombreLOL,
         ]);
     }
 

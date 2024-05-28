@@ -17,7 +17,12 @@ export default function Authenticated({ user, header, children }) {
     };
 
     return (
-        <div className="min-h-screen bg-black">
+        <div className="h-screen" style={{
+            backgroundImage: `url('/images/jinxx.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'right',
+            backgroundRepeat: 'no-repeat',
+        }}>
             <nav className="bg-gradient-to-b from-50% from-sky-950 to-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
