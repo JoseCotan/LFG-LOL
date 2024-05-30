@@ -13,7 +13,7 @@ const RankedComponente = ({ rankData }) => {
     };
 
     return (
-        <div className="flex w-350 h-150 border border-gray-300 rounded-lg overflow-hidden mx-2 my-2" style={{ maxWidth: '600px', fontFamily: 'Spiegel' }}>
+        <div className="flex w-350 h-150 border border-gray-300 rounded-lg overflow-hidden mx-2 my-2" style={{ maxWidth: '500px', fontFamily: 'Spiegel' }}>
             <div className="w-150 bg-gray-200">
                 <img src={`/images/rangos/${tier.toUpperCase()}.png`} alt="Icono del rango" className="object-cover w-full h-full" />
             </div>

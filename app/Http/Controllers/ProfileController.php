@@ -127,7 +127,7 @@ class ProfileController extends Controller
             $manager = new ImageManager(new Driver());
 
             $extension = $request->foto_perfil->extension();
-            $nombreImagen = $request->nombre . '.' . $extension;
+            $nombreImagen = $user->id . '_' . time() . '.' . $extension;
 
             // Ruta de almacenamiento para cada versión de la imagen
             $rutaPC = public_path('images/fotosPerfil/imagenPC_' . $nombreImagen);

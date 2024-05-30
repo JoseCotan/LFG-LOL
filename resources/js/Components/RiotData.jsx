@@ -66,13 +66,15 @@ const DatosRiot = () => {
 
     return (
         <div>
-            <h1>Información</h1>
+            <div className="flex flex-col w-full border rounded-lg overflow-hidden font-bold bg-blue-100 mx-2 my-1" style={{ maxWidth: '500px' }}>
+            <h1 className="text-xl font-bold p-4">Información</h1>
             {datosRiot.datosInvocadorSummonerv4 && (
-                <div>
-                    <p>Nombre: {datosRiot.datosInvocadorAccount.gameName}</p>
-                    <p>Nivel: {datosRiot.datosInvocadorSummonerv4.summonerLevel}</p>
+                <div className="p-4">
+                    <p className="text-lg">Nombre: {datosRiot.datosInvocadorAccount.gameName}</p>
+                    <p className="text-lg">Nivel: {datosRiot.datosInvocadorSummonerv4.summonerLevel}</p>
                 </div>
             )}
+        </div>
 
             <RankedComponente rankData={datosRankSoloQ} />
             <RankedComponente rankData={datosRankFlexQ} />

@@ -18,6 +18,8 @@ export default function Authenticated({ user, header, children }) {
         window.open(route('vip'), '_blank', 'width=650,height=900');
     };
 
+    console.log(user.foto_perfil_Tablet)
+
     return (
         <div className="relative">
             <div id="jinx-background"></div>
@@ -59,9 +61,9 @@ export default function Authenticated({ user, header, children }) {
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                             <ImagenResponsive
-                                                srcPC={user.foto_perfil_PC || '/images/user-regular.svg'}
-                                                srcTablet={user.foto_perfil_Tablet || '/images/user-regular.svg'}
-                                                srcMobile={user.foto_perfil_Movil || '/images/user-regular.svg'}
+                                                srcPC={user.foto_perfil_Tablet}
+                                                srcTablet={user.foto_perfil_Tablet}
+                                                srcMobile={user.foto_perfil_Movil}
                                                 alt="Foto de perfil"
                                                 className="h-10 w-10 cursor-pointer"
                                             />
