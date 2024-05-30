@@ -41,7 +41,7 @@ const UserShow = ({ user, amistad, amigos, reputacion }) => {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <div className="text-white">
+            <div className="text-gray-900">
                 <h1>Perfil de Usuario</h1>
                 <p>Nombre: {user.nombreLOL}</p>
                 <p>Email: {user.email}</p>

@@ -22,55 +22,63 @@ class PublicacionController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $publicaciones = Publicacion::with(['modo', 'rango', 'rol', 'usuario'])
-        ->join('users', 'publicaciones.usuario_id', '=', 'users.id')
-        ->orderBy('users.VIP', 'DESC')
-        ->orderBy('publicaciones.created_at', 'DESC')
-        ->paginate(20);
+    {
+        $publicaciones = Publicacion::with(['modo', 'rango', 'rol', 'usuario'])
+            ->join('users', 'publicaciones.usuario_id', '=', 'users.id')
+            ->orderBy('users.VIP', 'DESC')
+            ->orderBy('publicaciones.created_at', 'DESC')
+            ->select('publicaciones.*')
+            ->paginate(20);
 
-    // Verifica la reputación del usuario y obtiene la imagen correspondiente
-    foreach ($publicaciones as $publicacion) {
-        $user = $publicacion->usuario;
-        $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
-        $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
-        $reputacion = $likes - $dislikes;
 
-        // Agrega una propiedad reputacion_img al objeto de la publicación
-        $publicacion->reputacion_img = $reputacion > 0;
+        // Verifica la reputación del usuario y obtiene la imagen correspondiente
+        foreach ($publicaciones as $publicacion) {
+            $user = $publicacion->usuario;
+            $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
+            $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
+            $reputacion = $likes - $dislikes;
+
+            // Agrega una propiedad reputacion_img al objeto de la publicación
+            $publicacion->reputacion_img = $reputacion > 0;
+        }
+
+        Log::info($publicaciones[0]);
+        Log::info($publicaciones[1]);
+        Log::info($publicaciones[2]);
+
+
+        $existePublicacion = Publicacion::where('usuario_id', Auth::user()->id)->exists();
+
+        return Inertia::render('Publicaciones/Index', [
+            'publicaciones' => $publicaciones,
+            'modos' => Modo::all(),
+            'rangos' => Rango::all(),
+            'roles' => Rol::all(),
+            'existePublicacion' => $existePublicacion,
+            'flash' => session('error'),
+        ]);
     }
 
-    $existePublicacion = Publicacion::where('usuario_id', Auth::id())->exists();
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $userId = Auth::id();
 
-    return Inertia::render('Publicaciones/Index', [
-        'publicaciones' => $publicaciones,
-        'modos' => Modo::all(),
-        'rangos' => Rango::all(),
-        'roles' => Rol::all(),
-        'existePublicacion' => $existePublicacion,
-        'flash' => session('error'),
-    ]);
-}
+        $existePublicacion = Publicacion::where('usuario_id', $userId)->exists();
 
-/**
- * Show the form for creating a new resource.
- */
-public function create()
-{
-    $userId = Auth::id();
+        if ($existePublicacion) {
+            Session::flash('error', 'No puedes crear más de una publicación.');
+            return Inertia::location(route('publicaciones.index'));
+        }
 
-    $existePublicacion = Publicacion::where('usuario_id', $userId)->exists();
-
-    if ($existePublicacion) {
-        Session::flash('error', 'No puedes crear más de una publicación.');
-        return Inertia::location(route('publicaciones.index'));    }
-
-    return Inertia::render('Publicaciones/Create', [
-        'modos' => Modo::all(),
-        'roles' => Rol::all(),
-        'rangos' => Rango::all()
-    ]);
-}
+        return Inertia::render('Publicaciones/Create', [
+            'modos' => Modo::all(),
+            'roles' => Rol::all(),
+            'rangos' => Rango::all()
+        ]);
+    }
 
 
     /**
@@ -194,7 +202,7 @@ public function create()
         $publicacion = Publicacion::findOrFail($id); // Busca la publicación por ID.
 
         // Verifica si el usuario logueado es el creador de la publicación.
-        if (Auth::id() !== $publicacion->usuario_id) {
+        if (Auth::user()->id !== $publicacion->usuario_id) {
             // Si no es el líder, redirige al índice sin eliminar.
             return Inertia::location(route('publicaciones.index'));
         }

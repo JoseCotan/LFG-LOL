@@ -1,34 +1,120 @@
 #jinx-background {
     position: absolute;
-    inset: 0;
-    background: url('/images/jinxx.jpg');
-    background-size: cover;
+    background: url('/images/jinxxx.jpg');
+    background-size: 100% 100%;
     background-position: right;
+    inset: 0;
     z-index: -1;
+    height: 100vh;
 }
 
 
-@media (max-width: 1200px) {
+
+@media (max-width: 1600px) {
     #jinx-background {
         opacity: 0.9;
     }
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1550px) {
+    #jinx-background {
+        opacity: 0.85;
+    }
+}
+
+@media (max-width: 1500px) {
+    #jinx-background {
+        opacity: 0.8;
+    }
+}
+
+@media (max-width: 1450px) {
+    #jinx-background {
+        opacity: 0.75;
+    }
+}
+
+@media (max-width: 1400px) {
+    #jinx-background {
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 1350px) {
+    #jinx-background {
+        opacity: 0.65;
+    }
+}
+
+@media (max-width: 1300px) {
     #jinx-background {
         opacity: 0.6;
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1250px) {
+    #jinx-background {
+        opacity: 0.55;
+    }
+}
+
+@media (max-width: 1200px) {
+    #jinx-background {
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 1150px) {
+    #jinx-background {
+        opacity: 0.45;
+    }
+}
+
+@media (max-width: 1100px) {
     #jinx-background {
         opacity: 0.4;
     }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 1050px) {
+    #jinx-background {
+        opacity: 0.35;
+    }
+}
+
+@media (max-width: 1000px) {
+    #jinx-background {
+        opacity: 0.3;
+    }
+}
+
+@media (max-width: 950px) {
+    #jinx-background {
+        opacity: 0.25;
+    }
+}
+
+@media (max-width: 900px) {
     #jinx-background {
         opacity: 0.2;
+    }
+}
+
+@media (max-width: 850px) {
+    #jinx-background {
+        opacity: 0.15;
+    }
+}
+
+@media (max-width: 800px) {
+    #jinx-background {
+        opacity: 0.1;
+    }
+}
+
+@media (max-width: 750px) {
+    #jinx-background {
+        opacity: 0.05;
     }
 }
 

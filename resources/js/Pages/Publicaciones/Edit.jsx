@@ -1,10 +1,16 @@
 import React from 'react';
 import { useForm, usePage, Link } from '@inertiajs/react';
+import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
+import TextArea from '@/Components/TextArea';
+import Select from '@/Components/Select';
+import DangerButton from '@/Components/DangerButton';
+import Button from '@/Components/Button';
+
 
 const EditPublicacion = () => {
     const { auth, modos, roles, rangos, publicacion } = usePage().props;
@@ -23,9 +29,13 @@ const EditPublicacion = () => {
         put(route('publicaciones.update', publicacion.id));
     };
 
+    const handleDelete = (id) => {
+        Inertia.delete(route('publicaciones.destroy', id));
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
-            <div className="max-w-4xl mx-auto p-8">
+            <div className="max-w-3xl mx-auto p-8">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-6">
                         <InputLabel htmlFor="titulo" value="Título" />
@@ -49,55 +59,39 @@ const EditPublicacion = () => {
                     </div>
 
                     <div className="mb-6">
-                        <InputLabel htmlFor="descripcion" value="Descripción" />
-                        <textarea
-                            id="descripcion"
-                            value={data.descripcion}
-                            onChange={(e) => setData('descripcion', e.target.value)}
-                            className="mt-1 block w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-                        />
+                        <InputLabel htmlFor="descripcion" className="block text-lg font-bold mb-2">Descripción</InputLabel>
+                        <TextArea data={data} setData={setData} />
                     </div>
 
                     <div className="mb-6">
                         <InputLabel htmlFor="modo_id" value="Modo de juego" />
-                        <select
-                            id="modo_id"
+                        <Select
                             value={data.modo_id}
                             onChange={(e) => setData('modo_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {modos.map((modo) => (
-                                <option key={modo.id} value={modo.id}>{modo.nombre}</option>
-                            ))}
-                        </select>
+                            options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
+                            className=""
+                            id="modo_id"
+                        />
                     </div>
 
                     <div className="mb-6">
                         <InputLabel htmlFor="rol_id" value="Rol del juego" />
-                        <select
-                            id="rol_id"
+                        <Select
                             value={data.rol_id}
                             onChange={(e) => setData('rol_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {roles.map((rol) => (
-                                <option key={rol.id} value={rol.id}>{rol.nombre}</option>
-                            ))}
-                        </select>
+                            options={roles.map((rol) => ({ value: rol.id, label: rol.nombre }))}
+                            id="rol_id"
+                        />
                     </div>
 
                     <div className="mb-6">
                         <InputLabel htmlFor="rango_id" value="Rango del juego" />
-                        <select
-                            id="rango_id"
+                        <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {rangos.map((rango) => (
-                                <option key={rango.id} value={rango.id}>{rango.nombre}</option>
-                            ))}
-                        </select>
+                            options={rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))}
+                            id="rango_id"
+                        />
                     </div>
 
                     <div className="mb-6">
@@ -142,7 +136,10 @@ const EditPublicacion = () => {
 
                     <div className="flex items-center justify-between">
                         <PrimaryButton disabled={processing ? 'true' : undefined}>Actualizar Publicación</PrimaryButton>
-                        <Link href={route('publicaciones.index')} className="text-sm text-blue-600 hover:text-blue-800">Cancelar</Link>
+                        <DangerButton onClick={() => handleDelete(publicacion.id)}>
+                            Eliminar Publicación
+                        </DangerButton>
+                        <Button href={route('publicaciones.index')} className="text-sm text-blue-600 hover:text-blue-800">Volver</Button>
                     </div>
                 </form>
             </div>
