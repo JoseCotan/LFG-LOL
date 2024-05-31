@@ -108,6 +108,7 @@ class ProfileController extends Controller
             'reputacion' => $reputacion,
             'name' => $user->name,
             'perfilNombreLOL' => $user->nombreLOL,
+            'comentarios' => $user->comentarios()->with('user')->get(),
         ]);
     }
 

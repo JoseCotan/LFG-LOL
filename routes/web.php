@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AmigoController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\MensajeController;
@@ -67,6 +68,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/users/{name}', [ProfileController::class, 'show'])->name('users.show');
+Route::post('/users/{user}/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
+
 
 Route::post('/amigos/enviar/{amistadId}', [AmigoController::class, 'enviarSolicitud'])->name('amigos.enviar');
 Route::patch('/amigos/aceptar/{amistadId}', [AmigoController::class, 'aceptarSolicitud'])->name('amigos.aceptar');

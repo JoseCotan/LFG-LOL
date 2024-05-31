@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { usePage } from '@inertiajs/react';
 import RankedComponente from './RankedComponente';
 import TarjetaPartida from './TarjetaPartida';
+import CargandoDatos from './CargandoDatosRiot';
 
 const DatosRiot = () => {
     const { props } = usePage();
@@ -58,28 +59,34 @@ const DatosRiot = () => {
     }
 
     if (!datosRiot) {
-        return <div>Cargando datos...</div>; // Muestra un mensaje de carga mientras se obtienen los datos
+        return (
+            <CargandoDatos />
+        );
     }
 
     const datosRankSoloQ = datosRiot.rankedSoloQDatos || { tier: 'Unranked', rank: '', lp: 0, wins: 0, losses: 0 };
     const datosRankFlexQ = datosRiot.rankedSoloFlexDatos || { tier: 'Unranked', rank: '', lp: 0, wins: 0, losses: 0 };
 
     return (
-        <div>
-            <div className="flex flex-col w-full border rounded-lg overflow-hidden font-bold bg-blue-100 mx-2 my-1" style={{ maxWidth: '500px' }}>
-            <h1 className="text-xl font-bold p-4">Información</h1>
-            {datosRiot.datosInvocadorSummonerv4 && (
-                <div className="p-4">
-                    <p className="text-lg">Nombre: {datosRiot.datosInvocadorAccount.gameName}</p>
-                    <p className="text-lg">Nivel: {datosRiot.datosInvocadorSummonerv4.summonerLevel}</p>
-                </div>
-            )}
-        </div>
+        <div className="flex flex-col items-center">
+            <div className="flex flex-col w-full max-w-md border rounded-lg overflow-hidden font-bold bg-blue-100 mx-auto ml-2 my-1">
+                <h1 className="text-xl font-bold p-4">Información</h1>
+                {datosRiot.datosInvocadorSummonerv4 && (
+                    <div className="p-4">
+                        <p className="text-lg">Nombre: {datosRiot.datosInvocadorAccount.gameName}</p>
+                        <p className="text-lg">Nivel: {datosRiot.datosInvocadorSummonerv4.summonerLevel}</p>
+                    </div>
+                )}
+            </div>
 
-            <RankedComponente rankData={datosRankSoloQ} />
-            <RankedComponente rankData={datosRankFlexQ} />
+            <div className="w-full max-w-md">
+                <RankedComponente rankData={datosRankSoloQ} />
+            </div>
+            <div className="w-full max-w-md">
+                <RankedComponente rankData={datosRankFlexQ} />
+            </div>
 
-            <div className="tarjetas-partidas flex flex-wrap max-w-screen-lg">
+            <div className="tarjetas-partidas w-full max-w-md">
                 {datosRiot.partidasDetalles.map((partida, index) => (
                     <TarjetaPartida
                         key={index}

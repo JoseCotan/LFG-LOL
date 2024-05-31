@@ -13,13 +13,13 @@ const RankedComponente = ({ rankData }) => {
     };
 
     return (
-        <div className="flex w-350 h-150 border border-gray-300 rounded-lg overflow-hidden mx-2 my-2" style={{ maxWidth: '500px', fontFamily: 'Spiegel' }}>
-            <div className="w-150 bg-gray-200">
+        <div className="flex w-full max-w-md h-40 border border-gray-300 rounded-lg overflow-hidden mx-2 my-2" style={{ fontFamily: 'Spiegel' }}>
+            <div className="w-1/3 bg-gray-200">
                 <img src={`/images/rangos/${tier.toUpperCase()}.png`} alt="Icono del rango" className="object-cover w-full h-full" />
             </div>
-            <div className="flex-grow flex flex-col justify-center px-10 text-gray-900">
-                <h1 className="text-3xl font-bold">{convertirTipoRanked(queueType)}</h1>
-                <h2 className="text-2xl">{tier} {rank}</h2>
+            <div className="flex-grow flex flex-col justify-center px-4 text-gray-900">
+                <h1 className="text-xl font-bold">{convertirTipoRanked(queueType)}</h1>
+                <h2 className="text-lg">{tier} {rank}</h2>
                 <p>LP: {leaguePoints}</p>
                 <p>Victorias: {wins} - Derrotas: {losses}</p>
             </div>

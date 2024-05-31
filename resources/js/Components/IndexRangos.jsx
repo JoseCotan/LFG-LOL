@@ -10,7 +10,7 @@ const RangosList = () => {
 
     const fetchRangos = async () => {
         try {
-            const response = await axios.get('/api/rangos'); // Endpoint para obtener los rangos
+            const response = await axios.get('/api/rangos');
             setRangos(response.data);
         } catch (error) {
             console.error('Error fetching rangos:', error);

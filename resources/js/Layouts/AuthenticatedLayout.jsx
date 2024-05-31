@@ -18,8 +18,6 @@ export default function Authenticated({ user, header, children }) {
         window.open(route('vip'), '_blank', 'width=650,height=900');
     };
 
-    console.log(user.foto_perfil_Tablet)
-
     return (
         <div className="relative">
             <div id="jinx-background"></div>

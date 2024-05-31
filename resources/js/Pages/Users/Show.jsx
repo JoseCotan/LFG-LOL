@@ -7,8 +7,10 @@ import DangerButton from '@/Components/DangerButton';
 import RiotData from '@/Components/RiotData';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import EnviarMensajeForm from '@/Components/EnviarMensajeForm';
+import Comentario from '@/Components/Comentario';
+import ListaComentarios from '@/Components/ListaComentarios';
 
-const UserShow = ({ user, amistad, amigos, reputacion }) => {
+const UserShow = ({ user, amistad, amigos, reputacion, comentarios }) => {
     const { auth } = usePage().props;
 
     const handleAnyadirAmigo = () => {
@@ -41,8 +43,8 @@ const UserShow = ({ user, amistad, amigos, reputacion }) => {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <div className="relative flex flex-col items-start justify-start lg:flex-row">
-                <div className="max-w-xs mx-auto bg-white rounded-lg shadow-md p-6 mt-6 mb-10">
+            <div className="relative flex flex-col items-center justify-center lg:flex-row lg:items-start lg:justify-start">
+                <div className="max-w-xs w-full bg-white rounded-lg shadow-md p-6 mt-6 mb-10 lg:ml-10">
                     <h1 className="text-2xl text-center text-blue-600 mb-4">Perfil de Usuario</h1>
                     <p className="text-lg text-center text-gray-800 mb-2">Nombre: {user.name}</p>
                     <p className="text-lg text-center text-gray-800 mb-2">Nick de invocador: {user.nombreLOL}</p>
@@ -95,9 +97,14 @@ const UserShow = ({ user, amistad, amigos, reputacion }) => {
                         </div>
                     )}
                     <p className="text-center mt-4 text-gray-800"><Link href="/dashboard" className="text-blue-600">Volver al inicio</Link></p>
+
+                    <div className="flex justify-center">
+                        <Comentario userId={user.id} />
+                    </div>
+                    <ListaComentarios comentarios={comentarios} />
                 </div>
 
-                <div className="flex-grow flex justify-center lg:justify-center items-center p-4 lg:ml-56">
+                <div className="flex-grow flex justify-center items-center p-4 lg:justify-start lg:ml-56">
                     <RiotData />
                 </div>
             </div>
