@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Mensaje;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class MensajeController extends Controller
@@ -19,7 +20,6 @@ class MensajeController extends Controller
         $request->validate([
             'mensaje' => 'required|string',
         ]);
-
         // Obtener el usuario autenticado y el destinatario
         $remitente = Auth::user();
         $destinatario = User::findOrFail($destinatarioId);
@@ -28,6 +28,7 @@ class MensajeController extends Controller
         // Enviar el correo
         Mail::to($destinatario->email)->send(new Mensaje($remitente, $destinatario, $contenidoMensaje));
 
+        Session::flash('success', 'El mensaje se envió correctamente a ' . $destinatario->name);
         return Inertia::location(back());
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
 use Intervention\Image\ImageManager;
@@ -100,6 +101,7 @@ class ProfileController extends Controller
         $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
         $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
         $reputacion = $likes - $dislikes;
+        $haComentado = $user->comentarios()->where('user_id', Auth::user()->id)->exists();
 
         return Inertia::render('Users/Show', [
             'user' => $user,
@@ -109,6 +111,8 @@ class ProfileController extends Controller
             'name' => $user->name,
             'perfilNombreLOL' => $user->nombreLOL,
             'comentarios' => $user->comentarios()->with('user')->get(),
+            'haComentado' => $haComentado,
+            'flash' => session('success'),
         ]);
     }
 
@@ -182,6 +186,7 @@ class ProfileController extends Controller
                 'valoracion' => 'like',
             ]);
         }
+        Session::flash('success', 'Le has dado Like a ' . $user->name);
         return Inertia::location(route('users.show', ['name' => $user->name]));
     }
 
@@ -207,6 +212,7 @@ class ProfileController extends Controller
                 'valoracion' => 'dislike',
             ]);
         }
+        Session::flash('success', 'Le has dado Dislike a ' . $user->name);
         return Inertia::location(route('users.show', ['name' => $user->name]));
     }
 

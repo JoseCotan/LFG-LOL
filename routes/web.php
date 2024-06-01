@@ -102,6 +102,8 @@ Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'envia
 
 Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
+Route::delete('/comentarios/{comentarioId}', [ComentarioController::class, 'destroy'])->name('comentarios.eliminar');
+
 
 Route::get('/vip', [PaypalController::class, 'index'])->name('vip');
 Route::post('/paypal', [PaypalController::class, 'paypal'])->name('paypal');

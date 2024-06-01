@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class ComentarioController extends Controller
@@ -87,8 +88,17 @@ class ComentarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comentario $comentario)
+    public function destroy($id)
     {
-        //
+        $comentario = Comentario::findOrFail($id);
+
+        if ($comentario->user_id !== Auth::id()) {
+            Session::flash('error', 'No puedes crear más de una publicación.');
+            return Inertia::location(back());
+        }
+
+        $comentario->delete();
+        Session::flash('success', 'El comentario se eliminó correctamente.');
+        return Inertia::location(back());
     }
 }
