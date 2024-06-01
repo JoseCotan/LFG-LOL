@@ -13,11 +13,17 @@ import ListaComentarios from '@/Components/ListaComentarios';
 import DesplegableComentarios from '@/Components/DesplegableComentarios';
 import DesplegableAmigos from '@/Components/DesplegableAmigos';
 import MensajeSuccess from '@/Components/MensajeSuccess';
+import MensajeError from '@/Components/MensajeError';
+import LikeButton from '@/Components/LikeButton';
+import DislikeButton from '@/Components/DislikeButton';
 
 
-const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado, flash }) => {
+
+
+const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado, haDadoLike, haDadoDislike, flash }) => {
     const { auth } = usePage().props;
     const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
 
 
     const handleAnyadirAmigo = () => {
@@ -54,10 +60,15 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
     };
 
     useEffect(() => {
-        if (flash) {
-            setSuccess(flash);
+        if (flash && flash.type === 'success') {
+            setSuccess(flash.message);
+            setError('');
+        } else if (flash && flash.type === 'error') {
+            setError(flash.message);
+            setSuccess('');
         }
     }, [flash]);
+
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -69,8 +80,8 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                     <p className="text-lg text-center text-gray-800 mb-2">Reputación: {reputacion}</p>
                     {auth.user.id !== user.id && (
                         <div className="flex justify-center mt-4">
-                            <Button onClick={handleLike} className="mr-2 bg-green-500 hover:bg-green-600 text-white">Like</Button>
-                            <DangerButton onClick={handleDislike} className="bg-red-500 hover:bg-red-600 text-white">Dislike</DangerButton>
+                            <LikeButton liked={haDadoLike} onClick={handleLike}></LikeButton>
+                            <DislikeButton disliked={haDadoDislike} onClick={handleDislike}></DislikeButton>
                         </div>
                     )}
 
@@ -97,6 +108,9 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
 
                     {success && (
                         <MensajeSuccess message={success} onClose={() => setSuccess('')} />
+                    )}
+                    {error && (
+                        <MensajeError message={error} onClose={() => setError('')} />
                     )}
                     {auth.user.id !== user.id && (
                         <>

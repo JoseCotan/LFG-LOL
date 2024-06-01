@@ -8,6 +8,7 @@ use App\Models\Amigo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class AmigoController extends Controller
@@ -83,6 +84,7 @@ class AmigoController extends Controller
 
         // Encuentra al usuario al que se le envió la solicitud para mostrar su perfil.
         $user = User::findOrFail($amistadId);
+        Session::flash('flash', ['type' => 'success', 'message' => 'Petición de amistad enviada a ' . $user->name]);
         return Inertia::location(route('users.show', ['name' => $user->name]));
     }
 
@@ -95,6 +97,7 @@ class AmigoController extends Controller
         $amistad = Amigo::with('amigoAgregado')->findOrFail($amistadId);
         $amistad->delete();
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'Petición de amistad cancelada a ' . $amistad->amigoAgregado->name]);
         // Redirige al perfil del usuario a quien se le había enviado la solicitud.
         return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregado->name]));
     }
@@ -109,6 +112,7 @@ class AmigoController extends Controller
         $amistad->estado = 'aceptado';
         $amistad->save();
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'Aceptaste la petición de amistad de ' . $amistad->amigoAgregado->name]);
         // Redirige al perfil del usuario que envió la solicitud.
         return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
     }
@@ -125,6 +129,7 @@ class AmigoController extends Controller
             $amistad->save();
         }
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'Rechazaste la petición de amistad de ' . $amistad->amigoAgregado->name]);
         // Redirige al perfil del usuario que envió la solicitud.
         return Inertia::location(route('users.show', ['name' => $amistad->amigoAgregador->name]));
     }

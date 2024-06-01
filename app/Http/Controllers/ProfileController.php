@@ -103,6 +103,16 @@ class ProfileController extends Controller
         $reputacion = $likes - $dislikes;
         $haComentado = $user->comentarios()->where('user_id', Auth::user()->id)->exists();
 
+        $haDadoLike = Reputacion::where('usuario_id', $user->id)
+            ->where('valorador_id', $authUser->id)
+            ->where('valoracion', 'like')
+            ->exists();
+
+        $haDadoDislike = Reputacion::where('usuario_id', $user->id)
+            ->where('valorador_id', $authUser->id)
+            ->where('valoracion', 'dislike')
+            ->exists();
+
         return Inertia::render('Users/Show', [
             'user' => $user,
             'amistad' => $amistad,
@@ -112,7 +122,9 @@ class ProfileController extends Controller
             'perfilNombreLOL' => $user->nombreLOL,
             'comentarios' => $user->comentarios()->with('user')->get(),
             'haComentado' => $haComentado,
-            'flash' => session('success'),
+            'haDadoLike' => $haDadoLike,
+            'haDadoDislike' => $haDadoDislike,
+            'flash' => session('flash'),
         ]);
     }
 
@@ -175,6 +187,7 @@ class ProfileController extends Controller
 
         if ($existeValoracion) {
             if ($existeValoracion->valoracion === 'like') {
+                Session::flash('flash', ['type' => 'error', 'message' => 'Ya le diste Like a ' . $user->name]);
                 return Inertia::location(route('users.show', ['name' => $user->name]));
             } else {
                 $existeValoracion->update(['valoracion' => 'like']);
@@ -186,7 +199,8 @@ class ProfileController extends Controller
                 'valoracion' => 'like',
             ]);
         }
-        Session::flash('success', 'Le has dado Like a ' . $user->name);
+
+        Session::flash('flash', ['type' => 'success', 'message' => 'Le has dado Like a ' . $user->name]);
         return Inertia::location(route('users.show', ['name' => $user->name]));
     }
 
@@ -201,6 +215,7 @@ class ProfileController extends Controller
 
         if ($existeValoracion) {
             if ($existeValoracion->valoracion === 'dislike') {
+                Session::flash('flash', ['type' => 'error', 'message' => 'Ya le diste Dislike a ' . $user->name]);
                 return Inertia::location(route('users.show', ['name' => $user->name]));
             } else {
                 $existeValoracion->update(['valoracion' => 'dislike']);
@@ -212,7 +227,7 @@ class ProfileController extends Controller
                 'valoracion' => 'dislike',
             ]);
         }
-        Session::flash('success', 'Le has dado Dislike a ' . $user->name);
+        Session::flash('flash', ['type' => 'success', 'message' => 'Le has dado Dislike a ' . $user->name]);
         return Inertia::location(route('users.show', ['name' => $user->name]));
     }
 
