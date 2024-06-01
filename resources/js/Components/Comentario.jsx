@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from '@inertiajs/react';
 import Button from './Button';
 import TextAreaPerfil from './TextAreaPerfil';
@@ -19,7 +19,7 @@ const Comentario = ({ userId }) => {
 
     return (
         <form onSubmit={handleSubmit} className="mt-4">
-            <InputLabel htmlFor="descripcion">Descripción:</InputLabel>
+            <InputLabel htmlFor="descripcion">Escribe un comentario:</InputLabel>
             <TextAreaPerfil
                 value={data.descripcion}
                 onChange={(e) => setData('descripcion', e.target.value)}

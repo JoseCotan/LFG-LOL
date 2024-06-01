@@ -73,7 +73,7 @@ const DatosRiot = () => {
                 <h1 className="text-xl font-bold p-4">Información</h1>
                 {datosRiot.datosInvocadorSummonerv4 && (
                     <div className="p-4">
-                        <p className="text-lg">Nombre: {datosRiot.datosInvocadorAccount.gameName}</p>
+                        <p className="text-lg">Nombre: {datosRiot.datosInvocadorAccount.gameName + "#" + datosRiot.datosInvocadorAccount.tagLine}</p>
                         <p className="text-lg">Nivel: {datosRiot.datosInvocadorSummonerv4.summonerLevel}</p>
                     </div>
                 )}

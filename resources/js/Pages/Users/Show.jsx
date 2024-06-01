@@ -5,10 +5,14 @@ import { Inertia } from '@inertiajs/inertia';
 import Button from '@/Components/Button';
 import DangerButton from '@/Components/DangerButton';
 import RiotData from '@/Components/RiotData';
+import InputLabel from '@/Components/InputLabel';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import EnviarMensajeForm from '@/Components/EnviarMensajeForm';
 import Comentario from '@/Components/Comentario';
 import ListaComentarios from '@/Components/ListaComentarios';
+import DesplegableComentarios from '@/Components/DesplegableComentarios';
+import DesplegableAmigos from '@/Components/DesplegableAmigos';
+
 
 const UserShow = ({ user, amistad, amigos, reputacion, comentarios }) => {
     const { auth } = usePage().props;
@@ -55,22 +59,7 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios }) => {
                             <DangerButton onClick={handleDislike} className="bg-red-500 hover:bg-red-600 text-white">Dislike</DangerButton>
                         </div>
                     )}
-                    <div className="mt-4 grid gap-4 grid-cols-3">
-                        {amigos.map(amigo => (
-                            <div key={amigo.id} className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center">
-                                <ImagenResponsive
-                                    srcPC={amigo.usuario_id === user.id ? amigo.amigo_agregado.foto_perfil_Tablet : amigo.amigo_agregador.foto_perfil_Tablet}
-                                    srcTablet={amigo.usuario_id === user.id ? amigo.amigo_agregado.foto_perfil_Tablet : amigo.amigo_agregador.foto_perfil_Tablet}
-                                    srcMobile={amigo.usuario_id === user.id ? amigo.amigo_agregado.foto_perfil_Movil : amigo.amigo_agregador.foto_perfil_Movil}
-                                    alt="Foto de perfil"
-                                    className="h-20 w-20 rounded-full mb-2"
-                                />
-                                <span className="text-gray-800 text-center overflow-hidden overflow-ellipsis max-w-full">
-                                    {amigo.usuario_id === user.id ? amigo.amigo_agregado.name : amigo.amigo_agregador.name}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
+
                     {auth.user.id !== user.id && (
                         !amistad ? (
                             <div className="mt-4 flex justify-center">
@@ -92,18 +81,19 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios }) => {
                         ) : null
                     )}
                     {auth.user.id !== user.id && (
-                        <div className="mt-4 flex justify-center">
-                            <EnviarMensajeForm destinatarioId={user.id} />
-                        </div>
+                        <>
+                            <div className="mt-4 flex justify-center">
+                                <EnviarMensajeForm destinatarioId={user.id} />
+                            </div>
+                            <div className="flex justify-center mb-4">
+                                <Comentario userId={user.id} />
+                            </div>
+                        </>
                     )}
-                    <p className="text-center mt-4 text-gray-800"><Link href="/dashboard" className="text-blue-600">Volver al inicio</Link></p>
-
-                    <div className="flex justify-center">
-                        <Comentario userId={user.id} />
-                    </div>
-                    <ListaComentarios comentarios={comentarios} />
+                    <DesplegableAmigos amigos={amigos} user={user} />
+                    <DesplegableComentarios comentarios={comentarios} />
+                    {/*<p className="text-center mt-4 text-gray-800 mb-4 "><Link href="/dashboard" className="text-blue-600">Volver al inicio</Link></p>*/}
                 </div>
-
                 <div className="flex-grow flex justify-center items-center p-4 lg:justify-start lg:ml-56">
                     <RiotData />
                 </div>

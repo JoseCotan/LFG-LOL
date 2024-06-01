@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Mensaje;
 use App\Models\User;
+use Inertia\Inertia;
 
 class MensajeController extends Controller
 {
@@ -26,5 +27,7 @@ class MensajeController extends Controller
 
         // Enviar el correo
         Mail::to($destinatario->email)->send(new Mensaje($remitente, $destinatario, $contenidoMensaje));
+
+        return Inertia::location(back());
     }
 }

@@ -23,7 +23,7 @@ const EnviarMensajeForm = ({ destinatarioId }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <InputLabel htmlFor="mensaje">Mensaje:</InputLabel>
+                <InputLabel htmlFor="mensaje">Mensaje privado:</InputLabel>
                 <TextAreaPerfil
                     value={data.mensaje}
                     onChange={handleChange}
