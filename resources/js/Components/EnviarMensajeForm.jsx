@@ -1,15 +1,21 @@
+import React from 'react';
 import { useForm } from '@inertiajs/react';
 import Button from './Button';
 import InputLabel from './InputLabel';
+import TextAreaPerfil from './TextAreaPerfil';
 
 const EnviarMensajeForm = ({ destinatarioId }) => {
     const { data, setData, post, reset, errors } = useForm({
         mensaje: '',
     });
 
+    const handleChange = (e) => {
+        setData('mensaje', e.target.value);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('enviarMensaje', destinatarioId), {
+        post(route('enviarMensaje', destinatarioId), data, {
             onSuccess: () => reset(),
         });
     };
@@ -17,14 +23,12 @@ const EnviarMensajeForm = ({ destinatarioId }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <InputLabel htmlFor="mensaje">Mensaje:</InputLabel>
-                <textarea
-                    id="mensaje"
+                <InputLabel htmlFor="mensaje">Mensaje privado:</InputLabel>
+                <TextAreaPerfil
                     value={data.mensaje}
-                    onChange={(e) => setData('mensaje', e.target.value)}
-                    style={{ color: 'black' }}
-                ></textarea>
-                {errors.mensaje && <div>{errors.mensaje}</div>}
+                    onChange={handleChange}
+                    placeholderText="mensaje"
+                />
             </div>
             <Button type="submit">Enviar Mensaje</Button>
         </form>

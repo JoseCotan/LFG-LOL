@@ -38,7 +38,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor='name' value='Nombre de usuario' />
+                    <InputLabel htmlFor='name' className='text-white' value='Nombre de usuario' />
 
                     <TextInput
                         id='name'
@@ -72,7 +72,7 @@ export default function Register() {
                 </div>
 
                 <div className='mt-4'>
-                    <InputLabel htmlFor='email' value='Correo electrónico' />
+                    <InputLabel htmlFor='email' className='text-white' value='Correo electrónico' />
 
                     <TextInput
                         id='email'
@@ -98,7 +98,7 @@ export default function Register() {
                 </div>
 
                 <div className='mt-4'>
-                    <InputLabel htmlFor='nac' value='Fecha de nacimiento' />
+                    <InputLabel htmlFor='nac' className='text-white' value='Fecha de nacimiento' />
                     <TextInput
                         id="nac"
                         name="nac"
@@ -127,7 +127,7 @@ export default function Register() {
                 </div>
 
                 <div className='mt-4'>
-                    <InputLabel htmlFor='password' value='Contraseña' />
+                    <InputLabel htmlFor='password' className='text-white' value='Contraseña' />
 
                     <div className='relative'>
                         <TextInput
@@ -168,7 +168,7 @@ export default function Register() {
                 </div>
 
                 <div className='mt-4'>
-                    <InputLabel htmlFor='password_confirmation' value='Confirmar contraseña' />
+                    <InputLabel htmlFor='password_confirmation' className='text-white' value='Confirmar contraseña' />
 
                     <div className='relative'>
                         <TextInput

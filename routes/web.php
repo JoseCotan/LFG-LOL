@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AmigoController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\MensajeController;
@@ -67,6 +68,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/users/{name}', [ProfileController::class, 'show'])->name('users.show');
+Route::post('/users/{user}/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
+
 
 Route::post('/amigos/enviar/{amistadId}', [AmigoController::class, 'enviarSolicitud'])->name('amigos.enviar');
 Route::patch('/amigos/aceptar/{amistadId}', [AmigoController::class, 'aceptarSolicitud'])->name('amigos.aceptar');
@@ -98,6 +101,8 @@ Route::resource('publicaciones', PublicacionController::class)->parameters([
 Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'enviarMensaje'])->name('enviarMensaje');
 
 Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
+
+Route::delete('/comentarios/{comentarioId}', [ComentarioController::class, 'destroy'])->name('comentarios.eliminar');
 
 
 Route::get('/vip', [PaypalController::class, 'index'])->name('vip');

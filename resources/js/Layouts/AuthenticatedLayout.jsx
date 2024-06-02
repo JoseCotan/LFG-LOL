@@ -3,9 +3,11 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import Busqueda from '@/Components/Busqueda';
+import ImagenResponsive from '@/Components/ImagenResponsive';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import Footer from '@/Components/Footer';
+import './../../css/imagenFondo.css'
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -17,12 +19,9 @@ export default function Authenticated({ user, header, children }) {
     };
 
     return (
-        <div className="h-screen" style={{
-            backgroundImage: `url('/images/jinxx.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'right',
-            backgroundRepeat: 'no-repeat',
-        }}>
+        <div className="relative">
+            <div id="jinx-background"></div>
+            <div id="garen-background"></div>
             <nav className="bg-gradient-to-b from-50% from-sky-950 to-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -55,20 +54,18 @@ export default function Authenticated({ user, header, children }) {
                                 )}
                             </div>
                         </div>
-
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
                             <div className="ms-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                            >
-                                                <img src="/images/user-regular.svg" alt="User" className="h-6 w-6 mr-2" />
-                                            </button>
-                                        </span>
+                                            <ImagenResponsive
+                                                srcPC={user.foto_perfil_Tablet}
+                                                srcTablet={user.foto_perfil_Tablet}
+                                                srcMobile={user.foto_perfil_Movil}
+                                                alt="Foto de perfil"
+                                                className="h-10 w-10 cursor-pointer"
+                                            />
                                     </Dropdown.Trigger>
-
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('profile.edit')}>Perfil</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">

@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreComentarioRequest;
 use App\Http\Requests\UpdateComentarioRequest;
 use App\Models\Comentario;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class ComentarioController extends Controller
 {
@@ -27,9 +33,32 @@ class ComentarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreComentarioRequest $request)
+    public function store(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'descripcion' => 'required|string|max:50',
+        ]);
+
+        if (Auth::user()->id === $user->id) {
+            return Inertia::location(back());
+        }
+
+        $existingComment = Comentario::where('comentable_type', User::class)
+            ->where('comentable_id', $user->id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        if ($existingComment) {
+            return Inertia::location(back());
+        }
+
+        $comentario = new Comentario();
+        $comentario->descripcion = $request->descripcion;
+        $comentario->user_id = Auth::user()->id;
+
+        $user->comentarios()->save($comentario);
+
+        return Inertia::location(back());
     }
 
     /**
@@ -59,8 +88,17 @@ class ComentarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comentario $comentario)
+    public function destroy($id)
     {
-        //
+        $comentario = Comentario::findOrFail($id);
+
+        if ($comentario->user_id !== Auth::id()) {
+            Session::flash('error', 'No puedes crear más de una publicación.');
+            return Inertia::location(back());
+        }
+
+        $comentario->delete();
+        Session::flash('success', 'El comentario se eliminó correctamente.');
+        return Inertia::location(back());
     }
 }

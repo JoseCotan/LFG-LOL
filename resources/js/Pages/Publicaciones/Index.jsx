@@ -39,7 +39,7 @@ const PublicacionesIndex = () => {
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="flex">
-                <div className="w-1/4 p-4">
+                <div className="p-4">
                     <div className="mb-4">
                         <h3 className="font-bold text-lg mb-2">Filtrar por Modo</h3>
                         <select

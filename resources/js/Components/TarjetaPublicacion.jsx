@@ -1,7 +1,10 @@
 import React from 'react';
 import Button from './Button';
+import { Link, usePage } from '@inertiajs/react';
 
 const TarjetaPublicacion = ({ publicacion }) => {
+    const { auth } = usePage().props;
+
     const convertirRango = (nombreRango) => {
         const rangos = {
             "Hierro": "IRON",
@@ -35,7 +38,8 @@ const TarjetaPublicacion = ({ publicacion }) => {
         }
     };
 
-    const imagenReputacionPositiva = '/images/rammus_okay.png';
+    const creador = auth.user.id === publicacion.usuario_id;
+    console.log(publicacion)
 
     return (
         <div className="flex w-380 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 bg-blue-100 relative" style={{ maxWidth: '400px' }}>
@@ -57,15 +61,22 @@ const TarjetaPublicacion = ({ publicacion }) => {
             </div>
             {publicacion.reputacion_img && (
                 <img
-                    src={imagenReputacionPositiva}
+                    src="/images/rammus_okay.png"
                     alt="Reputación positiva"
-                    className="w-16 h-16 mb-2 absolute right-2 top-2"
+                    className="w-16 h-16 mt-2 absolute right-2"
                 />
             )}
+            {creador && (
+                <Link href={route('publicaciones.edit', publicacion.id)}>
+                    <img
+                        src="/images/edit.svg"
+                        alt="Editar publicación"
+                        className="w-12 h-12 mb-2 absolute bottom-2 right-2 cursor-pointer"
+                    />
+                </Link>
+            )}
+
         </div>
-
-
-
     );
 };
 

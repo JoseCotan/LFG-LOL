@@ -39,11 +39,11 @@ export default function UpdateProfilePhotoForm() {
                     </div>
                 </div>
                 <ImagenResponsive
-                    srcPC={user.foto_perfil_PC || '/images/user-regular.svg'}
-                    srcTablet={user.foto_perfil_Tablet || '/images/user-regular.svg'}
-                    srcMobile={user.foto_perfil_Movil || '/images/user-regular.svg'}
+                    srcPC={user.foto_perfil_Tablet}
+                    srcTablet={user.foto_perfil_Tablet}
+                    srcMobile={user.foto_perfil_Movil}
                     alt="Foto de perfil"
-                    className="ml-6 h-16 w-16"
+                    className="h-10 w-10"
                 />
             </div>
         </form>
