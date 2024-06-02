@@ -16,6 +16,7 @@ class RiotController extends Controller
         $user = User::where('name', $name)->first();
         $nombreLOL = $user->nombreLOL;
 
+
         // Verificar si el usuario tiene un nombre de usuario de League of Legends guardado
         if (!$nombreLOL) {
             return response()->json(['error' => 'El usuario no tiene guardado su nombre de invocador.']);
@@ -84,6 +85,11 @@ class RiotController extends Controller
             $datosInvocadorLeaguev4 = $respuesta->json();
             $rankedSoloQDatos = collect($datosInvocadorLeaguev4)->firstWhere('queueType', 'RANKED_SOLO_5x5');
             $rankedSoloFlexDatos = collect($datosInvocadorLeaguev4)->firstWhere('queueType', 'RANKED_FLEX_SR');
+
+            if ($rankedSoloQDatos) {
+                $user->rankedSoloQ = $rankedSoloQDatos['tier'];
+                $user->save();
+            }
 
             // ------------------------------- OBTENER ID DE LAS ÚLTIMAS PARTIDAS ---------------------------- //
             $urlObtenerUltimasPartidas = "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{$puuid}/ids?start=0&count=20&api_key={$apiKey}";
