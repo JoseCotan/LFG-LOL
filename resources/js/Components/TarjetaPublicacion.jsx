@@ -38,8 +38,8 @@ const TarjetaPublicacion = ({ publicacion }) => {
         }
     };
 
-    const creador = auth.user.id === publicacion.usuario_id;
-    console.log(publicacion)
+    // Si el usuario no está logeado, devolverá false.
+    const creador = auth.user && auth.user.id === publicacion.usuario_id;
 
     return (
         <div className="flex w-380 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 bg-blue-100 relative" style={{ maxWidth: '400px' }}>

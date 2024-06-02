@@ -47,7 +47,11 @@ class PublicacionController extends Controller
         Log::info($publicaciones[2]);
 
 
-        $existePublicacion = Publicacion::where('usuario_id', Auth::user()->id)->exists();
+        $existePublicacion = false;
+
+        if (Auth::check()) {
+            $existePublicacion = Publicacion::where('usuario_id', Auth::user()->id)->exists();
+        }
 
         return Inertia::render('Publicaciones/Index', [
             'publicaciones' => $publicaciones,
@@ -134,8 +138,9 @@ class PublicacionController extends Controller
         $roles = Rol::all();
         $rangos = Rango::all();
 
-        if (Auth::user()->id !== $publicacion->usuario_id) {
-            abort(403, 'No estás autorizado para editar esta publicación.');
+        if (!Auth::check() || Auth::user()->id !== $publicacion->usuario_id) {
+            Session::flash('error', 'No puedes editar esta publicación.');
+            return Inertia::location(back());
         }
 
         return Inertia::render('Publicaciones/Edit', [

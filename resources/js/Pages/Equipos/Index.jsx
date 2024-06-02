@@ -1,7 +1,7 @@
 import React from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import ControladorLayout from '@/Layouts/ControladorLayout';
 import DangerButton from '@/Components/DangerButton';
 
 const EquiposIndex = () => {
@@ -12,7 +12,7 @@ const EquiposIndex = () => {
     };
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <ControladorLayout>
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg">
@@ -86,7 +86,7 @@ const EquiposIndex = () => {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </ControladorLayout>
     );
 };
 

@@ -80,38 +80,47 @@ class ProfileController extends Controller
 
         $authUser = Auth::user();
 
-        // Busca si existe una relación de amistad entre el usuario autenticado y el usuario cuyo perfil se está visitando.
-        $amistad = Amigo::where(function ($query) use ($authUser, $user) {
-            // Verifica si el usuario autenticado ha enviado una solicitud al usuario del perfil.
-            $query->where('usuario_id', $authUser->id)->where('amigo_id', $user->id);
-        })->orWhere(function ($query) use ($authUser, $user) {
-            // Verifica si el usuario del perfil ha enviado una solicitud al usuario autenticado.
-            $query->where('usuario_id', $user->id)->where('amigo_id', $authUser->id);
-        })->first();
+        $haComentado = false;
+        $haDadoLike = false;
+        $haDadoDislike = false;
+        $amistad = false;
+        $amigos = false;
+        $reputacion = false;
 
-        // Obtiene una lista de todos los amigos del usuario cuyo perfil se está viendo, que se hayan "aceptado".
-        $amigos = Amigo::with(['amigoAgregador', 'amigoAgregado'])
-            ->where(function ($query) use ($user) {
-                // Busca todas las amistades donde el usuario del perfil es el agregador o agregado.
-                $query->where('usuario_id', $user->id)->orWhere('amigo_id', $user->id);
-            })
-            ->whereIn('estado', ['aceptado'])
-            ->get();
+        if ($authUser) {
 
-        $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
-        $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
-        $reputacion = $likes - $dislikes;
-        $haComentado = $user->comentarios()->where('user_id', Auth::user()->id)->exists();
+            // Busca si existe una relación de amistad entre el usuario autenticado y el usuario cuyo perfil se está visitando.
+            $amistad = Amigo::where(function ($query) use ($authUser, $user) {
+                // Verifica si el usuario autenticado ha enviado una solicitud al usuario del perfil.
+                $query->where('usuario_id', $authUser->id)->where('amigo_id', $user->id);
+            })->orWhere(function ($query) use ($authUser, $user) {
+                // Verifica si el usuario del perfil ha enviado una solicitud al usuario autenticado.
+                $query->where('usuario_id', $user->id)->where('amigo_id', $authUser->id);
+            })->first();
 
-        $haDadoLike = Reputacion::where('usuario_id', $user->id)
-            ->where('valorador_id', $authUser->id)
-            ->where('valoracion', 'like')
-            ->exists();
+            // Obtiene una lista de todos los amigos del usuario cuyo perfil se está viendo, que se hayan "aceptado".
+            $amigos = Amigo::with(['amigoAgregador', 'amigoAgregado'])
+                ->where(function ($query) use ($user) {
+                    // Busca todas las amistades donde el usuario del perfil es el agregador o agregado.
+                    $query->where('usuario_id', $user->id)->orWhere('amigo_id', $user->id);
+                })
+                ->whereIn('estado', ['aceptado'])
+                ->get();
+            $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
+            $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
+            $reputacion = $likes - $dislikes;
+            $haComentado = $user->comentarios()->where('user_id', Auth::user()->id)->exists();
 
-        $haDadoDislike = Reputacion::where('usuario_id', $user->id)
-            ->where('valorador_id', $authUser->id)
-            ->where('valoracion', 'dislike')
-            ->exists();
+            $haDadoLike = Reputacion::where('usuario_id', $user->id)
+                ->where('valorador_id', $authUser->id)
+                ->where('valoracion', 'like')
+                ->exists();
+
+            $haDadoDislike = Reputacion::where('usuario_id', $user->id)
+                ->where('valorador_id', $authUser->id)
+                ->where('valoracion', 'dislike')
+                ->exists();
+        }
 
         return Inertia::render('Users/Show', [
             'user' => $user,

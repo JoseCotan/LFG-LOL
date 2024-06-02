@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, usePage, Link } from '@inertiajs/react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import ControladorLayout from '@/Layouts/ControladorLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import Checkbox from '@/Components/Checkbox';
@@ -31,7 +31,7 @@ const EventosCreate = () => {
     };
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <ControladorLayout>
             <div className="max-w-4xl mx-auto p-8">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-6">
@@ -87,7 +87,7 @@ const EventosCreate = () => {
                     </div>
                 </form>
             </div>
-        </AuthenticatedLayout>
+        </ControladorLayout>
     );
 };
 

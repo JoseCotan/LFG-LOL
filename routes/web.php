@@ -80,15 +80,15 @@ Route::delete('/amigos/eliminar/{amistadId}', [AmigoController::class, 'eliminar
 Route::resource('rangos', RangoController::class)
     ->middleware('auth');
 
-Route::resource('eventos', EventoController::class)
-    ->middleware('auth');
+Route::resource('eventos', EventoController::class);
+Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create')->middleware('auth');
 Route::post('eventos/{evento}/unirse', [EventoController::class, 'unirse'])->name('eventos.unirse')->middleware('auth');
 Route::post('eventos/{evento}/abandonar', [EventoController::class, 'abandonar'])->name('eventos.abandonar')->middleware('auth');
 
 
 
-Route::resource('equipos', EquipoController::class)
-    ->middleware('auth');
+Route::resource('equipos', EquipoController::class);
+Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create')->middleware('auth');
 Route::post('/equipos/unirse/{id}', [EquipoController::class, 'unirse'])->name('equipos.unirse')->middleware('auth');
 Route::post('/equipos/{equipoId}/expulsar/{miembroId}', [EquipoController::class, 'expulsarMiembro'])->name('equipos.expulsarMiembro')->middleware('auth');
 Route::post('/equipos/{id}/abandonar', [EquipoController::class, 'abandonarEquipo'])->name('equipos.abandonarEquipo')->middleware('auth');
@@ -96,7 +96,9 @@ Route::post('/equipos/{id}/abandonar', [EquipoController::class, 'abandonarEquip
 
 Route::resource('publicaciones', PublicacionController::class)->parameters([
     'publicaciones' => 'publicacion'
-])->middleware('auth');
+]);
+Route::get('/publicaciones/create', [PublicacionController::class, 'create'])->name('publicaciones.create')->middleware('auth');
+
 
 Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'enviarMensaje'])->name('enviarMensaje');
 
@@ -105,7 +107,7 @@ Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 Route::delete('/comentarios/{comentarioId}', [ComentarioController::class, 'destroy'])->name('comentarios.eliminar');
 
 
-Route::get('/vip', [PaypalController::class, 'index'])->name('vip');
+Route::get('/vip', [PaypalController::class, 'index'])->name('vip')->middleware('auth');
 Route::post('/paypal', [PaypalController::class, 'paypal'])->name('paypal');
 Route::get('/success', [PaypalController::class, 'success'])->name('success');
 Route::get('/cancel', [PaypalController::class, 'cancel'])->name('cancel');
