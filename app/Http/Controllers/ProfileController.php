@@ -78,16 +78,18 @@ class ProfileController extends Controller
         // Encuentra al usuario por su nombre. Si no lo encuentra, lanza un error.
         $user = User::where('name', $name)->firstOrFail();
 
-        $authUser = Auth::user();
+        // Obtiene una lista de todos los amigos del usuario cuyo perfil se está viendo, que se hayan "aceptado".
+        $amigos = Amigo::with(['amigoAgregador', 'amigoAgregado'])
+            ->where(function ($query) use ($user) {
+                // Busca todas las amistades donde el usuario del perfil es el agregador o agregado.
+                $query->where('usuario_id', $user->id)->orWhere('amigo_id', $user->id);
+            })
+            ->whereIn('estado', ['aceptado'])
+            ->get();
 
-        $haComentado = false;
-        $haDadoLike = false;
-        $haDadoDislike = false;
-        $amistad = false;
-        $amigos = false;
-        $reputacion = false;
-
-        if ($authUser) {
+        // Si el usuario está autenticado, se comprueba su interacción con el perfil del usuario visitado
+        if (Auth::check()) {
+            $authUser = Auth::user();
 
             // Busca si existe una relación de amistad entre el usuario autenticado y el usuario cuyo perfil se está visitando.
             $amistad = Amigo::where(function ($query) use ($authUser, $user) {
@@ -98,29 +100,32 @@ class ProfileController extends Controller
                 $query->where('usuario_id', $user->id)->where('amigo_id', $authUser->id);
             })->first();
 
-            // Obtiene una lista de todos los amigos del usuario cuyo perfil se está viendo, que se hayan "aceptado".
-            $amigos = Amigo::with(['amigoAgregador', 'amigoAgregado'])
-                ->where(function ($query) use ($user) {
-                    // Busca todas las amistades donde el usuario del perfil es el agregador o agregado.
-                    $query->where('usuario_id', $user->id)->orWhere('amigo_id', $user->id);
-                })
-                ->whereIn('estado', ['aceptado'])
-                ->get();
-            $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
-            $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
-            $reputacion = $likes - $dislikes;
-            $haComentado = $user->comentarios()->where('user_id', Auth::user()->id)->exists();
+            // Comprueba si el usuario autenticado ha comentado en el perfil del usuario visitado
+            $haComentado = $user->comentarios()->where('user_id', $authUser->id)->exists();
 
+            // Comprueba si el usuario autenticado ha dado like al perfil del usuario visitado
             $haDadoLike = Reputacion::where('usuario_id', $user->id)
                 ->where('valorador_id', $authUser->id)
                 ->where('valoracion', 'like')
                 ->exists();
 
+            // Comprueba si el usuario autenticado ha dado dislike al perfil del usuario visitado
             $haDadoDislike = Reputacion::where('usuario_id', $user->id)
                 ->where('valorador_id', $authUser->id)
                 ->where('valoracion', 'dislike')
                 ->exists();
+        } else {
+            // Si no hay usuario autenticado, se establecen los valores por defecto para las variables de interacción
+            $amistad = false;
+            $haComentado = false;
+            $haDadoLike = false;
+            $haDadoDislike = false;
         }
+
+        // Calcula la reputación del usuario
+        $likes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'like')->count();
+        $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
+        $reputacion = $likes - $dislikes;
 
         return Inertia::render('Users/Show', [
             'user' => $user,
@@ -136,6 +141,7 @@ class ProfileController extends Controller
             'flash' => session('flash'),
         ]);
     }
+
 
     public function updateProfilePhoto(Request $request)
     {
