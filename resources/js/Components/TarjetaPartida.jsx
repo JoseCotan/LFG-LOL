@@ -5,7 +5,7 @@ const TarjetaPartida = ({ imagenCampeon, imagenesHechizos, estadisticas1, estadi
     const [kills, deaths, assists] = estadisticas1.split(' / ');
 
     return (
-        <div className={`flex w-full h-30 border rounded-lg overflow-hidden font-bold ${win ? 'bg-blue-100' : 'bg-red-100'} mx-2 my-1 tarjeta-partida`} style={{ maxWidth: '500px', fontFamily: 'Spiegel' }}>
+        <div className={`flex w-full h-30 max-w-md border rounded-lg overflow-hidden font-bold ${win ? 'bg-blue-100' : 'bg-red-100'} mx-2 my-1 tarjeta-partida`}>
             <div className="w-24 flex flex-col items-center">
                 <img src={imagenCampeon} alt="Campeón" />
                 <div className="flex">

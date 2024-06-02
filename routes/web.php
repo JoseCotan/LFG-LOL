@@ -4,6 +4,7 @@ use App\Http\Controllers\AmigoController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MensajeController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ProfileController;
@@ -19,14 +20,8 @@ use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [InicioController::class, 'index'])->name('inicio');
+
 
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
