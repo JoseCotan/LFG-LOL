@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
+import AuthLayout from '@/Layouts/AuthLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -33,7 +33,7 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
+        <AuthLayout>
             <Head title='Register' />
 
             <form onSubmit={submit}>
@@ -221,6 +221,6 @@ export default function Register() {
 
             {/* Botón de inicio de sesión con Google */}
             <BotonLogueoGoogle />
-        </GuestLayout>
+        </AuthLayout>
     );
 }

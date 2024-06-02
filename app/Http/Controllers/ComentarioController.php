@@ -58,6 +58,7 @@ class ComentarioController extends Controller
 
         $user->comentarios()->save($comentario);
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'Creaste el comentario correctamente.']);
         return Inertia::location(back());
     }
 
@@ -93,12 +94,12 @@ class ComentarioController extends Controller
         $comentario = Comentario::findOrFail($id);
 
         if ($comentario->user_id !== Auth::id()) {
-            Session::flash('error', 'No puedes crear más de una publicación.');
+            Session::flash('flash', ['type' => 'error', 'message' => 'Este comentario no es tuyo.']);
             return Inertia::location(back());
         }
 
         $comentario->delete();
-        Session::flash('success', 'El comentario se eliminó correctamente.');
+        Session::flash('flash', ['type' => 'success', 'message' => 'El comentario se eliminó correctamente']);
         return Inertia::location(back());
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import ControladorLayout from '@/Layouts/ControladorLayout';
 import { Link, usePage } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
@@ -37,7 +37,7 @@ const PublicacionesIndex = () => {
     }, [flash]);
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <ControladorLayout user={auth.user}>
             <div className="flex">
                 <div className="p-4">
                     <div className="mb-4">
@@ -138,7 +138,7 @@ const PublicacionesIndex = () => {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </ControladorLayout>
     );
 };
 

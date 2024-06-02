@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import ControladorLayout from '@/Layouts/ControladorLayout';
 import { Link, usePage } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import Button from '@/Components/Button';
@@ -55,7 +55,7 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
     };
 
     const handleEliminarComentario = () => {
-        const comentarioId = comentarios[0].id;
+        const comentarioId = comentarios.find(comment => comment.user_id === auth.user.id).id;
         Inertia.delete(route('comentarios.eliminar', { comentarioId }));
     };
 
@@ -71,21 +71,21 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
 
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <ControladorLayout>
             <div className="relative flex flex-col items-center justify-center lg:flex-row lg:items-start lg:justify-start">
                 <div className="max-w-xs w-full bg-white rounded-lg shadow-md p-6 mt-6 mb-10 lg:ml-10">
                     <h1 className="text-2xl text-center text-blue-600 mb-4">Perfil de Usuario</h1>
                     <p className="text-lg text-center text-gray-800 mb-2">Nombre: {user.name}</p>
                     <p className="text-lg text-center text-gray-800 mb-2">Nick de invocador: {user.nombreLOL}</p>
                     <p className="text-lg text-center text-gray-800 mb-2">Reputación: {reputacion}</p>
-                    {auth.user.id !== user.id && (
+                    {auth.user && auth.user.id !== user.id && (
                         <div className="flex justify-center mt-4">
                             <LikeButton liked={haDadoLike} onClick={handleLike}></LikeButton>
                             <DislikeButton disliked={haDadoDislike} onClick={handleDislike}></DislikeButton>
                         </div>
                     )}
 
-                    {auth.user.id !== user.id && (
+                    {auth.user && auth.user.id !== user.id && (
                         !amistad ? (
                             <div className="mt-4 flex justify-center">
                                 <Button onClick={handleAnyadirAmigo} className="bg-blue-500 hover:bg-blue-600 text-white">Enviar Solicitud de Amistad</Button>
@@ -112,28 +112,30 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                     {error && (
                         <MensajeError message={error} onClose={() => setError('')} />
                     )}
-                    {auth.user.id !== user.id && (
+                    {auth.user && auth.user.id !== user.id && (
                         <>
                             <div className="mt-4 flex justify-center">
                                 <EnviarMensajeForm destinatarioId={user.id} />
                             </div>
+                            {!haComentado && (
+                                <div className="flex justify-center mb-4">
+                                    <Comentario userId={user.id} />
+                                </div>
+                            )}
                         </>
                     )}
-                    {!haComentado && (
-                        <div className="flex justify-center mb-4">
-                            <Comentario userId={user.id} />
-                        </div>
-                    )}
+
                     {haComentado && (
                         <div className="max-w-xs w-full flex justify-center mt-6 mb-6">
                             <div className="bg-gray-100 p-4 rounded shadow-md text-center">
-                                <p className="text-gray-800 mb-2">{comentarios[0].descripcion}</p>
+                                <p className="text-gray-800 mb-2">{comentarios.find(comment => comment.user_id === auth.user.id).descripcion}</p>
                                 <DangerButton onClick={handleEliminarComentario}>
                                     Eliminar Comentario
                                 </DangerButton>
                             </div>
                         </div>
                     )}
+
 
                     <DesplegableAmigos amigos={amigos} user={user} />
                     <DesplegableComentarios comentarios={comentarios} />
@@ -143,7 +145,7 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                     <RiotData />
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </ControladorLayout>
     );
 };
 
