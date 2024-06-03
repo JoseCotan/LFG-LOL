@@ -4,14 +4,13 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
-import TextArea from '@/Components/TextArea';
+import Select from '@/Components/Select';
 import InputError from '@/Components/InputError';
 
 const CreatePublicacion = () => {
     const { auth, modos, roles, rangos } = usePage().props;
     const { data, setData, post, processing, errors, setError } = useForm({
         titulo: '',
-        descripcion: '',
         modo_id: '',
         rol_id: '',
         rango_id: '',
@@ -25,7 +24,6 @@ const CreatePublicacion = () => {
             onSuccess: () => {
                 setData({
                     titulo: '',
-                    descripcion: '',
                     modo_id: '',
                     rol_id: '',
                     rango_id: '',
@@ -64,44 +62,33 @@ const CreatePublicacion = () => {
 
                     <div className="mb-6">
                         <InputLabel htmlFor="modo_id" value="Modo de juego" />
-                        <select
-                            id="modo_id"
+                        <Select
                             value={data.modo_id}
                             onChange={(e) => setData('modo_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {modos.map((modo) => (
-                                <option key={modo.id} value={modo.id}>{modo.nombre}</option>
-                            ))}
-                        </select>
+                            options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
+                            id="modo_id"
+                        />
+
                     </div>
 
                     <div className="mb-6">
                         <InputLabel htmlFor="rol_id" value="Rol del juego" />
-                        <select
-                            id="rol_id"
+                        <Select
                             value={data.rol_id}
                             onChange={(e) => setData('rol_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {roles.map((rol) => (
-                                <option key={rol.id} value={rol.id}>{rol.nombre}</option>
-                            ))}
-                        </select>
+                            options={roles.map((rol) => ({ value: rol.id, label: rol.nombre }))}
+                            id="rol_id"
+                        />
                     </div>
 
                     <div className="mb-6">
                         <InputLabel htmlFor="rango_id" value="Rango del juego" />
-                        <select
-                            id="rango_id"
+                        <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {rangos.map((rango) => (
-                                <option key={rango.id} value={rango.id}>{rango.nombre}</option>
-                            ))}
-                        </select>
+                            options={rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))}
+                            id="rango_id"
+                        />
                     </div>
 
                     <div className="mb-6">

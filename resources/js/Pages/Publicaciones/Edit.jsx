@@ -16,7 +16,6 @@ const EditPublicacion = () => {
     const { auth, modos, roles, rangos, publicacion } = usePage().props;
     const { data, setData, put, processing, errors, setError } = useForm({
         titulo: publicacion.titulo || '',
-        descripcion: publicacion.descripcion || '',
         modo_id: publicacion.modo_id || '',
         rol_id: publicacion.rol_id || '',
         rango_id: publicacion.rango_id || '',
@@ -59,17 +58,11 @@ const EditPublicacion = () => {
                     </div>
 
                     <div className="mb-6">
-                        <InputLabel htmlFor="descripcion" className="block text-lg font-bold mb-2">Descripción</InputLabel>
-                        <TextArea data={data} setData={setData} />
-                    </div>
-
-                    <div className="mb-6">
                         <InputLabel htmlFor="modo_id" value="Modo de juego" />
                         <Select
                             value={data.modo_id}
                             onChange={(e) => setData('modo_id', e.target.value)}
                             options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
-                            className=""
                             id="modo_id"
                         />
                     </div>

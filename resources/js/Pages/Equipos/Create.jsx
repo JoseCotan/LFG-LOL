@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import Checkbox from '@/Components/Checkbox';
 import InputLabel from '@/Components/InputLabel';
+import Select from '@/Components/Select';
 
 
 const EquiposCreate = () => {
@@ -44,16 +45,12 @@ const EquiposCreate = () => {
                     </div>
                     <div className="mb-6">
                     <InputLabel value="Modo de juego preferente" />
-                        <select
+                        <Select
                             id="modo_juego_preferente"
                             value={data.modo_juego_preferente}
                             onChange={(e) => setData('modo_juego_preferente', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {modos && modos.map((modo) => (
-                                <option key={modo.id} value={modo.id}>{modo.nombre}</option>
-                            ))}
-                        </select>
+                            options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
+                        />
                     </div>
                     <div className="mb-6">
                     <InputLabel value="Equipo privado" />

@@ -104,7 +104,6 @@ class PublicacionController extends Controller
         // Crea una nueva publicación y asigna cada valor manualmente.
         $publicacion = new Publicacion();
         $publicacion->titulo = $request->input('titulo');
-        $publicacion->descripcion = $request->input('descripcion');
         // Segundo argumento es el valor por defecto si no se proporciona
         $publicacion->modo_id = $request->input('modo_id') ?? 1;
         $publicacion->rol_id = $request->input('rol_id') ?? 1;
@@ -175,7 +174,6 @@ class PublicacionController extends Controller
 
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
             'modo_id' => 'nullable|exists:modos,id',
             'rol_id' => 'nullable|exists:roles,id',
             'rango_id' => 'nullable|exists:rangos,id',
@@ -186,7 +184,6 @@ class PublicacionController extends Controller
         // Actualiza la publicación con los datos del formulario.
         $publicacion->update([
             'titulo' => $request->input('titulo'),
-            'descripcion' => $request->input('descripcion'),
             'modo_id' => $request->input('modo_id') ?? 1,
             'rol_id' => $request->input('rol_id') ?? 1,
             'rango_id' => $request->input('rango_id') ?? 1,

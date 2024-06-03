@@ -4,6 +4,10 @@ import { Link, usePage } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
 import MensajeError from '@/Components/MensajeError';
+import Select from '@/Components/Select';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
+
 
 const PublicacionesIndex = () => {
     const { publicaciones, modos, roles, rangos, auth, flash } = usePage().props;
@@ -37,72 +41,51 @@ const PublicacionesIndex = () => {
     }, [flash]);
 
     return (
-        <ControladorLayout user={auth.user}>
+        <ControladorLayout>
             <div className="flex">
                 <div className="p-4">
                     <div className="mb-4">
-                        <h3 className="font-bold text-lg mb-2">Filtrar por Modo</h3>
-                        <select
-                            className="block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        <InputLabel>Filtrar por Modo</InputLabel>
+                        <Select
                             value={filtroModo}
                             onChange={(e) => setFiltroModo(e.target.value)}
-                        >
-                            <option value="">Modos</option>
-                            {modos.map((modo) => (
-                                <option key={modo.id} value={modo.id}>
-                                    {modo.nombre}
-                                </option>
-                            ))}
-                        </select>
+                            options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
+                            id="modo_id"
+                        />
                     </div>
                     <div className="mb-4">
-                        <h3 className="font-bold text-lg mb-2">Filtrar por Rango</h3>
-                        <select
-                            className="block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        <InputLabel>Filtrar por Rango</InputLabel>
+                        <Select
                             value={filtroRango}
                             onChange={(e) => setFiltroRango(e.target.value)}
-                        >
-                            <option value="">Rangos</option>
-                            {rangos.map((rango) => (
-                                <option key={rango.id} value={rango.id}>
-                                    {rango.nombre}
-                                </option>
-                            ))}
-                        </select>
+                            options={rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))}
+                            id="rango_id"
+                        />
                     </div>
                     <div className="mb-4">
-                        <h3 className="font-bold text-lg mb-2">Filtrar por Rol</h3>
-                        <select
-                            className="block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        <InputLabel>Filtrar por Rol</InputLabel>
+                        <Select
                             value={filtroRol}
                             onChange={(e) => setFiltroRol(e.target.value)}
-                        >
-                            <option value="">Roles</option>
-                            {roles.map((rol) => (
-                                <option key={rol.id} value={rol.id}>
-                                    {rol.nombre}
-                                </option>
-                            ))}
-                        </select>
+                            options={roles.map((rol) => ({ value: rol.id, label: rol.nombre }))}
+                            id="rol_id"
+                        />
                     </div>
                     <div className="mb-4">
-                        <h3 className="font-bold text-lg mb-2">Filtrar por Horario</h3>
                         <div>
-                            <label htmlFor="horaInicio">Desde:</label>
-                            <input
+                            <InputLabel htmlFor="horaInicio">Desde:</InputLabel>
+                            <TextInput
                                 type="time"
                                 id="horaInicio"
                                 value={horaInicio}
                                 onChange={(e) => setHoraInicio(e.target.value)}
-                                className="mb-2 mt-1 block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             />
-                            <label htmlFor="horaFin">Hasta:</label>
-                            <input
+                            <InputLabel htmlFor="horaFin">Hasta:</InputLabel>
+                            <TextInput
                                 type="time"
                                 id="horaFin"
                                 value={horaFin}
                                 onChange={(e) => setHoraFin(e.target.value)}
-                                className="mt-1 block w-full p-2 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             />
                         </div>
                     </div>
