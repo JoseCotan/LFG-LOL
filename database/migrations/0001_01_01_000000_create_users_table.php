@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('google_id')->nullable();
             $table->string('nombreLOL')->nullable();
             $table->string('rankedSoloQ')->nullable();
+            $table->string('rankedFlex')->nullable();
             $table->boolean('VIP')->default(false);
             $table->boolean('admin')->default(false);
             $table->rememberToken();

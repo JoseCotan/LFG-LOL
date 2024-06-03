@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import TextArea from '@/Components/TextArea';
 import InputError from '@/Components/InputError';
 
 const CreatePublicacion = () => {
@@ -59,16 +60,6 @@ const CreatePublicacion = () => {
                             }}
                         />
                         <InputError message={errors.titulo} className="mt-2" />
-                    </div>
-
-                    <div className="mb-6">
-                        <InputLabel htmlFor="descripcion" value="Descripción" />
-                        <textarea
-                            id="descripcion"
-                            value={data.descripcion}
-                            onChange={(e) => setData('descripcion', e.target.value)}
-                            className="mt-1 block w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
-                        />
                     </div>
 
                     <div className="mb-6">

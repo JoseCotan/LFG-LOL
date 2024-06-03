@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->text('descripcion')->nullable();
             $table->time('hora_preferente_inicio')->nullable();
             $table->time('hora_preferente_final')->nullable();
             $table->foreignId('rango_id')->nullable()->constrained();
