@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/react';
 import Button from './Button';
 import TextAreaPerfil from './TextAreaPerfil';
 import InputLabel from './InputLabel';
+import ButtonColores from './ButtonColores';
 
 const Comentario = ({ userId }) => {
     const { data, setData, post, reset, errors } = useForm({
@@ -25,9 +26,9 @@ const Comentario = ({ userId }) => {
                 onChange={(e) => setData('descripcion', e.target.value)}
                 placeholderText="comentario"
             />
-            <Button type="submit">
+            <ButtonColores color="blue" type="submit">
                 Enviar Comentario
-            </Button>
+            </ButtonColores>
         </form>
     );
 };

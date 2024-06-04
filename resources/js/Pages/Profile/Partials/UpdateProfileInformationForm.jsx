@@ -4,6 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import ButtonColores from '@/Components/ButtonColores';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
@@ -22,16 +23,16 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-white">Profile Information</h2>
+                <h2 className="text-lg font-medium text-white">Información del perfil</h2>
 
                 <p className="mt-1 text-sm text-white">
-                    Update your account's profile information and email address.
+                    Actualice la información del perfil y la dirección de correo electrónico de su cuenta.
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
+            <form onSubmit={submit} className="mt-6 space-y-6 text-white">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Nombre" />
 
                     <TextInput
                         id="name"
@@ -47,7 +48,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" className='text-white' value="Email" />
+                    <InputLabel htmlFor="email" value="Correo electrónico" />
 
                     <TextInput
                         id="email"
@@ -88,7 +89,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <ButtonColores color="green" disabled={processing}>Guardar</ButtonColores>
 
                     <Transition
                         show={recentlySuccessful}

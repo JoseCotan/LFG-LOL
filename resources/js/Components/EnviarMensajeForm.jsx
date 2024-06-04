@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/react';
 import Button from './Button';
 import InputLabel from './InputLabel';
 import TextAreaPerfil from './TextAreaPerfil';
+import ButtonColores from './ButtonColores';
 
 const EnviarMensajeForm = ({ destinatarioId }) => {
     const { data, setData, post, reset, errors } = useForm({
@@ -30,7 +31,7 @@ const EnviarMensajeForm = ({ destinatarioId }) => {
                     placeholderText="mensaje"
                 />
             </div>
-            <Button type="submit">Enviar Mensaje</Button>
+            <ButtonColores color="blue" type="submit">Enviar Mensaje</ButtonColores>
         </form>
     );
 };

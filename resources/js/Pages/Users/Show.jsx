@@ -16,6 +16,7 @@ import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
 import LikeButton from '@/Components/LikeButton';
 import DislikeButton from '@/Components/DislikeButton';
+import ButtonColores from '@/Components/ButtonColores';
 
 
 
@@ -88,20 +89,20 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                     {auth.user && auth.user.id !== user.id && (
                         !amistad ? (
                             <div className="mt-4 flex justify-center">
-                                <Button onClick={handleAnyadirAmigo} className="bg-blue-500 hover:bg-blue-600 text-white">Enviar Solicitud de Amistad</Button>
+                                <ButtonColores color="blue" onClick={handleAnyadirAmigo}>Enviar Solicitud de Amistad</ButtonColores>
                             </div>
                         ) : amistad.estado === 'aceptado' ? (
                             <div className="mt-4 flex justify-center">
-                                <DangerButton onClick={handleEliminarAmigo} className="bg-red-500 hover:bg-red-600 text-white">Eliminar Amigo</DangerButton>
+                                <ButtonColores color="red" onClick={handleEliminarAmigo}>Eliminar Amigo</ButtonColores>
                             </div>
                         ) : amistad.estado === 'pendiente' && amistad.amigo_id === auth.user.id ? (
                             <div className="mt-4 flex justify-center">
-                                <Button onClick={handleAceptarSolicitud} className="mr-2 bg-green-500 hover:bg-green-600 text-white">Aceptar Solicitud</Button>
-                                <DangerButton onClick={handleRechazarSolicitud} className="bg-red-500 hover:bg-red-600 text-white">Rechazar Solicitud</DangerButton>
+                                <ButtonColores color="blue" onClick={handleAceptarSolicitud}>Aceptar Solicitud</ButtonColores>
+                                <ButtonColores color="red" onClick={handleRechazarSolicitud}>Rechazar Solicitud</ButtonColores>
                             </div>
                         ) : amistad.estado === 'pendiente' && amistad.usuario_id === auth.user.id ? (
                             <div className="mt-4 flex justify-center">
-                                <DangerButton onClick={handleCancelarSolicitud} className="bg-gray-500 hover:bg-gray-600 text-white">Cancelar Solicitud</DangerButton>
+                                <ButtonColores color="red" onClick={handleCancelarSolicitud}>Cancelar Solicitud</ButtonColores>
                             </div>
                         ) : null
                     )}

@@ -7,6 +7,7 @@ import MensajeError from '@/Components/MensajeError';
 import Select from '@/Components/Select';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import ButtonColores from '@/Components/ButtonColores';
 
 
 const PublicacionesIndex = () => {
@@ -89,18 +90,18 @@ const PublicacionesIndex = () => {
                             />
                         </div>
                     </div>
-                    <Button onClick={resetearFiltros}>
+                    <ButtonColores color="blue" onClick={resetearFiltros}>
                         Resetear Filtros
-                    </Button>
+                    </ButtonColores>
                 </div>
                 <div className="w-3/4 p-6 overflow-hidden sm:rounded-lg">
                     {error && (
                         <MensajeError message={error} onClose={() => setError('')} />
                     )}
                     <Link href={route('publicaciones.create')}>
-                        <Button>
+                        <ButtonColores color="blue">
                             Crear Publicación
-                        </Button>
+                        </ButtonColores>
                     </Link>
                     <div className="mt-6">
                         {publicacionesFiltradas.map((publicacion) => (

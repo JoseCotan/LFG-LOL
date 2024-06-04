@@ -36,7 +36,7 @@ class ComentarioController extends Controller
     public function store(Request $request, User $user)
     {
         $request->validate([
-            'descripcion' => 'required|string|max:50',
+            'descripcion' => 'required|string|max:255',
         ]);
 
         if (Auth::user()->id === $user->id) {
