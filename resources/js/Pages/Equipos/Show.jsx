@@ -5,9 +5,49 @@ import ControladorLayout from '@/Layouts/ControladorLayout';
 import DangerButton from '@/Components/DangerButton';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import Button from '@/Components/Button';
+import ButtonColores from '@/Components/ButtonColores';
 
 const EquipoShow = () => {
     const { equipo, auth } = usePage().props;
+
+    const esMiembro = [
+        equipo.miembro1?.id,
+        equipo.miembro2?.id,
+        equipo.miembro3?.id,
+        equipo.miembro4?.id,
+        equipo.miembro5?.id
+    ].includes(auth.user?.id);
+
+    // Verifica si todos los puestos del equipo están ocupados
+    const equipoLleno = [
+        equipo.miembro1,
+        equipo.miembro2,
+        equipo.miembro3,
+        equipo.miembro4,
+        equipo.miembro5
+    ].every(miembro => miembro !== null && miembro !== undefined);
+
+    const convertirRango = (nombreRango) => {
+        const rangos = {
+            "Hierro": "IRON",
+            "Bronce": "BRONZE",
+            "Plata": "SILVER",
+            "Oro": "GOLD",
+            "Platino": "PLATINUM",
+            "Esmeralda": "EMERALD",
+            "Diamante": "DIAMOND",
+            "Maestro": "MASTER",
+            "Gran Maestro": "GRANDMASTER",
+            "Aspirante": "CHALLENGER",
+            "Sin clasificar": "UNRANKED",
+            "Sin rango": "NORANK"
+        };
+        return rangos[nombreRango] || nombreRango;
+    };
+
+    const handleUnirseEquipo = () => {
+        Inertia.post(route('equipos.unirse', equipo.id));
+    };
 
     const handleExpulsarMiembro = (miembroId) => {
         Inertia.post(route('equipos.expulsarMiembro', { equipoId: equipo.id, miembroId }));
@@ -15,6 +55,14 @@ const EquipoShow = () => {
 
     const handleAbandonarEquipo = () => {
         Inertia.post(route('equipos.abandonarEquipo', equipo.id));
+    };
+
+    const handleDelete = (id) => {
+        Inertia.delete(route('equipos.destroy', id));
+    };
+
+    const handleHacerLider = (miembroId) => {
+        Inertia.post(route('equipos.hacerLider', { equipoId: equipo.id, miembroId }));
     };
 
     return (
@@ -41,6 +89,11 @@ const EquipoShow = () => {
                         <p className="text-sm text-white">{equipo.modo.nombre}</p>
                     </div>
                     <hr className="my-4" />
+                    <div className="mb-4">
+                        <h4 className="text-sm font-semibold text-gray-300">Rango mínimo:</h4>
+                        <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="w-20 h-20" />
+                    </div>
+                    <hr className="my-4" />
                     <div className="mb-4 flex items-center">
                         <h4 className="text-sm font-semibold text-gray-300 mr-2">Privacidad:</h4>
                         <p className="text-sm text-white">{equipo.privado ? 'Privado' : 'Público'}</p>
@@ -65,33 +118,52 @@ const EquipoShow = () => {
                                     />
                                     <p className="text-sm text-white">{miembro.name}</p>
                                     {auth.user && equipo.lider && equipo.lider.id === auth.user.id && (
-                                        <Button onClick={() => handleExpulsarMiembro(miembro.id)} className="ml-4">
-                                            Expulsar
-                                        </Button>
+                                        <>
+                                            <Button onClick={() => handleExpulsarMiembro(miembro.id)} className="ml-4">
+                                                Expulsar
+                                            </Button>
+                                            {miembro.id !== auth.user.id && (
+                                                <Button onClick={() => handleHacerLider(miembro.id)} className="ml-4">
+                                                    Hacer Líder
+                                                </Button>
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             </div>
                         )
                     ))}
                     <hr className="my-4" />
-                    {!auth.user || auth.user.id !== equipo.lider?.id ? (
+                    {/* Muestra el botón solo si el equipo no está lleno y el usuario no es miembro */}
+                    {!esMiembro && !equipoLleno && !equipo.privado && (
+                        <ButtonColores color="blue" onClick={handleUnirseEquipo}>
+                            Unirse al Equipo
+                        </ButtonColores>
+                    )}
+                    {auth.user && auth.user?.id !== equipo.lider.id && esMiembro && (
+                        <ButtonColores color="red" onClick={handleAbandonarEquipo}>
+                            Abandonar Equipo
+                        </ButtonColores>
+                    )}
+                    {auth.user?.id === equipo.lider.id && (
                         <div className="flex mt-4">
-                            <Button onClick={handleAbandonarEquipo}>Abandonar Equipo</Button>
-                        </div>
-                    ) : (
-                        <div className="flex mt-4">
-                            <Link href={route('equipos.edit', equipo.id)} className="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-600 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 disabled:opacity-25 transition mr-2">
-                                Editar
+                            <Link href={route('equipos.edit', equipo.id)}>
+                                <ButtonColores color="yellow">
+                                    Editar
+                                </ButtonColores>
                             </Link>
-                            <DangerButton onClick={() => handleDelete(equipo.id)} className="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-600 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 disabled:opacity-25 transition">
+                            <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
                                 Eliminar
-                            </DangerButton>
+                            </ButtonColores>
                         </div>
                     )}
-                    <br />
-                    <Link href={route('equipos.index')} className="text-indigo-600 hover:text-indigo-900">
-                        Volver
-                    </Link>
+                    <div className="flex mt-4">
+                        <Link href={route('equipos.index')}>
+                            <ButtonColores color="blue">
+                                Volver
+                            </ButtonColores>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </ControladorLayout>
