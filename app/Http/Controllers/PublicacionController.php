@@ -59,7 +59,7 @@ class PublicacionController extends Controller
             'rangos' => Rango::all(),
             'roles' => Rol::all(),
             'existePublicacion' => $existePublicacion,
-            'flash' => session('error'),
+            'flash' => session('flash'),
         ]);
     }
 
@@ -73,7 +73,7 @@ class PublicacionController extends Controller
         $existePublicacion = Publicacion::where('usuario_id', $userId)->exists();
 
         if ($existePublicacion) {
-            Session::flash('error', 'No puedes crear más de una publicación.');
+            Session::flash('flash', ['type' => 'error', 'message' => 'Ya tienes una publicación creada.']);
             return Inertia::location(route('publicaciones.index'));
         }
 
@@ -114,6 +114,7 @@ class PublicacionController extends Controller
 
         $publicacion->save(); // Guarda la publicación en la base de datos.
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'Tu publicación fue creada.']);
         // Redirige al usuario a la lista de publicaciones.
         return Inertia::location(route('publicaciones.index'));
     }
@@ -138,7 +139,7 @@ class PublicacionController extends Controller
         $rangos = Rango::all();
 
         if (!Auth::check() || Auth::user()->id !== $publicacion->usuario_id) {
-            Session::flash('error', 'No puedes editar esta publicación.');
+            Session::flash('flash', ['type' => 'error', 'message' => 'No puedes editar esta publicación.']);
             return Inertia::location(back());
         }
 
@@ -191,6 +192,7 @@ class PublicacionController extends Controller
             'hora_preferente_final' => $request->input('hora_preferente_final'),
         ]);
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'La publicación ha sido actualizada.']);
         // Redirige al usuario a la lista de publicaciones.
         return Inertia::location(route('publicaciones.index'));
     }

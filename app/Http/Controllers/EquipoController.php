@@ -63,10 +63,12 @@ class EquipoController extends Controller
     {
         // Validación de los datos recibidos del formulario.
         $request->validate([
-            'nombre_equipo' => 'required|string',
+            'nombre_equipo' => 'required|string|unique:equipos,nombre_equipo',
             'modo_juego_preferente' => 'nullable|exists:modos,id',
             'rango_id' => 'nullable|exists:rangos,id',
             'privado' => 'required|boolean',
+        ], [
+            'nombre_equipo.unique' => 'El nombre del equipo ya está en uso. Por favor elige otro nombre.',
         ]);
 
         $equipo = new Equipo(); // Crea un nuevo objeto Equipo.
