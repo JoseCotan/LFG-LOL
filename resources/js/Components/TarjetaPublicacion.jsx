@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './Button';
 import { Link, usePage } from '@inertiajs/react';
+import ButtonColores from './ButtonColores';
 
 const TarjetaPublicacion = ({ publicacion }) => {
     const { auth } = usePage().props;
@@ -57,9 +58,9 @@ const TarjetaPublicacion = ({ publicacion }) => {
                 <h2 className="text-lg font-bold mb-2">{publicacion.titulo}</h2>
                 <div className="mb-2">Horario: {publicacion.hora_preferente_inicio} - {publicacion.hora_preferente_final}</div>
                 <div className="mb-2">Modo: {publicacion.modo.nombre}</div>
-                <Button onClick={handlePerfilClick}>
+                <ButtonColores color="green" onClick={handlePerfilClick}>
                     Ver perfil
-                </Button>
+                </ButtonColores>
             </div>
             {publicacion.reputacion_img && (
                 <img

@@ -4,6 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
+import ButtonColores from '@/Components/ButtonColores';
 
 export default function UpdateLeagueOfLegendsNickForm() {
     const { data, setData, post, errors, processing } = useForm({
@@ -17,7 +18,7 @@ export default function UpdateLeagueOfLegendsNickForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 text-white">
             <div>
                 <InputLabel htmlFor="nick" value="Nombre de League of Legends" />
                 <TextInput
@@ -41,9 +42,9 @@ export default function UpdateLeagueOfLegendsNickForm() {
                 <InputError message={errors.tag} />
             </div>
             <div className="flex items-center mt-4">
-                <PrimaryButton disabled={processing || !data.nick || !data.tag}>
+                <ButtonColores color="green" disabled={processing || !data.nick || !data.tag}>
                     Guardar nick
-                </PrimaryButton>
+                </ButtonColores>
             </div>
         </form>
     );

@@ -3,6 +3,7 @@ import { useForm, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputError from '@/Components/InputError';
 import ImagenResponsive from '@/Components/ImagenResponsive';
+import ButtonColores from '@/Components/ButtonColores';
 
 export default function UpdateProfilePhotoForm() {
     const { user } = usePage().props.auth;
@@ -21,7 +22,7 @@ export default function UpdateProfilePhotoForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 text-white">
             <div className="flex justify-between items-center">
                 <div className="flex-grow flex flex-col">
                     <input
@@ -33,9 +34,9 @@ export default function UpdateProfilePhotoForm() {
                     />
                     <InputError message={errors.foto_perfil} />
                     <div className="flex mt-6 gap-4">
-                        <PrimaryButton disabled={processing || !data.foto_perfil}>
+                        <ButtonColores color="green" disabled={processing || !data.foto_perfil}>
                             Guardar foto
-                        </PrimaryButton>
+                        </ButtonColores>
                     </div>
                 </div>
                 <ImagenResponsive
