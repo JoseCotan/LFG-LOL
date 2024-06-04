@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, usePage, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import PrimaryButton from '@/Components/PrimaryButton';
+import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import Checkbox from '@/Components/Checkbox';
-import InputLabel from '@/Components/InputLabel';
 import Select from '@/Components/Select';
 import ButtonColores from '@/Components/ButtonColores';
 
 const EquiposCreate = () => {
     const { auth, modos, rangos } = usePage().props;
-    const { data, setData, post, processing } = useForm({
+    const { data, setData, post, processing, errors, setError, clearErrors } = useForm({
         nombre_equipo: '',
         rango_id: '',
         modo_juego_preferente: '2',
         privado: false,
     });
 
-    // Estado para controlar la deshabilitación del campo de rango
     const [rangoDisabled, setRangoDisabled] = useState(false);
 
-    // Efecto para ajustar el rango automáticamente y bloquear la selección
     useEffect(() => {
-        // Si el modo de juego preferente es "Draft Pick" o "Aram", deshabilita el campo de rango
         if (data.modo_juego_preferente === '1' || data.modo_juego_preferente === '4') {
             setRangoDisabled(true);
             setData('rango_id', '12'); // ID 12 para "Sin rango"
@@ -31,18 +27,31 @@ const EquiposCreate = () => {
         }
     }, [data.modo_juego_preferente]);
 
+    const validateNombreEquipo = () => {
+        if (!data.nombre_equipo) {
+            setError('nombre_equipo', 'El nombre del equipo es obligatorio.');
+        } else if (data.nombre_equipo.length > 16) {
+            setError('nombre_equipo', 'El nombre del equipo no puede exceder los 16 caracteres.');
+        } else {
+            clearErrors('nombre_equipo');
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('equipos.store'), data, {
-            onSuccess: () => {
-                setData({
-                    nombre_equipo: '',
-                    modo_juego_preferente: '',
-                    rango_id: '',
-                    privado: false,
-                });
-            }
-        });
+        validateNombreEquipo(); // Validar antes de enviar
+        if (!errors.nombre_equipo) {
+            post(route('equipos.store'), data, {
+                onSuccess: () => {
+                    setData({
+                        nombre_equipo: '',
+                        modo_juego_preferente: '',
+                        rango_id: '',
+                        privado: false,
+                    });
+                }
+            });
+        }
     };
 
     return (
@@ -56,8 +65,11 @@ const EquiposCreate = () => {
                             type="text"
                             value={data.nombre_equipo}
                             onChange={(e) => setData('nombre_equipo', e.target.value)}
+                            onBlur={validateNombreEquipo}
+                            maxLength={16}
                             required
                         />
+                        {errors.nombre_equipo && <p className="text-red-600 text-sm mt-1">{errors.nombre_equipo}</p>}
                     </div>
                     <div className="mb-6">
                         <InputLabel value="Modo de juego preferente" />
@@ -96,8 +108,8 @@ const EquiposCreate = () => {
                         </Link>
                     </div>
                 </form>
-            </div >
-        </AuthenticatedLayout >
+            </div>
+        </AuthenticatedLayout>
     );
 };
 

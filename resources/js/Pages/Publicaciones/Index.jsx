@@ -3,6 +3,7 @@ import ControladorLayout from '@/Layouts/ControladorLayout';
 import { Link, usePage } from '@inertiajs/react';
 import Button from '@/Components/Button';
 import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
+import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
 import Select from '@/Components/Select';
 import InputLabel from '@/Components/InputLabel';
@@ -18,6 +19,8 @@ const PublicacionesIndex = () => {
     const [horaInicio, setHoraInicio] = useState('');
     const [horaFin, setHoraFin] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
 
     const resetearFiltros = () => {
         setFiltroModo('');
@@ -36,8 +39,12 @@ const PublicacionesIndex = () => {
     });
 
     useEffect(() => {
-        if (flash) {
-            setError(flash);
+        if (flash && flash.type === 'success') {
+            setSuccess(flash.message);
+            setError('');
+        } else if (flash && flash.type === 'error') {
+            setError(flash.message);
+            setSuccess('');
         }
     }, [flash]);
 
@@ -95,6 +102,9 @@ const PublicacionesIndex = () => {
                     </ButtonColores>
                 </div>
                 <div className="w-3/4 p-6 overflow-hidden sm:rounded-lg">
+                    {success && (
+                        <MensajeSuccess message={success} onClose={() => setSuccess('')} />
+                    )}
                     {error && (
                         <MensajeError message={error} onClose={() => setError('')} />
                     )}

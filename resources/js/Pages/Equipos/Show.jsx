@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
@@ -6,9 +6,13 @@ import DangerButton from '@/Components/DangerButton';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import Button from '@/Components/Button';
 import ButtonColores from '@/Components/ButtonColores';
+import MensajeSuccess from '@/Components/MensajeSuccess';
+import MensajeError from '@/Components/MensajeError';
 
 const EquipoShow = () => {
-    const { equipo, auth } = usePage().props;
+    const { equipo, auth, flash } = usePage().props;
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
 
     const esMiembro = [
         equipo.miembro1?.id,
@@ -45,6 +49,17 @@ const EquipoShow = () => {
         return rangos[nombreRango] || nombreRango;
     };
 
+    useEffect(() => {
+        if (flash && flash.type === 'success') {
+            setSuccess(flash.message);
+            setError('');
+        } else if (flash && flash.type === 'error') {
+            setError(flash.message);
+            setSuccess('');
+        }
+    }, [flash]);
+
+
     const handleUnirseEquipo = () => {
         Inertia.post(route('equipos.unirse', equipo.id));
     };
@@ -67,7 +82,13 @@ const EquipoShow = () => {
 
     return (
         <ControladorLayout>
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8 ml-4 mr-4 mb-4">
+                {success && (
+                    <MensajeSuccess message={success} onClose={() => setSuccess('')} />
+                )}
+                {error && (
+                    <MensajeError message={error} onClose={() => setError('')} />
+                )}
                 <div className="bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <h3 className="text-xl font-medium text-white mb-4">{equipo.nombre_equipo}</h3>
                     <div className="mb-4">
@@ -135,7 +156,7 @@ const EquipoShow = () => {
                     ))}
                     <hr className="my-4" />
                     {/* Muestra el botón solo si el equipo no está lleno y el usuario no es miembro */}
-                    {!esMiembro && !equipoLleno && !equipo.privado && (
+                    {!esMiembro && !equipoLleno && (
                         <ButtonColores color="blue" onClick={handleUnirseEquipo}>
                             Unirse al Equipo
                         </ButtonColores>
