@@ -16,7 +16,9 @@ const TarjetaPublicacion = ({ publicacion }) => {
             "Diamante": "DIAMOND",
             "Maestro": "MASTER",
             "Gran Maestro": "GRANDMASTER",
-            "Aspirante": "CHALLENGER"
+            "Aspirante": "CHALLENGER",
+            "Sin clasificar": "UNRANKED",
+            "Sin rango": "NORANK"
         };
         return rangos[nombreRango] || nombreRango;
     };
