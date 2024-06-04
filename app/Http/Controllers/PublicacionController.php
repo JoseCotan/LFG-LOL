@@ -68,7 +68,7 @@ class PublicacionController extends Controller
      */
     public function create()
     {
-        $userId = Auth::id();
+        $userId = Auth::user()->id;
 
         $existePublicacion = Publicacion::where('usuario_id', $userId)->exists();
 

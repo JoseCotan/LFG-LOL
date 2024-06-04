@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import ButtonColores from '@/Components/ButtonColores';
 import ImagenResponsive from '@/Components/ImagenResponsive';
+import MensajeSuccess from '@/Components/MensajeSuccess';
+import MensajeError from '@/Components/MensajeError';
 
 const EquiposIndex = () => {
-    const { equipos, auth } = usePage().props;
+    const { equipos, auth, flash } = usePage().props;
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
 
     const handleDelete = (id) => {
         Inertia.delete(route('equipos.destroy', id));
@@ -30,9 +34,27 @@ const EquiposIndex = () => {
         return rangos[nombreRango] || nombreRango;
     };
 
+    useEffect(() => {
+        if (flash && flash.type === 'success') {
+            setSuccess(flash.message);
+            setError('');
+        } else if (flash && flash.type === 'error') {
+            setError(flash.message);
+            setSuccess('');
+        }
+    }, [flash]);
+
     return (
         <ControladorLayout>
             <div className="py-12 max-w-8xl mx-auto sm:px-6 lg:px-8">
+                <div className="ml-4">
+                    {success && (
+                        <MensajeSuccess message={success} onClose={() => setSuccess('')} />
+                    )}
+                    {error && (
+                        <MensajeError message={error} onClose={() => setError('')} />
+                    )}
+                </div>
                 <div className="grid grid-cols-1 ml-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {equipos.map((equipo) => (
                         <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg max-w-md relative">
