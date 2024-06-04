@@ -24,6 +24,8 @@ class RangoSeeder extends Seeder
             ['nombre' => 'Maestro'],
             ['nombre' => 'Gran Maestro'],
             ['nombre' => 'Aspirante'],
+            ['nombre' => 'Sin clasificar'],
+            ['nombre' => 'Sin rango'],
         ]);
     }
 }

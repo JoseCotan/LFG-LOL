@@ -1,22 +1,84 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, usePage, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import Select from '@/Components/Select';
 import InputError from '@/Components/InputError';
 
 const CreatePublicacion = () => {
     const { auth, modos, roles, rangos } = usePage().props;
-    const { data, setData, post, processing, errors, setError } = useForm({
+    const { data, setData, post, errors, setError } = useForm({
         titulo: '',
-        descripcion: '',
         modo_id: '',
         rol_id: '',
-        rango_id: '',
+        rango_id: '12',
         hora_preferente_inicio: '',
         hora_preferente_final: ''
     });
+
+    const [rangoDisabled, setRangoDisabled] = useState(true);
+    const [rolDisabled, setRolDisabled] = useState(false);
+
+    useEffect(() => {
+        // Mapeo de los nombres de los rangos a sus IDs correspondientes
+        const rangosMap = {
+            'IRON': 1,
+            'BRONZE': 2,
+            'SILVER': 3,
+            'GOLD': 4,
+            'PLATINUM': 5,
+            'EMERALD': 6,
+            'DIAMOND': 7,
+            'MASTER': 8,
+            'GRANDMASTER': 9,
+            'CHALLENGER': 10,
+            'UNRANKED': 11,
+        };
+
+        // Si el usuario tiene un rango guardado en la base de datos, asigna automáticamente su ID correspondiente
+        if (auth.user.rankedSoloQ && data.modo_id === '2') {
+            setData('rango_id', rangosMap[auth.user.rankedSoloQ]);
+            setRangoDisabled(true);
+        } else if (auth.user.rankedFlex && data.modo_id === '3') {
+            setData('rango_id', rangosMap[auth.user.rankedFlex]);
+            setRangoDisabled(true);
+        } else if (data.modo_id === '1' || data.modo_id === '4') {
+            setRangoDisabled(true);
+            setData('rango_id', '12');
+        } else if ((!(auth.user.rankedSoloQ) && data.modo_id === '2')) {
+            setRangoDisabled(false);
+        } else if ((!(auth.user.rankedFlex) && data.modo_id === '3')) {
+            setRangoDisabled(false);
+        } else {
+            setRangoDisabled(true);
+        }
+
+        // Para el rol
+        if (data.modo_id === '4') { // Asumiendo que '4' es el ID para ARAM
+            setData('rol_id', '6'); // Asumiendo que '6' es el ID para ARAM
+            setRolDisabled(true);
+        } else {
+            setRolDisabled(false);
+        }
+    }, [data.modo_id, auth.user.rankedSoloQ, auth.user.rankedFlex]);
+
+    let rangoOptions;
+    if (!auth.user.rankedSoloQ && data.modo_id === '2') {
+        rangoOptions = rangos.slice(0, -1).map((rango) => ({ value: rango.id, label: rango.nombre }));
+    } else if (!auth.user.rankedFlex && data.modo_id === '3') {
+        rangoOptions = rangos.slice(0, -1).map((rango) => ({ value: rango.id, label: rango.nombre }));
+    } else {
+        rangoOptions = rangos.map((rango) => ({ value: rango.id, label: rango.nombre }));
+    }
+
+    let rolOptions;
+    if (data.modo_id === '4') { // Asumiendo que '4' es el ID para ARAM
+        rolOptions = [{ value: '6', label: 'ARAM' }];
+    } else {
+        rolOptions = roles.slice(0, -1).map((rol) => ({ value: rol.id, label: rol.nombre }));
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,7 +86,6 @@ const CreatePublicacion = () => {
             onSuccess: () => {
                 setData({
                     titulo: '',
-                    descripcion: '',
                     modo_id: '',
                     rol_id: '',
                     rango_id: '',
@@ -62,55 +123,35 @@ const CreatePublicacion = () => {
                     </div>
 
                     <div className="mb-6">
-                        <InputLabel htmlFor="descripcion" value="Descripción" />
-                        <textarea
-                            id="descripcion"
-                            value={data.descripcion}
-                            onChange={(e) => setData('descripcion', e.target.value)}
-                            className="mt-1 block w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        <InputLabel htmlFor="modo_id" value="Modo de juego" />
+                        <Select
+                            value={data.modo_id}
+                            onChange={(e) => setData('modo_id', e.target.value)}
+                            options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
+                            id="modo_id"
                         />
                     </div>
 
                     <div className="mb-6">
-                        <InputLabel htmlFor="modo_id" value="Modo de juego" />
-                        <select
-                            id="modo_id"
-                            value={data.modo_id}
-                            onChange={(e) => setData('modo_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {modos.map((modo) => (
-                                <option key={modo.id} value={modo.id}>{modo.nombre}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="mb-6">
                         <InputLabel htmlFor="rol_id" value="Rol del juego" />
-                        <select
-                            id="rol_id"
+                        <Select
                             value={data.rol_id}
                             onChange={(e) => setData('rol_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {roles.map((rol) => (
-                                <option key={rol.id} value={rol.id}>{rol.nombre}</option>
-                            ))}
-                        </select>
+                            options={rolOptions}
+                            id="rol_id"
+                            disabled={rolDisabled}
+                        />
                     </div>
 
                     <div className="mb-6">
                         <InputLabel htmlFor="rango_id" value="Rango del juego" />
-                        <select
-                            id="rango_id"
+                        <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        >
-                            {rangos.map((rango) => (
-                                <option key={rango.id} value={rango.id}>{rango.nombre}</option>
-                            ))}
-                        </select>
+                            options={rangoOptions}
+                            id="rango_id"
+                            disabled={rangoDisabled}
+                        />
                     </div>
 
                     <div className="mb-6">
@@ -128,7 +169,6 @@ const CreatePublicacion = () => {
                                     setError('hora_preferente_inicio', '');
                                 }
                             }}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required
                         />
                         <InputError message={errors.hora_preferente_inicio} className="mt-2" />
@@ -149,15 +189,14 @@ const CreatePublicacion = () => {
                                     setError('hora_preferente_final', '');
                                 }
                             }}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required
                         />
                         <InputError message={errors.hora_preferente_final} className="mt-2" />
                     </div>
 
                     <div className="flex items-center justify-between">
-                        <PrimaryButton disabled={processing}>Crear publicación</PrimaryButton>
-                        <Link href={route('publicaciones.index')} className="text-sm text-blue-600 hover:text-blue-800">Cancelar</Link>
+                        <PrimaryButton>Crear publicación</PrimaryButton>
+                        <Link href={route('publicaciones.index')} className="text-sm text-blue-600 hover">Cancelar</Link>
                     </div>
                 </form>
             </div>

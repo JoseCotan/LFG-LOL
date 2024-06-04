@@ -19,6 +19,7 @@ class RolSeeder extends Seeder
             ['nombre' => 'Medio'],
             ['nombre' => 'ADC'],
             ['nombre' => 'Soporte'],
+            ['nombre' => 'ARAM'],
         ]);
     }
 }

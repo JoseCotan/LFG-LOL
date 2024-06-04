@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -255,6 +256,84 @@ class ProfileController extends Controller
 
         $user = Auth::user();
         $user->nombreLOL = $request->nick . '#' . $request->tag;
+        list($nombre, $tag) = explode('#', $user->nombreLOL);
+
+        $apiKey = env('RIOT_API_KEY');
+        $encodedNombre = urlencode($nombre);
+        $encodedTag = urlencode($tag);
+        $urlObtenerPuuid = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{$encodedNombre}/{$encodedTag}?api_key={$apiKey}";
+        $urlObtenerPuuidCORS = "http://cors-anywhere.herokuapp.com/{$urlObtenerPuuid}";
+
+
+        try {
+            // ------------------------------- OBTENER PUUID DE LA CUENTA ------------------------------------ //
+            $respuesta = Http::withHeaders([
+                'Origin' => 'http://localhost',
+            ])->get($urlObtenerPuuidCORS);
+
+            if ($respuesta->failed()) {
+                $user->rankedSoloQ = null;
+                $user->rankedFlex = null;
+                $user->nombreLOL = null;
+                $request->user()->save();
+
+                return Inertia::render('CuentaNoEncontrada');
+            }
+
+            $datosInvocadorAccount = $respuesta->json();
+            Log::info("Riot API Respuesta: " . json_encode($datosInvocadorAccount));
+
+            // Extraer el puuid
+            $puuid = $datosInvocadorAccount['puuid'];
+            Log::info("PUUID: {$puuid}");
+
+            // ------------------------------- OBTENER ID DE LA CUENTA --------------------------------------- //
+            $urlObtenerDatosInvocador = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{$puuid}?api_key={$apiKey}";
+            $urlObtenerDatosInvocadorCORS = "http://cors-anywhere.herokuapp.com/{$urlObtenerDatosInvocador}";
+
+            $respuesta = Http::withHeaders([
+                'Origin' => 'http://localhost',
+            ])->get($urlObtenerDatosInvocadorCORS);
+
+            if ($respuesta->failed()) {
+                throw new \Exception('No se pudieron recuperar los datos del invocador.');
+            }
+
+            $datosInvocadorSummonerv4 = $respuesta->json();
+            $id = $datosInvocadorSummonerv4['id'];
+            Log::info("Riot API Respuesta 2: " . json_encode($datosInvocadorSummonerv4));
+
+            // ------------------------------- OBTENER DATOS DE RANKED SOLOQ --------------------------------- //
+            $urlObtenerDatosRanked = "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/{$id}?api_key={$apiKey}";
+            $urlObtenerDatosRankedCORS = "http://cors-anywhere.herokuapp.com/{$urlObtenerDatosRanked}";
+
+            $respuesta = Http::withHeaders([
+                'Origin' => 'http://localhost',
+            ])->get($urlObtenerDatosRankedCORS);
+
+            if ($respuesta->failed()) {
+                throw new \Exception('No se pudieron recuperar los datos del invocador.');
+            }
+
+            $datosInvocadorLeaguev4 = $respuesta->json();
+            $rankedSoloQDatos = collect($datosInvocadorLeaguev4)->firstWhere('queueType', 'RANKED_SOLO_5x5');
+            $rankedSoloFlexDatos = collect($datosInvocadorLeaguev4)->firstWhere('queueType', 'RANKED_FLEX_SR');
+
+            if ($rankedSoloQDatos) {
+                $user->rankedSoloQ = $rankedSoloQDatos['tier'];
+            } else {
+                $user->rankedSoloQ = "UNRANKED";
+            }
+
+            if ($rankedSoloFlexDatos) {
+                $user->rankedFlex = $rankedSoloFlexDatos['tier'];
+            } else {
+                $user->rankedFlex = "UNRANKED";
+
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Un error ocurrió: ' . $e->getMessage()]);
+        }
         $request->user()->save();
 
         return Inertia::location(route('profile.edit'));

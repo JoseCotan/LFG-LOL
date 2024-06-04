@@ -91,6 +91,11 @@ class RiotController extends Controller
                 $user->save();
             }
 
+            if ($rankedSoloFlexDatos) {
+                $user->rankedFlex = $rankedSoloFlexDatos['tier'];
+                $user->save();
+            }
+
             // ------------------------------- OBTENER ID DE LAS ÚLTIMAS PARTIDAS ---------------------------- //
             $urlObtenerUltimasPartidas = "https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{$puuid}/ids?start=0&count=20&api_key={$apiKey}";
             $urlObtenerUltimasPartidasCORS = "http://cors-anywhere.herokuapp.com/{$urlObtenerUltimasPartidas}";

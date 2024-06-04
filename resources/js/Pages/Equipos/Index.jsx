@@ -2,10 +2,11 @@ import React from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
-import DangerButton from '@/Components/DangerButton';
+import ButtonColores from '@/Components/ButtonColores';
+import ImagenResponsive from '@/Components/ImagenResponsive';
 
 const EquiposIndex = () => {
-    const { equipos, auth, esLider } = usePage().props;
+    const { equipos, auth } = usePage().props;
 
     const handleDelete = (id) => {
         Inertia.delete(route('equipos.destroy', id));
@@ -13,77 +14,56 @@ const EquiposIndex = () => {
 
     return (
         <ControladorLayout>
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-600">
-                            <thead className="bg-gray-900 text-white">
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                        Nombre del Equipo
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                        Líder
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                        Modo de Juego
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                        Privacidad
-                                    </th>
-                                    {esLider && (
-                                    <>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                            Editar
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                            Eliminar
-                                        </th>
-                                    </>
-                                )}
-                                </tr>
-                            </thead>
-                            <tbody className="bg-gray-800 text-white divide-y divide-gray-700">
-                                {equipos.map((equipo) => (
-                                    <tr key={equipo.id}>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <Link href={route('equipos.show', { id: equipo.id })} className="text-sm text-white hover:text-blue-300">
-                                                {equipo.nombre_equipo}
+            <div className="py-12 max-w-8xl mx-auto sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 ml-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {equipos.map((equipo) => (
+                        <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg max-w-md">
+                            <div className="p-6 h-full">
+                                <h3 className="text-lg font-semibold text-white mb-2">{equipo.nombre_equipo}</h3>
+                                <div className="flex items-center mb-2">
+                                    <ImagenResponsive
+                                        srcPC={equipo.lider.foto_perfil_PC}
+                                        srcTablet={equipo.lider.foto_perfil_Tablet}
+                                        srcMobile={equipo.lider.foto_perfil_Movil}
+                                        alt="Foto de perfil"
+                                        className="h-8 w-8 rounded-full mr-2"
+                                    />
+                                    <p className="text-sm text-white">{equipo.lider.name}</p>
+                                </div>
+                                <div className="mb-4">
+                                    <p className="text-sm text-gray-400 mb-1">Modo de Juego:</p>
+                                    <p className="text-sm text-white">{equipo.modo.nombre}</p>
+                                </div>
+                                <div className="flex items-center mb-4">
+                                    <p className="text-sm text-gray-400">Privacidad:</p>
+                                    <p className="text-sm text-white ml-1">{equipo.privado ? 'Privado' : 'Público'}</p>
+                                    <img
+                                        src={`/images/${equipo.privado ? 'lock-solid.svg' : 'unlock-solid.svg'}`}
+                                        alt="Candado"
+                                        className="h-4 w-4 ml-2"
+                                    />
+                                </div>
+                                <div className="flex">
+                                    <Link href={route('equipos.show', equipo.id)}>
+                                        <ButtonColores color="green">Mirar Equipo</ButtonColores>
+                                    </Link>
+                                    {auth.user && auth.user.id === equipo.lider.id && (
+                                        <>
+                                            <Link href={route('equipos.edit', equipo.id)}>
+                                                <ButtonColores color="yellow">Editar</ButtonColores>
                                             </Link>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-white">{equipo.lider.name}</div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-white">{equipo.modo.nombre}</div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-white">{equipo.privado ? 'Privado' : 'Público'}</div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            {auth.user.id === equipo.lider.id && (
-                                                <Link href={route('equipos.edit', equipo.id)} className="text-indigo-600 hover:text-indigo-900">
-                                                    Editar
-                                                </Link>
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            {auth.user.id === equipo.lider.id && (
-                                                <DangerButton onClick={() => handleDelete(equipo.id)} className="text-red-600 hover:text-red-400">
-                                                    Eliminar
-                                                </DangerButton>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <div className="flex justify-center mt-4 mb-4">
-                            <Link href={route('equipos.create')} className="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-600 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 disabled:opacity-25 transition">
-                                Añadir Nuevo Equipo
-                            </Link>
+                                            <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>Eliminar</ButtonColores>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    ))}
+                </div>
+                <div className="flex justify-center mt-4">
+                    <Link href={route('equipos.create')} className="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-600 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 disabled:opacity-25 transition">
+                        Añadir Nuevo Equipo
+                    </Link>
                 </div>
             </div>
         </ControladorLayout>

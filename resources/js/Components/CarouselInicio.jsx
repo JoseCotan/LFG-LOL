@@ -29,12 +29,16 @@ const CarouselUsuarios = ({ usuarios }) => {
         ]
     };
 
+    const handleUserClick = (nickBusqueda) => {
+        window.location.href = `/users/${nickBusqueda.trim()}`;
+    };
+
     return (
         <div className="bg-gray-100 rounded-lg p-6 max-w-screen-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-800">Últimos usuarios registrados</h2>
             <Slider {...settings}>
                 {usuarios.map(usuario => (
-                    <div key={usuario.id} className="bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-between" style={{ fontFamily: 'Spiegel' }}>
+                    <div key={usuario.id} className="bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-between transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg cursor-pointer" style={{ fontFamily: 'Spiegel' }} onClick={() => handleUserClick(usuario.name)}>
                         <div className="flex items-center">
                             <div className="mr-4">
                                 <ImagenResponsive

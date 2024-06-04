@@ -22,12 +22,8 @@ class EquipoController extends Controller
         // Se obtiene todos los equipos y carga las relaciones 'lider' y 'modo' de una vez.
         $equipos = Equipo::with(['lider', 'modo'])->get();
 
-        // Verifica si el usuario logueado es líder de algún equipo.
-        $esLider = Equipo::where('lider_id', Auth::id())->exists();
-
         return Inertia::render('Equipos/Index', [
             'equipos' => $equipos,
-            'esLider' => $esLider
         ]);
     }
 
@@ -153,7 +149,7 @@ class EquipoController extends Controller
         $equipo = Equipo::findOrFail($id); // Busca el equipo por ID.
 
         // Verifica si el usuario logueado es el líder del equipo.
-        if (Auth::id() !== $equipo->lider_id) {
+        if (Auth::user()->id !== $equipo->lider_id) {
             // Si no es el líder, redirige al índice sin eliminar.
             return Inertia::location(route('equipos.index'));
         }

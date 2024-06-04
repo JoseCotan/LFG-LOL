@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, usePage, Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
@@ -11,26 +11,83 @@ import Select from '@/Components/Select';
 import DangerButton from '@/Components/DangerButton';
 import Button from '@/Components/Button';
 
-
 const EditPublicacion = () => {
     const { auth, modos, roles, rangos, publicacion } = usePage().props;
     const { data, setData, put, processing, errors, setError } = useForm({
         titulo: publicacion.titulo || '',
-        descripcion: publicacion.descripcion || '',
         modo_id: publicacion.modo_id || '',
         rol_id: publicacion.rol_id || '',
-        rango_id: publicacion.rango_id || '',
+        rango_id: publicacion.rango_id || '12',
         hora_preferente_inicio: publicacion.hora_preferente_inicio || '',
         hora_preferente_final: publicacion.hora_preferente_final || ''
     });
+
+    const [rangoDisabled, setRangoDisabled] = useState(true);
+    const [rolDisabled, setRolDisabled] = useState(false);
+
+    useEffect(() => {
+        const rangosMap = {
+            'IRON': 1,
+            'BRONZE': 2,
+            'SILVER': 3,
+            'GOLD': 4,
+            'PLATINUM': 5,
+            'EMERALD': 6,
+            'DIAMOND': 7,
+            'MASTER': 8,
+            'GRANDMASTER': 9,
+            'CHALLENGER': 10,
+            'UNRANKED': 11,
+        };
+
+        if (auth.user.rankedSoloQ && data.modo_id === '2') {
+            setData('rango_id', rangosMap[auth.user.rankedSoloQ]);
+            setRangoDisabled(true);
+        } else if (auth.user.rankedFlex && data.modo_id === '3') {
+            setData('rango_id', rangosMap[auth.user.rankedFlex]);
+            setRangoDisabled(true);
+        } else if (data.modo_id === '1' || data.modo_id === '4') {
+            setRangoDisabled(true);
+            setData('rango_id', '12');
+        } else if ((!(auth.user.rankedSoloQ) && data.modo_id === '2')) {
+            setRangoDisabled(false);
+        } else if ((!(auth.user.rankedFlex) && data.modo_id === '3')) {
+            setRangoDisabled(false);
+        } else {
+            setRangoDisabled(true);
+        }
+
+        if (data.modo_id === '4') {
+            setData('rol_id', '6');
+            setRolDisabled(true);
+        } else {
+            setRolDisabled(false);
+        }
+    }, [data.modo_id, auth.user.rankedSoloQ, auth.user.rankedFlex]);
+
+    let rangoOptions;
+    if (!auth.user.rankedSoloQ && data.modo_id === '2') {
+        rangoOptions = rangos.map((rango) => ({ value: rango.id, label: rango.nombre }));
+    } else if (!auth.user.rankedFlex && data.modo_id === '3') {
+        rangoOptions = rangos.map((rango) => ({ value: rango.id, label: rango.nombre }));
+    } else {
+        rangoOptions = rangos.map((rango) => ({ value: rango.id, label: rango.nombre }));
+    }
+
+    let rolOptions;
+    if (data.modo_id === '4') {
+        rolOptions = [{ value: '6', label: 'ARAM' }];
+    } else {
+        rolOptions = roles.slice(0, -1).map((rol) => ({ value: rol.id, label: rol.nombre }));
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         put(route('publicaciones.update', publicacion.id));
     };
 
-    const handleDelete = (id) => {
-        Inertia.delete(route('publicaciones.destroy', id));
+    const handleDelete = () => {
+        Inertia.delete(route('publicaciones.destroy', publicacion.id));
     };
 
     return (
@@ -59,17 +116,11 @@ const EditPublicacion = () => {
                     </div>
 
                     <div className="mb-6">
-                        <InputLabel htmlFor="descripcion" className="block text-lg font-bold mb-2">Descripción</InputLabel>
-                        <TextArea data={data} setData={setData} />
-                    </div>
-
-                    <div className="mb-6">
                         <InputLabel htmlFor="modo_id" value="Modo de juego" />
                         <Select
                             value={data.modo_id}
                             onChange={(e) => setData('modo_id', e.target.value)}
                             options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
-                            className=""
                             id="modo_id"
                         />
                     </div>
@@ -79,8 +130,9 @@ const EditPublicacion = () => {
                         <Select
                             value={data.rol_id}
                             onChange={(e) => setData('rol_id', e.target.value)}
-                            options={roles.map((rol) => ({ value: rol.id, label: rol.nombre }))}
+                            options={rolOptions}
                             id="rol_id"
+                            disabled={rolDisabled}
                         />
                     </div>
 
@@ -89,8 +141,9 @@ const EditPublicacion = () => {
                         <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}
-                            options={rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))}
+                            options={rangoOptions}
                             id="rango_id"
+                            disabled={rangoDisabled}
                         />
                     </div>
 
@@ -108,7 +161,6 @@ const EditPublicacion = () => {
                                     setError('hora_preferente_inicio', '');
                                 }
                             }}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required
                         />
                         <InputError message={errors.hora_preferente_inicio} className="mt-2" />
@@ -128,20 +180,22 @@ const EditPublicacion = () => {
                                     setError('hora_preferente_final', '');
                                 }
                             }}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             required
                         />
                         <InputError message={errors.hora_preferente_final} className="mt-2" />
                     </div>
-
-                    <div className="flex items-center justify-between">
-                        <PrimaryButton disabled={processing ? 'true' : undefined}>Actualizar Publicación</PrimaryButton>
+                    <div className="flex items-center justify-between mb-12">
+                        <PrimaryButton disabled={processing}>Actualizar Publicación</PrimaryButton>
                         <DangerButton onClick={() => handleDelete(publicacion.id)}>
                             Eliminar Publicación
                         </DangerButton>
-                        <Button href={route('publicaciones.index')} className="text-sm text-blue-600 hover:text-blue-800">Volver</Button>
                     </div>
                 </form>
+                <div className="flex justify-end">
+                    <Link href={route('publicaciones.index')}>
+                        <Button>Volver</Button>
+                    </Link>
+                </div>
             </div>
         </AuthenticatedLayout>
     );
