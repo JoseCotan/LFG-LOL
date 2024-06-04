@@ -12,12 +12,30 @@ const EquiposIndex = () => {
         Inertia.delete(route('equipos.destroy', id));
     };
 
+    const convertirRango = (nombreRango) => {
+        const rangos = {
+            "Hierro": "IRON",
+            "Bronce": "BRONZE",
+            "Plata": "SILVER",
+            "Oro": "GOLD",
+            "Platino": "PLATINUM",
+            "Esmeralda": "EMERALD",
+            "Diamante": "DIAMOND",
+            "Maestro": "MASTER",
+            "Gran Maestro": "GRANDMASTER",
+            "Aspirante": "CHALLENGER",
+            "Sin clasificar": "UNRANKED",
+            "Sin rango": "NORANK"
+        };
+        return rangos[nombreRango] || nombreRango;
+    };
+
     return (
         <ControladorLayout>
             <div className="py-12 max-w-8xl mx-auto sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 ml-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {equipos.map((equipo) => (
-                        <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg max-w-md">
+                        <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg max-w-md relative">
                             <div className="p-6 h-full">
                                 <h3 className="text-lg font-semibold text-white mb-2">{equipo.nombre_equipo}</h3>
                                 <div className="flex items-center mb-2">
@@ -52,17 +70,22 @@ const EquiposIndex = () => {
                                             <Link href={route('equipos.edit', equipo.id)}>
                                                 <ButtonColores color="yellow">Editar</ButtonColores>
                                             </Link>
-                                            <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>Eliminar</ButtonColores>
+                                            <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
+                                                Eliminar
+                                            </ButtonColores>
                                         </>
                                     )}
                                 </div>
                             </div>
+                            <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="absolute top-6 right-6 w-20 h-20" />
                         </div>
                     ))}
                 </div>
-                <div className="flex justify-center mt-4">
-                    <Link href={route('equipos.create')} className="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-600 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 disabled:opacity-25 transition">
-                        Añadir Nuevo Equipo
+                <div className="flex justify-left mt-4 ml-4">
+                    <Link href={route('equipos.create')}>
+                        <ButtonColores color="green">
+                            Añadir Nuevo Equipo
+                        </ButtonColores>
                     </Link>
                 </div>
             </div>

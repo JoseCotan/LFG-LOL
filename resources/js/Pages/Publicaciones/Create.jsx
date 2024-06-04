@@ -18,6 +18,7 @@ const CreatePublicacion = () => {
         hora_preferente_final: ''
     });
 
+        // Estado para controlar la deshabilitación de los campos
     const [rangoDisabled, setRangoDisabled] = useState(true);
     const [rolDisabled, setRolDisabled] = useState(false);
 
@@ -56,8 +57,8 @@ const CreatePublicacion = () => {
         }
 
         // Para el rol
-        if (data.modo_id === '4') { // Asumiendo que '4' es el ID para ARAM
-            setData('rol_id', '6'); // Asumiendo que '6' es el ID para ARAM
+        if (data.modo_id === '4') {
+            setData('rol_id', '6');
             setRolDisabled(true);
         } else {
             setRolDisabled(false);
@@ -74,7 +75,7 @@ const CreatePublicacion = () => {
     }
 
     let rolOptions;
-    if (data.modo_id === '4') { // Asumiendo que '4' es el ID para ARAM
+    if (data.modo_id === '4') {
         rolOptions = [{ value: '6', label: 'ARAM' }];
     } else {
         rolOptions = roles.slice(0, -1).map((rol) => ({ value: rol.id, label: rol.nombre }));
@@ -144,7 +145,7 @@ const CreatePublicacion = () => {
                     </div>
 
                     <div className="mb-6">
-                        <InputLabel htmlFor="rango_id" value="Rango del juego" />
+                        <InputLabel htmlFor="rango_id" value="Rango del juego mínimo preferente" />
                         <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}

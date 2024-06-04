@@ -48,6 +48,11 @@ class Equipo extends Model
         return $this->belongsTo(User::class, 'miembro_5');
     }
 
+    public function rango()
+    {
+        return $this->belongsTo(Rango::class);
+    }
+
     public function modo()
     {
         return $this->belongsTo(Modo::class, 'modo_juego_preferente');

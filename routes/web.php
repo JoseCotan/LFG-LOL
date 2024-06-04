@@ -86,6 +86,7 @@ Route::resource('equipos', EquipoController::class);
 Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create')->middleware('auth');
 Route::post('/equipos/unirse/{id}', [EquipoController::class, 'unirse'])->name('equipos.unirse')->middleware('auth');
 Route::post('/equipos/{equipoId}/expulsar/{miembroId}', [EquipoController::class, 'expulsarMiembro'])->name('equipos.expulsarMiembro')->middleware('auth');
+Route::post('/equipos/{equipoId}/hacer-lider/{miembroId}', [EquipoController::class, 'hacerLider'])->name('equipos.hacerLider')->middleware('auth');
 Route::post('/equipos/{id}/abandonar', [EquipoController::class, 'abandonarEquipo'])->name('equipos.abandonarEquipo')->middleware('auth');
 
 
