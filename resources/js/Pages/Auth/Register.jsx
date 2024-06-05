@@ -9,7 +9,7 @@ import BotonLogueoGoogle from '@/Components/BotonLogueoGoogle';
 import 'tailwindcss/tailwind.css';
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset, setError } = useForm({
+    const { data, setData, post, processing, errors, reset, setError, clearErrors } = useForm({
         name: '',
         email: '',
         password: '',
@@ -21,22 +21,92 @@ export default function Register() {
     const [showConfirmationPassword, setShowConfirmationPassword] = useState(false); // Estado para controlar si se muestra la confirmación de la contraseña
 
     useEffect(() => {
+        // Restablece los campos de contraseña
         return () => {
             reset('password', 'password_confirmation');
         };
     }, []);
 
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('register'));
+    const validateName = () => {
+        const namePattern = /^[A-Za-z0-9]+$/;
+        // Valida si el campo de nombre está vacío
+        if (!data.name) {
+            setError('name', 'El nombre de usuario es obligatorio.');
+        } else if (data.name.length > 16) { // Valida la longitud del nombre de usuario
+            setError('name', 'El nombre de usuario no puede exceder los 16 caracteres.');
+        } else if (!namePattern.test(data.name)) { // Valida el formato del nombre de usuario
+            setError('name', 'El nombre de usuario solo puede contener letras y números.');
+        } else {
+            clearErrors('name');
+        }
     };
+
+    const validateEmail = () => {
+        const emailPattern = /^[a-zA-Z_.0-9]{3,30}@[a-z]{3,30}\.[a-z]{2,6}$/;
+        // Valida si el campo de correo electrónico está vacío
+        if (!data.email) {
+            setError('email', 'El correo electrónico es obligatorio.');
+        } else if (!emailPattern.test(data.email)) { // Valida el formato del correo electrónico
+            setError('email', 'Por favor ingresa un correo electrónico válido.');
+        } else {
+            clearErrors('email');
+        }
+    };
+
+    const validateNac = () => {
+        const dateValue = new Date(data.nac);
+        const currentDate = new Date();
+        // Valida si el campo de fecha de nacimiento está vacío
+        if (!data.nac) {
+            setError('nac', 'La fecha de nacimiento es obligatoria.');
+        } else if (isNaN(dateValue.getTime()) || dateValue.getFullYear() < 1900 || dateValue >= currentDate) {
+            // Valida si la fecha de nacimiento es válida y anterior a la fecha actual
+            setError('nac', 'Por favor ingresa una fecha de nacimiento válida anterior a la fecha actual.');
+        } else {
+            clearErrors('nac'); // Elimina cualquier error previo del campo de fecha de nacimiento
+        }
+    };
+
+    const validatePasswords = () => {
+        // Valida si la contraseña tiene al menos 8 caracteres
+        if (data.password.length < 8) {
+            setError('password', 'La contraseña debe tener al menos 8 caracteres.');
+        } else {
+            clearErrors('password');
+        }
+
+        // Valida si la confirmación de la contraseña tiene al menos 8 caracteres
+        if (data.password_confirmation.length < 8) {
+            setError('password_confirmation', 'La confirmación de la contraseña debe tener al menos 8 caracteres.');
+        } else if (data.password !== data.password_confirmation) { // Valida si las contraseñas coinciden
+            setError('password_confirmation', 'Las contraseñas no coinciden.');
+        } else {
+            clearErrors('password_confirmation');
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        validateName();
+        validateEmail();
+        validateNac();
+        validatePasswords();
+
+        // Verifica que no haya errores en los campos antes de enviar el formulario
+        if (!errors.name && !errors.email && !errors.nac && !errors.password && !errors.password_confirmation) {
+            // Envía el formulario si no hay errores y restablece los campos
+            post(route('register'), {
+                onSuccess: () => reset()
+            });
+        }
+    };
+
 
     return (
         <AuthLayout>
             <Head title='Register' />
 
-            <form onSubmit={submit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <InputLabel htmlFor='name' className='text-white' value='Nombre de usuario' />
 
@@ -49,24 +119,11 @@ export default function Register() {
                         isFocused={true}
                         pattern='[A-Za-z0-9]+'
                         title='El nombre de usuario solo puede contener letras y números'
-                        onBlur={(e) => {
-                            const input = e.target;
-                            // Verifica si el valor contiene espacios
-                            const tieneEspacios = /\s/.test(input.value);
-                            // Verifica si el valor contiene caracteres no permitidos
-                            const tieneCaracteresNoPermitidos = !/^[A-Za-z0-9]+$/.test(input.value);
-                            if (tieneEspacios) {
-                                setError('name', 'El nombre de usuario no puede contener espacios');
-                            } else if (tieneCaracteresNoPermitidos) {
-                                setError('name', 'El nombre de usuario solo puede contener letras y números');
-                            } else {
-                                setError('name', '');
-                            }
-                        }}
+                        maxLength={16}
+                        onBlur={validateName}
                         onChange={(e) => setData('name', e.target.value)}
                         required
                     />
-
 
                     <InputError message={errors.name} className='mt-2' />
                 </div>
@@ -81,15 +138,7 @@ export default function Register() {
                         value={data.email}
                         className='mt-1 block w-full'
                         autoComplete='username'
-                        onBlur={(e) => {
-                            const input = e.target;
-                            const isValid = /^[a-zA-Z_.0-9]{3,30}@[a-z]{3,30}\.[a-z]{2,6}$/.test(input.value); // Verifica si el valor del input cumple con la expresión regular
-                            if (!isValid) {
-                                setError('email', 'Por favor ingresa un correo electrónico válido');
-                            } else {
-                                setError('email', '');
-                            }
-                        }}
+                        onBlur={validateEmail}
                         onChange={(e) => setData('email', e.target.value)}
                         required
                     />
@@ -105,18 +154,7 @@ export default function Register() {
                         value={data.nac}
                         className="mt-1 block w-full"
                         autoComplete="nac"
-                        onBlur={(e) => {
-                            const input = e.target;
-                            const dateValue = new Date(input.value); // Convertimos el valor del input a un objeto Date
-                            const currentDate = new Date(); // Obtenemos la fecha actual
-
-                            // Verificamos si el valor del input es una fecha válida y está dentro del rango deseado
-                            if (isNaN(dateValue.getTime()) || dateValue.getFullYear() < 1900 || dateValue >= currentDate) {
-                                setError('nac', 'Por favor ingresa una fecha de nacimiento válida anterior a la fecha actual');
-                            } else {
-                                setError('nac', '');
-                            }
-                        }}
+                        onBlur={validateNac}
                         onChange={(e) => setData('nac', e.target.value)}
                         placeholder="dd/mm/yyyy"
                         type="date"
@@ -141,10 +179,8 @@ export default function Register() {
                             required
                         />
 
-                        { /* Añadido botón para mostrar/ocultar la contraseña */}
                         <button
                             type='button'
-                            /* Añadido botón para mostrar/ocultar la contraseña */
                             className='absolute inset-y-0 right-0 pr-3'
                             onClick={() => setShowPassword(!showPassword)}
                         >
@@ -173,7 +209,7 @@ export default function Register() {
                     <div className='relative'>
                         <TextInput
                             id='password_confirmation'
-                            type={showConfirmationPassword ? 'text' : 'password'} // Cambia el tipo del input según el estado
+                            type={showConfirmationPassword ? 'text' : 'password'}
                             name='password_confirmation'
                             value={data.password_confirmation}
                             className='mt-1 block w-full pr-10'
@@ -182,11 +218,9 @@ export default function Register() {
                             required
                         />
 
-                        { /* Añadido botón para mostrar/ocultar la confirmación de la contraseña */}
                         <button
                             type='button'
-                            /* Añadido botón para mostrar/ocultar la confirmación de la contraseña */
-                            className='absolute inset-y-0 right-0 pr-3' // Coloca correctamente el icono a la derecha del input, dejando un pequeño margen
+                            className='absolute inset-y-0 right-0 pr-3'
                             onClick={() => setShowConfirmationPassword(!showConfirmationPassword)}
                         >
                             {showConfirmationPassword ? (
@@ -219,7 +253,6 @@ export default function Register() {
                 <p className='text-white'>Registrarse con Google</p>
             </div>
 
-            {/* Botón de inicio de sesión con Google */}
             <BotonLogueoGoogle />
         </AuthLayout>
     );
