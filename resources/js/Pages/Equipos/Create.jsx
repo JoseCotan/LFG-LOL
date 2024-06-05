@@ -39,7 +39,8 @@ const EquiposCreate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        validateNombreEquipo(); // Validar antes de enviar
+         // Validar antes de enviar
+        validateNombreEquipo();
         if (!errors.nombre_equipo) {
             post(route('equipos.store'), data, {
                 onSuccess: () => {
@@ -81,7 +82,7 @@ const EquiposCreate = () => {
                         />
                     </div>
                     <div className="mb-6">
-                        <InputLabel htmlFor="rango_id" value="Rango del juego" />
+                        <InputLabel htmlFor="rango_id" value="Rango del juego preferente" />
                         <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}

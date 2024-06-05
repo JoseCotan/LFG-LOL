@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -92,9 +92,16 @@ const EquiposEdit = () => {
                         />
                         <span>Hacer equipo Privado</span>
                     </div>
-                    <ButtonColores color="green" disabled={processing}>
-                        Actualizar Equipo
-                    </ButtonColores>
+                    <div className="flex items-center justify-between">
+                        <ButtonColores color="green" disabled={processing}>
+                            Actualizar Equipo
+                        </ButtonColores>
+                        <Link href={route('equipos.index')}>
+                            <ButtonColores color="blue">
+                                Cancelar
+                            </ButtonColores>
+                        </Link>
+                    </div>
                 </form>
             </div>
         </AuthenticatedLayout>

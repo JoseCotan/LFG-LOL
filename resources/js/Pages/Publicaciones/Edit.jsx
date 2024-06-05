@@ -13,7 +13,7 @@ import Button from '@/Components/Button';
 
 const EditPublicacion = () => {
     const { auth, modos, roles, rangos, publicacion } = usePage().props;
-    const { data, setData, put, processing, errors, setError } = useForm({
+    const { data, setData, put, processing, errors, setError, clearErrors } = useForm({
         titulo: publicacion.titulo || '',
         modo_id: publicacion.modo_id || '',
         rol_id: publicacion.rol_id || '',
@@ -22,10 +22,13 @@ const EditPublicacion = () => {
         hora_preferente_final: publicacion.hora_preferente_final || ''
     });
 
+    // Estado para controlar la deshabilitación de los campos
     const [rangoDisabled, setRangoDisabled] = useState(true);
     const [rolDisabled, setRolDisabled] = useState(false);
 
+    // Efecto para manejar el cambio en el modo de juego
     useEffect(() => {
+        // Mapeo de los rangos con sus IDs correspondientes
         const rangosMap = {
             'IRON': 1,
             'BRONZE': 2,
@@ -40,50 +43,94 @@ const EditPublicacion = () => {
             'UNRANKED': 11,
         };
 
+        // Si el usuario tiene un rango asignado para SoloQ o Flex, se deshabilita la selección
         if (auth.user.rankedSoloQ && data.modo_id === '2') {
-            setData('rango_id', rangosMap[auth.user.rankedSoloQ]);
-            setRangoDisabled(true);
+            setData('rango_id', rangosMap[auth.user.rankedSoloQ]); // Asignar el ID del rango
+            setRangoDisabled(true); // Deshabilitar la selección de rango
         } else if (auth.user.rankedFlex && data.modo_id === '3') {
-            setData('rango_id', rangosMap[auth.user.rankedFlex]);
-            setRangoDisabled(true);
+            setData('rango_id', rangosMap[auth.user.rankedFlex]); // Asignar el ID del rango
+            setRangoDisabled(true); // Deshabilitar la selección de rango
         } else if (data.modo_id === '1' || data.modo_id === '4') {
-            setRangoDisabled(true);
-            setData('rango_id', '12');
-        } else if ((!(auth.user.rankedSoloQ) && data.modo_id === '2')) {
-            setRangoDisabled(false);
-        } else if ((!(auth.user.rankedFlex) && data.modo_id === '3')) {
-            setRangoDisabled(false);
+            setRangoDisabled(true); // Deshabilitar la selección de rango
+            setData('rango_id', '12'); // Asignar un valor predeterminado para otros modos
+        } else if (!(auth.user.rankedSoloQ) && data.modo_id === '2') {
+            setRangoDisabled(false); // Habilitar la selección de rango
+        } else if (!(auth.user.rankedFlex) && data.modo_id === '3') {
+            setRangoDisabled(false); // Habilitar la selección de rango
         } else {
-            setRangoDisabled(true);
+            setRangoDisabled(true); // Deshabilitar la selección de rango por defecto
         }
 
+        // Si el modo de juego es ARAM (ID_modo 4), se deshabilita la selección de rol
         if (data.modo_id === '4') {
-            setData('rol_id', '6');
-            setRolDisabled(true);
+            setData('rol_id', '6'); // Asignar un valor predeterminado para ARAM
+            setRolDisabled(true); // Deshabilitar la selección de rol
         } else {
-            setRolDisabled(false);
+            setRolDisabled(false); // Habilitar la selección de rol
         }
     }, [data.modo_id, auth.user.rankedSoloQ, auth.user.rankedFlex]);
 
+    // Opciones de selección para el campo de rango
     let rangoOptions;
     if (!auth.user.rankedSoloQ && data.modo_id === '2') {
-        rangoOptions = rangos.map((rango) => ({ value: rango.id, label: rango.nombre }));
+        rangoOptions = rangos.slice(0, -1).map((rango) => ({ value: rango.id, label: rango.nombre }));
     } else if (!auth.user.rankedFlex && data.modo_id === '3') {
-        rangoOptions = rangos.map((rango) => ({ value: rango.id, label: rango.nombre }));
+        rangoOptions = rangos.slice(0, -1).map((rango) => ({ value: rango.id, label: rango.nombre }));
     } else {
         rangoOptions = rangos.map((rango) => ({ value: rango.id, label: rango.nombre }));
     }
 
+    // Opciones de selección para el campo de rol
     let rolOptions;
     if (data.modo_id === '4') {
-        rolOptions = [{ value: '6', label: 'ARAM' }];
+        rolOptions = [{ value: '6', label: 'ARAM' }]; // Opción predeterminada para ARAM
     } else {
         rolOptions = roles.slice(0, -1).map((rol) => ({ value: rol.id, label: rol.nombre }));
     }
 
+    // Función para validar el campo de título
+    const validateTitulo = () => {
+        if (!data.titulo) {
+            setError('titulo', 'El título no puede estar vacío.');
+        } else if (data.titulo.length > 20) {
+            setError('titulo', 'El título no puede exceder los 20 caracteres.');
+        } else {
+            clearErrors('titulo');
+        }
+    };
+
+    // Función para validar el campo de hora preferente de inicio
+    const validateHoraPreferenteInicio = () => {
+        if (!data.hora_preferente_inicio) {
+            setError('hora_preferente_inicio', 'La hora de inicio es obligatoria.');
+        } else if (data.hora_preferente_final && data.hora_preferente_inicio >= data.hora_preferente_final) {
+            setError('hora_preferente_inicio', 'La hora de inicio debe ser menor que la hora final.');
+        } else {
+            clearErrors('hora_preferente_inicio');
+        }
+    };
+
+    // Función para validar el campo de hora preferente final
+    const validateHoraPreferenteFinal = () => {
+        if (!data.hora_preferente_final) {
+            setError('hora_preferente_final', 'La hora final es obligatoria.');
+        } else if (data.hora_preferente_inicio && data.hora_preferente_inicio >= data.hora_preferente_final) {
+            setError('hora_preferente_final', 'La hora final debe ser mayor que la hora de inicio.');
+        } else {
+            clearErrors('hora_preferente_final');
+        }
+    };
+
+    // Función para manejar el envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('publicaciones.update', publicacion.id));
+        // Validar antes de enviar
+        validateTitulo();
+        validateHoraPreferenteInicio();
+        validateHoraPreferenteFinal();
+        if (!errors.titulo && !errors.hora_preferente_inicio && !errors.hora_preferente_final) {
+            put(route('publicaciones.update', publicacion.id));
+        }
     };
 
     const handleDelete = () => {
@@ -103,14 +150,9 @@ const EditPublicacion = () => {
                             onChange={(e) => setData('titulo', e.target.value)}
                             className="mt-1 block w-full"
                             autoComplete="titulo"
+                            maxLength={20}
                             required
-                            onBlur={(e) => {
-                                if (e.target.value === '') {
-                                    setError('titulo', 'El título no puede estar vacío.');
-                                } else {
-                                    setError('titulo', '');
-                                }
-                            }}
+                            onBlur={validateTitulo}
                         />
                         <InputError message={errors.titulo} className="mt-2" />
                     </div>
@@ -154,13 +196,7 @@ const EditPublicacion = () => {
                             type="time"
                             value={data.hora_preferente_inicio}
                             onChange={(e) => setData('hora_preferente_inicio', e.target.value)}
-                            onBlur={() => {
-                                if (data.hora_preferente_final && data.hora_preferente_inicio >= data.hora_preferente_final) {
-                                    setError('hora_preferente_inicio', 'La hora de inicio debe ser menor que la hora final.');
-                                } else {
-                                    setError('hora_preferente_inicio', '');
-                                }
-                            }}
+                            onBlur={validateHoraPreferenteInicio}
                             required
                         />
                         <InputError message={errors.hora_preferente_inicio} className="mt-2" />
@@ -173,17 +209,12 @@ const EditPublicacion = () => {
                             type="time"
                             value={data.hora_preferente_final}
                             onChange={(e) => setData('hora_preferente_final', e.target.value)}
-                            onBlur={() => {
-                                if (data.hora_preferente_inicio && data.hora_preferente_inicio >= data.hora_preferente_final) {
-                                    setError('hora_preferente_final', 'La hora final debe ser mayor que la hora de inicio.');
-                                } else {
-                                    setError('hora_preferente_final', '');
-                                }
-                            }}
+                            onBlur={validateHoraPreferenteFinal}
                             required
                         />
                         <InputError message={errors.hora_preferente_final} className="mt-2" />
                     </div>
+
                     <div className="flex items-center justify-between mb-12">
                         <PrimaryButton disabled={processing}>Actualizar Publicación</PrimaryButton>
                         <DangerButton onClick={() => handleDelete(publicacion.id)}>
