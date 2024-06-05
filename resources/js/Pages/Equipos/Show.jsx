@@ -100,23 +100,23 @@ const EquipoShow = () => {
                                 className="h-12 w-12 rounded-full"
                             />
                             <div>
-                                <h4 className="text-xl font-semibold text-gray-700">Líder:</h4>
-                                <p className="text-lg text-gray-600">{equipo.lider.name}</p>
+                                <h4 className="text-xl font-semibold text-black">Líder:</h4>
+                                <p className="text-lg text-gray-900">{equipo.lider.name}</p>
                             </div>
                         </div>
                     </div>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-semibold text-gray-700">Modo de Juego:</h4>
-                        <p className="text-lg text-gray-600">{equipo.modo.nombre}</p>
+                        <h4 className="text-xl font-semibold text-black">Modo de Juego:</h4>
+                        <p className="text-lg text-gray-900">{equipo.modo.nombre}</p>
                     </div>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
-                        <h4 className="text-xl font-semibold text-gray-700">Rango mínimo:</h4>
+                        <h4 className="text-xl font-semibold text-black">Rango mínimo:</h4>
                         <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="w-20 h-20" />
                     </div>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
                         <div className="flex items-center space-x-2">
-                            <h4 className="text-xl font-semibold text-gray-700">Privacidad:</h4>
-                            <p className="text-lg text-gray-600">{equipo.privado ? 'Privado' : 'Público'}</p>
+                            <h4 className="text-xl font-semibold text-black">Privacidad:</h4>
+                            <p className="text-lg text-gray-900">{equipo.privado ? 'Privado' : 'Público'}</p>
                             <img
                                 src={`/images/${equipo.privado ? 'lock-solid.svg' : 'unlock-solid.svg'}`}
                                 alt="Candado"
@@ -136,8 +136,8 @@ const EquipoShow = () => {
                                         className="h-12 w-12 rounded-full"
                                     />
                                     <div>
-                                        <h4 className="text-xl font-semibold text-gray-700">Miembro {index + 1}:</h4>
-                                        <p className="text-lg text-gray-600">{miembro.name}</p>
+                                        <h4 className="text-xl font-semibold text-black">Miembro {index + 1}:</h4>
+                                        <p className="text-lg text-gray-900">{miembro.name}</p>
                                     </div>
                                     {auth.user && equipo.lider && equipo.lider.id === auth.user.id && (
                                         <>

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import ButtonColores from '@/Components/ButtonColores';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
-import Select from '@/Components/Select';
-import InputLabel from '@/Components/InputLabel';
+import DesplegableEquipo from '@/Components/DesplegableEquipo';
 
 const EquiposIndex = () => {
     const { equipos, modos, rangos, auth, flash } = usePage().props;
@@ -45,7 +43,13 @@ const EquiposIndex = () => {
         }
     }, [flash]);
 
-    const resetearFiltros = () => {
+    const handleFiltrar = (modo, rango, privacidad) => {
+        setFiltroModo(modo);
+        setFiltroRango(rango);
+        setFiltroPrivacidad(privacidad);
+    };
+
+    const handleReset = () => {
         setFiltroModo('');
         setFiltroRango('');
         setFiltroPrivacidad('');
@@ -59,44 +63,19 @@ const EquiposIndex = () => {
 
     return (
         <ControladorLayout>
-            <div className="flex">
-                <div className="p-4">
-                    <div className="mb-4">
-                        <InputLabel>Filtrar por Modo</InputLabel>
-                        <Select
-                            value={filtroModo}
-                            onChange={(e) => setFiltroModo(e.target.value)}
-                            options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
-                            id="modo_id"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel>Filtrar por Rango</InputLabel>
-                        <Select
-                            value={filtroRango}
-                            onChange={(e) => setFiltroRango(e.target.value)}
-                            options={rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))}
-                            id="rango_id"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel>Filtrar por Privacidad</InputLabel>
-                        <Select
-                            value={filtroPrivacidad}
-                            onChange={(e) => setFiltroPrivacidad(e.target.value)}
-                            options={[
-                                { value: "publico", label: "Público" },
-                                { value: "privado", label: "Privado" }
-                            ]}
-                            id="privacidad"
-                        />
-                    </div>
-                    <ButtonColores color="blue" onClick={resetearFiltros}>
-                        Resetear Filtros
-                    </ButtonColores>
+            <div className="flex flex-col sm:flex-row">
+                <div className="p-4 lg:w-1/6">
+                    <DesplegableEquipo
+                        modos={modos}
+                        rangos={rangos}
+                        onFiltrar={handleFiltrar}
+                        onReset={handleReset}
+                        setFiltroModo={setFiltroModo}
+                        setFiltroRango={setFiltroRango}
+                        setFiltroPrivacidad={setFiltroPrivacidad}
+                    />
                 </div>
-
-                <div className="w-11/12 p-6 overflow-hidden sm:rounded-lg">
+                <div className="w-full lg:w-3/4 p-4">
                     <div className="ml-4 mb-4">
                         {success && (
                             <MensajeSuccess message={success} onClose={() => setSuccess('')} />
@@ -105,10 +84,10 @@ const EquiposIndex = () => {
                             <MensajeError message={error} onClose={() => setError('')} />
                         )}
                     </div>
-                    <div className="grid grid-cols-1 ml-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <div className="flex flex-wrap justify-center sm:justify-start">
                         {equiposFiltrados.map((equipo) => (
-                            <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative">
-                                <div className="p-6 h-full">
+                            <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4">
+                                <div className="p-6">
                                     <h3 className="text-lg font-semibold text-white mb-2">{equipo.nombre_equipo}</h3>
                                     <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="absolute top-0 right-6 w-20 h-20" />
                                     <div className="flex items-center mb-2">
@@ -125,6 +104,7 @@ const EquiposIndex = () => {
                                         <p className="text-sm text-gray-400 mb-1">Modo de Juego:</p>
                                         <p className="text-sm text-white">{equipo.modo.nombre}</p>
                                     </div>
+
                                     <div className="flex items-center mb-4">
                                         <p className="text-sm text-gray-400">Privacidad:</p>
                                         <p className="text-sm text-white ml-1">{equipo.privado ? 'Privado' : 'Público'}</p>
@@ -145,7 +125,7 @@ const EquiposIndex = () => {
                                                 </Link>
                                                 {/*<ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
                                                     Eliminar
-                                        </ButtonColores>*/}
+                                                </ButtonColores>*/}
                                             </>
                                         )}
                                     </div>
@@ -153,7 +133,7 @@ const EquiposIndex = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-left mt-4 ml-4">
+                    <div className="flex justify-left mt-4">
                         <Link href={route('equipos.create')}>
                             <ButtonColores color="green">
                                 Añadir Nuevo Equipo
