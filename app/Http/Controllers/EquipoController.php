@@ -67,8 +67,6 @@ class EquipoController extends Controller
             'modo_juego_preferente' => 'nullable|exists:modos,id',
             'rango_id' => 'nullable|exists:rangos,id',
             'privado' => 'required|boolean',
-        ], [
-            'nombre_equipo.unique' => 'El nombre del equipo ya está en uso. Por favor elige otro nombre.',
         ]);
 
         $equipo = new Equipo(); // Crea un nuevo objeto Equipo.
@@ -166,7 +164,6 @@ class EquipoController extends Controller
             'rango_id' => $request->rango_id,
             'privado' => $request->privado,
         ]);
-
 
         Session::flash('flash', ['type' => 'success', 'message' => 'Editaste correctamente el equipo ' . $equipo->nombre_equipo . '.']);
         // Redirige al usuario a la lista de equipos.
