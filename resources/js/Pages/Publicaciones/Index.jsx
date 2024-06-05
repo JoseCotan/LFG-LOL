@@ -80,22 +80,20 @@ const PublicacionesIndex = () => {
                         />
                     </div>
                     <div className="mb-4">
-                        <div>
-                            <InputLabel htmlFor="horaInicio">Desde:</InputLabel>
-                            <TextInput
-                                type="time"
-                                id="horaInicio"
-                                value={horaInicio}
-                                onChange={(e) => setHoraInicio(e.target.value)}
-                            />
-                            <InputLabel htmlFor="horaFin">Hasta:</InputLabel>
-                            <TextInput
-                                type="time"
-                                id="horaFin"
-                                value={horaFin}
-                                onChange={(e) => setHoraFin(e.target.value)}
-                            />
-                        </div>
+                        <InputLabel htmlFor="horaInicio">Desde:</InputLabel>
+                        <TextInput
+                            type="time"
+                            id="horaInicio"
+                            value={horaInicio}
+                            onChange={(e) => setHoraInicio(e.target.value)}
+                        />
+                        <InputLabel htmlFor="horaFin">Hasta:</InputLabel>
+                        <TextInput
+                            type="time"
+                            id="horaFin"
+                            value={horaFin}
+                            onChange={(e) => setHoraFin(e.target.value)}
+                        />
                     </div>
                     <ButtonColores color="blue" onClick={resetearFiltros}>
                         Resetear Filtros

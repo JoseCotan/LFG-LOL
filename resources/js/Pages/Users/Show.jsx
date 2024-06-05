@@ -130,13 +130,12 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                         <div className="max-w-xs w-full flex justify-center mt-6 mb-6">
                             <div className="bg-gray-100 p-4 rounded shadow-md text-center">
                                 <p className="text-gray-800 mb-2">{comentarios.find(comment => comment.user_id === auth.user.id).descripcion}</p>
-                                <DangerButton onClick={handleEliminarComentario}>
+                                <ButtonColores color="red" onClick={handleEliminarComentario}>
                                     Eliminar Comentario
-                                </DangerButton>
+                                </ButtonColores>
                             </div>
                         </div>
                     )}
-
 
                     <DesplegableAmigos amigos={amigos} user={user} />
                     <DesplegableComentarios comentarios={comentarios} />

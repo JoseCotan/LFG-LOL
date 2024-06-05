@@ -8,6 +8,7 @@ import Button from '@/Components/Button';
 import ButtonColores from '@/Components/ButtonColores';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
+import '../../../css/Spiegel.css'
 
 const EquipoShow = () => {
     const { equipo, auth, flash } = usePage().props;
@@ -22,7 +23,6 @@ const EquipoShow = () => {
         equipo.miembro5?.id
     ].includes(auth.user?.id);
 
-    // Verifica si todos los puestos del equipo están ocupados
     const equipoLleno = [
         equipo.miembro1,
         equipo.miembro2,
@@ -59,7 +59,6 @@ const EquipoShow = () => {
         }
     }, [flash]);
 
-
     const handleUnirseEquipo = () => {
         Inertia.post(route('equipos.unirse', equipo.id));
     };
@@ -82,108 +81,110 @@ const EquipoShow = () => {
 
     return (
         <ControladorLayout>
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8 ml-4 mr-4 mb-4">
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8 mb-4">
                 {success && (
                     <MensajeSuccess message={success} onClose={() => setSuccess('')} />
                 )}
                 {error && (
                     <MensajeError message={error} onClose={() => setError('')} />
                 )}
-                <div className="bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <h3 className="text-xl font-medium text-white mb-4">{equipo.nombre_equipo}</h3>
-                    <div className="mb-4">
-                        <h4 className="text-sm font-semibold text-gray-300">Líder:</h4>
-                        <div className="flex items-center">
+                <div className="bg-sky-950 ml-2 mr-2 shadow-lg rounded-xl p-6 space-y-6" style={{ fontFamily: 'Spiegel' }}>
+                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                        <h3 className="text-4xl font-semibold text-gray-800 mb-2">{equipo.nombre_equipo}</h3>
+                        <div className="flex items-center space-x-4">
                             <ImagenResponsive
                                 srcPC={equipo.lider.foto_perfil_PC}
                                 srcTablet={equipo.lider.foto_perfil_Tablet}
                                 srcMobile={equipo.lider.foto_perfil_Movil}
                                 alt={equipo.lider.name}
-                                className="h-12 w-12 rounded-full mr-2"
+                                className="h-12 w-12 rounded-full"
                             />
-                            <p className="text-sm text-white">{equipo.lider.name}</p>
+                            <div>
+                                <h4 className="text-xl font-semibold text-gray-700">Líder:</h4>
+                                <p className="text-lg text-gray-600">{equipo.lider.name}</p>
+                            </div>
                         </div>
                     </div>
-                    <hr className="my-4" />
-                    <div className="mb-4">
-                        <h4 className="text-sm font-semibold text-gray-300">Modo de Juego:</h4>
-                        <p className="text-sm text-white">{equipo.modo.nombre}</p>
+                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                        <h4 className="text-xl font-semibold text-gray-700">Modo de Juego:</h4>
+                        <p className="text-lg text-gray-600">{equipo.modo.nombre}</p>
                     </div>
-                    <hr className="my-4" />
-                    <div className="mb-4">
-                        <h4 className="text-sm font-semibold text-gray-300">Rango mínimo:</h4>
+                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                        <h4 className="text-xl font-semibold text-gray-700">Rango mínimo:</h4>
                         <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="w-20 h-20" />
                     </div>
-                    <hr className="my-4" />
-                    <div className="mb-4 flex items-center">
-                        <h4 className="text-sm font-semibold text-gray-300 mr-2">Privacidad:</h4>
-                        <p className="text-sm text-white">{equipo.privado ? 'Privado' : 'Público'}</p>
-                        <img
-                            src={`/images/${equipo.privado ? 'lock-solid.svg' : 'unlock-solid.svg'}`}
-                            alt="Candado"
-                            className="h-4 w-4 ml-2"
-                        />
+                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                        <div className="flex items-center space-x-2">
+                            <h4 className="text-xl font-semibold text-gray-700">Privacidad:</h4>
+                            <p className="text-lg text-gray-600">{equipo.privado ? 'Privado' : 'Público'}</p>
+                            <img
+                                src={`/images/${equipo.privado ? 'lock-solid.svg' : 'unlock-solid.svg'}`}
+                                alt="Candado"
+                                className="h-4 w-4"
+                            />
+                        </div>
                     </div>
-                    <hr className="my-4" />
-                    {[equipo.miembro1, equipo.miembro2, equipo.miembro3, equipo.miembro4, equipo.miembro5].map((miembro, index) => (
-                        miembro && (
-                            <div key={miembro.id} className="mb-4">
-                                <h4 className="text-sm font-semibold text-gray-300">Miembro {index + 1}:</h4>
-                                <div className="flex items-center">
+                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm space-y-4">
+                        {[equipo.miembro1, equipo.miembro2, equipo.miembro3, equipo.miembro4, equipo.miembro5].map((miembro, index) => (
+                            miembro && (
+                                <div key={miembro.id} className="flex items-center space-x-4">
                                     <ImagenResponsive
                                         srcPC={miembro.foto_perfil_PC}
                                         srcTablet={miembro.foto_perfil_Tablet}
                                         srcMobile={miembro.foto_perfil_Movil}
                                         alt={miembro.name}
-                                        className="h-12 w-12 rounded-full mr-2"
+                                        className="h-12 w-12 rounded-full"
                                     />
-                                    <p className="text-sm text-white">{miembro.name}</p>
+                                    <div>
+                                        <h4 className="text-xl font-semibold text-gray-700">Miembro {index + 1}:</h4>
+                                        <p className="text-lg text-gray-600">{miembro.name}</p>
+                                    </div>
                                     {auth.user && equipo.lider && equipo.lider.id === auth.user.id && (
                                         <>
-                                            <Button onClick={() => handleExpulsarMiembro(miembro.id)} className="ml-4">
+                                            <ButtonColores color="blue" onClick={() => handleExpulsarMiembro(miembro.id)}>
                                                 Expulsar
-                                            </Button>
+                                            </ButtonColores>
                                             {miembro.id !== auth.user.id && (
-                                                <Button onClick={() => handleHacerLider(miembro.id)} className="ml-4">
+                                                <ButtonColores color="blue" onClick={() => handleHacerLider(miembro.id)}>
                                                     Hacer Líder
-                                                </Button>
+                                                </ButtonColores>
                                             )}
                                         </>
                                     )}
                                 </div>
+                            )
+                        ))}
+                    </div>
+                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                        {!esMiembro && !equipoLleno && (
+                            <ButtonColores color="blue" onClick={handleUnirseEquipo}>
+                                Unirse al Equipo
+                            </ButtonColores>
+                        )}
+                        {auth.user && auth.user?.id !== equipo.lider.id && esMiembro && (
+                            <ButtonColores color="red" onClick={handleAbandonarEquipo}>
+                                Abandonar Equipo
+                            </ButtonColores>
+                        )}
+                        {auth.user?.id === equipo.lider.id && (
+                            <div className="flex space-x-4 mt-4">
+                                <Link href={route('equipos.edit', equipo.id)}>
+                                    <ButtonColores color="yellow">
+                                        Editar
+                                    </ButtonColores>
+                                </Link>
+                                <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
+                                    Eliminar
+                                </ButtonColores>
                             </div>
-                        )
-                    ))}
-                    <hr className="my-4" />
-                    {/* Muestra el botón solo si el equipo no está lleno y el usuario no es miembro */}
-                    {!esMiembro && !equipoLleno && (
-                        <ButtonColores color="blue" onClick={handleUnirseEquipo}>
-                            Unirse al Equipo
-                        </ButtonColores>
-                    )}
-                    {auth.user && auth.user?.id !== equipo.lider.id && esMiembro && (
-                        <ButtonColores color="red" onClick={handleAbandonarEquipo}>
-                            Abandonar Equipo
-                        </ButtonColores>
-                    )}
-                    {auth.user?.id === equipo.lider.id && (
+                        )}
                         <div className="flex mt-4">
-                            <Link href={route('equipos.edit', equipo.id)}>
-                                <ButtonColores color="yellow">
-                                    Editar
+                            <Link href={route('equipos.index')}>
+                                <ButtonColores color="blue">
+                                    Volver
                                 </ButtonColores>
                             </Link>
-                            <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
-                                Eliminar
-                            </ButtonColores>
                         </div>
-                    )}
-                    <div className="flex mt-4">
-                        <Link href={route('equipos.index')}>
-                            <ButtonColores color="blue">
-                                Volver
-                            </ButtonColores>
-                        </Link>
                     </div>
                 </div>
             </div>

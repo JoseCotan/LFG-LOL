@@ -141,7 +141,6 @@ const CreatePublicacion = () => {
                             onChange={(e) => setData('titulo', e.target.value)}
                             autoComplete="titulo"
                             required
-                            maxLength={20}
                             onBlur={validateTitulo}
                         />
                         <InputError message={errors.titulo} className="mt-2" />

@@ -26,6 +26,8 @@ class EquipoController extends Controller
 
         return Inertia::render('Equipos/Index', [
             'equipos' => $equipos,
+            'modos' => Modo::all(),
+            'rangos' => Rango::all(),
             'flash' => session('flash'),
         ]);
     }
