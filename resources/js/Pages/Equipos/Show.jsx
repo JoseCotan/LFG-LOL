@@ -118,7 +118,7 @@ const EquipoShow = () => {
                             <h4 className="text-xl font-semibold text-black">Privacidad:</h4>
                             <p className="text-lg text-gray-900">{equipo.privado ? 'Privado' : 'Público'}</p>
                             <img
-                                src={`/images/${equipo.privado ? 'lock-solid.svg' : 'unlock-solid.svg'}`}
+                                src={`/images/${equipo.privado ? 'lock-solid-black.svg' : 'unlock-solid-black.svg'}`}
                                 alt="Candado"
                                 className="h-4 w-4"
                             />

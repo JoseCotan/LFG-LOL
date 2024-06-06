@@ -61,6 +61,8 @@ const EquiposIndex = () => {
             (!filtroPrivacidad || (filtroPrivacidad === 'publico' && !e.privado) || (filtroPrivacidad === 'privado' && e.privado));
     });
 
+
+
     return (
         <ControladorLayout>
             <div className="flex flex-col sm:flex-row">

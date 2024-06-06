@@ -58,13 +58,13 @@ export default function Authenticated({ user, header, children }) {
                             <div className="ms-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
-                                            <ImagenResponsive
-                                                srcPC={user.foto_perfil_Tablet}
-                                                srcTablet={user.foto_perfil_Tablet}
-                                                srcMobile={user.foto_perfil_Movil}
-                                                alt="Foto de perfil"
-                                                className="h-10 w-10 cursor-pointer"
-                                            />
+                                        <ImagenResponsive
+                                            srcPC={user.foto_perfil_Tablet}
+                                            srcTablet={user.foto_perfil_Tablet}
+                                            srcMobile={user.foto_perfil_Movil}
+                                            alt="Foto de perfil"
+                                            className="h-10 w-10 cursor-pointer"
+                                        />
                                     </Dropdown.Trigger>
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('profile.edit')}>Perfil</Dropdown.Link>
@@ -119,15 +119,19 @@ export default function Authenticated({ user, header, children }) {
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                        <div className="px-4 py-2 bg-white bg-opacity-60 rounded-lg shadow-sm">
+                            <div className="font-medium text-xl text-sky-900">{user.name}</div>
+                            <div className="font-medium text-lg text-sky-700">{user.email}</div>
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
+                            <ResponsiveNavLink href={route('profile.edit')} className="flex items-center justify-between">
+                                <span>Perfil</span>
+                                <img src="/images/user-solid-white.svg" alt="Icono perfil" className="ml-2 w-4 h-4" />
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink method="post" href={route('logout')} as="button" className="flex items-center justify-between">
+                                <span>Cerrar sesión</span>
+                                <img src="/images/right-from-bracket-solid-white.svg" alt="Icono cerrar sesión" className="ml-2 w-4 h-4" />
                             </ResponsiveNavLink>
                         </div>
                     </div>

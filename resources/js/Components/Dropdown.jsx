@@ -74,12 +74,13 @@ const DropdownLink = ({ className = '', children, ...props }) => {
     return (
         <Link
             {...props}
-            className={
-                'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out ' +
-                className
-            }
+            className={`flex items-center justify-between w-full px-4 py-3 text-start text-base leading-6 text-gray-800
+                        hover:bg-gray-300 hover:text-gray-900 focus:outline-none focus:bg-gray-300
+                        transition duration-200 ease-in-out shadow-md rounded-lg ${className}`}
         >
-            {children}
+            <span>{children}</span>
+            {children === "Perfil" && <img src="/images/user-solid.svg" alt="Icono perfil" className="ml-2 w-5 h-5" />}
+            {children === "Cerrar sesión" && <img src="/images/right-from-bracket-solid.svg" alt="Icono cerrar sesión" className="ml-2 w-5 h-5" />}
         </Link>
     );
 };
