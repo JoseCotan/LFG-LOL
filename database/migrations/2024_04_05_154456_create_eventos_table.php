@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('acceso_publico')->default(true);
             $table->boolean('acceso_amigos')->default(true);
             $table->boolean('acceso_miembros_equipo')->default(true);
-            $table->foreignId('creador_evento')->constrained('users');
+            $table->foreignId('creador_evento')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

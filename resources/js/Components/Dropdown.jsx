@@ -81,6 +81,7 @@ const DropdownLink = ({ className = '', children, ...props }) => {
             <span>{children}</span>
             {children === "Perfil" && <img src="/images/user-solid.svg" alt="Icono perfil" className="ml-2 w-5 h-5" />}
             {children === "Cerrar sesión" && <img src="/images/right-from-bracket-solid.svg" alt="Icono cerrar sesión" className="ml-2 w-5 h-5" />}
+            {children === "Panel de administración" && <img src="/images/user-admin.svg" alt="Icono administración" className="ml-2 w-5 h-5" />}
         </Link>
     );
 };

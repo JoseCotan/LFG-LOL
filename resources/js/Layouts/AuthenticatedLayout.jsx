@@ -71,6 +71,9 @@ export default function Authenticated({ user, header, children }) {
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Cerrar sesión
                                         </Dropdown.Link>
+                                        {user.admin && (
+                                            <Dropdown.Link href={route('profile.edit')}>Panel de administración</Dropdown.Link>
+                                        )}
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
@@ -125,14 +128,20 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')} className="flex items-center justify-between">
+                            <ResponsiveNavLink href={route('profile.edit')} as="button" className="flex items-center justify-between">
                                 <span>Perfil</span>
-                                <img src="/images/user-solid-white.svg" alt="Icono perfil" className="ml-2 w-4 h-4" />
+                                <img src="/images/user-solid-white.svg" alt="Icono perfil" className="ml-2 w-7 h-7" />
                             </ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button" className="flex items-center justify-between">
                                 <span>Cerrar sesión</span>
-                                <img src="/images/right-from-bracket-solid-white.svg" alt="Icono cerrar sesión" className="ml-2 w-4 h-4" />
+                                <img src="/images/right-from-bracket-solid-white.svg" alt="Icono cerrar sesión" className="ml-2 w-7 h-7" />
                             </ResponsiveNavLink>
+                            {user.admin && (
+                                <ResponsiveNavLink href={route('logout')} as="button" className="flex items-center justify-between">
+                                    <span>Panel de Administración</span>
+                                    <img src="/images/user-admin-white.png" alt="Icono administrador" className="ml-2 w-7 h-7" />
+                                </ResponsiveNavLink>
+                            )}
                         </div>
                     </div>
                 </div>
