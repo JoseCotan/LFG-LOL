@@ -5,7 +5,7 @@ import ButtonColores from '@/Components/ButtonColores';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
-import DesplegableEquipo from '@/Components/DesplegableEquipo';
+import FiltroEquipo from '@/Components/FiltroEquipo';
 
 const EquiposIndex = () => {
     const { equipos, modos, rangos, auth, flash } = usePage().props;
@@ -64,8 +64,8 @@ const EquiposIndex = () => {
     return (
         <ControladorLayout>
             <div className="flex flex-col sm:flex-row">
-                <div className="p-4 lg:w-1/6">
-                    <DesplegableEquipo
+                <div className="p-4 2xl:w-96 xl:w-96 lg:w-96 md:w-96 sm:w-96">
+                    <FiltroEquipo
                         modos={modos}
                         rangos={rangos}
                         onFiltrar={handleFiltrar}
@@ -75,8 +75,8 @@ const EquiposIndex = () => {
                         setFiltroPrivacidad={setFiltroPrivacidad}
                     />
                 </div>
-                <div className="w-full lg:w-3/4 p-4">
-                    <div className="ml-4 mb-4">
+                <div className="w-full lg:w-3/4 p-4 mt-4">
+                <div className="ml-4 flex justify-center sm:justify-start">
                         {success && (
                             <MensajeSuccess message={success} onClose={() => setSuccess('')} />
                         )}
@@ -84,7 +84,14 @@ const EquiposIndex = () => {
                             <MensajeError message={error} onClose={() => setError('')} />
                         )}
                     </div>
-                    <div className="flex flex-wrap justify-center sm:justify-start">
+                    <div className="flex justify-center sm:justify-start mb-4 ml-2">
+                        <Link href={route('equipos.create')}>
+                            <ButtonColores color="blue">
+                                Añadir Nuevo Equipo
+                            </ButtonColores>
+                        </Link>
+                    </div>
+                    <div className="flex flex-wrap justify-center sm:justify-start ml-4">
                         {equiposFiltrados.map((equipo) => (
                             <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4">
                                 <div className="p-6">
@@ -133,13 +140,7 @@ const EquiposIndex = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-left mt-4">
-                        <Link href={route('equipos.create')}>
-                            <ButtonColores color="green">
-                                Añadir Nuevo Equipo
-                            </ButtonColores>
-                        </Link>
-                    </div>
+
                 </div>
             </div>
         </ControladorLayout>

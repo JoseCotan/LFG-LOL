@@ -3,7 +3,7 @@ import Select from '@/Components/Select';
 import InputLabel from '@/Components/InputLabel';
 import ButtonColores from '@/Components/ButtonColores';
 
-const DesplegableEventos = ({ onFiltrar, onReset, setFiltroPublico, setFiltroAmigos, setFiltroMiembrosEquipo }) => {
+const FiltroEventos = ({ onReset, setFiltroPublico, setFiltroAmigos, setFiltroMiembrosEquipo }) => {
     const [filtroPublicoLocal, setFiltroPublicoLocal] = useState('');
     const [filtroAmigosLocal, setFiltroAmigosLocal] = useState('');
     const [filtroMiembrosEquipoLocal, setFiltroMiembrosEquipoLocal] = useState('');
@@ -12,6 +12,9 @@ const DesplegableEventos = ({ onFiltrar, onReset, setFiltroPublico, setFiltroAmi
         setFiltroPublico('');
         setFiltroAmigos('');
         setFiltroMiembrosEquipo('');
+        setFiltroPublicoLocal('');
+        setFiltroAmigosLocal('');
+        setFiltroMiembrosEquipoLocal('');
         onReset();
     };
 
@@ -71,4 +74,4 @@ const DesplegableEventos = ({ onFiltrar, onReset, setFiltroPublico, setFiltroAmi
     );
 };
 
-export default DesplegableEventos;
+export default FiltroEventos;

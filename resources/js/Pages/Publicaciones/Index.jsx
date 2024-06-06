@@ -1,42 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import ControladorLayout from '@/Layouts/ControladorLayout';
 import { Link, usePage } from '@inertiajs/react';
-import Button from '@/Components/Button';
-import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
+import ControladorLayout from '@/Layouts/ControladorLayout';
+import ButtonColores from '@/Components/ButtonColores';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
-import Select from '@/Components/Select';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import ButtonColores from '@/Components/ButtonColores';
-
+import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
+import FiltroPublicaciones from '@/Components/FiltroPublicaciones';
 
 const PublicacionesIndex = () => {
     const { publicaciones, modos, roles, rangos, auth, flash } = usePage().props;
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
     const [filtroModo, setFiltroModo] = useState('');
     const [filtroRango, setFiltroRango] = useState('');
     const [filtroRol, setFiltroRol] = useState('');
-    const [horaInicio, setHoraInicio] = useState('');
-    const [horaFin, setHoraFin] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
-
-
-    const resetearFiltros = () => {
-        setFiltroModo('');
-        setFiltroRango('');
-        setFiltroRol('');
-        setHoraInicio('');
-        setHoraFin('');
-    };
-
-    const publicacionesFiltradas = publicaciones.data.filter(p => {
-        return (!filtroModo || p.modo.id.toString() === filtroModo) &&
-            (!filtroRango || p.rango.id.toString() === filtroRango) &&
-            (!filtroRol || p.rol.id.toString() === filtroRol) &&
-            (!horaInicio || p.hora_preferente_inicio >= horaInicio) &&
-            (!horaFin || p.hora_preferente_final <= horaFin);
-    });
+    const [filtroHoraInicio, setFiltroHoraInicio] = useState('');
+    const [filtroHoraFin, setFiltroHoraFin] = useState('');
 
     useEffect(() => {
         if (flash && flash.type === 'success') {
@@ -48,75 +27,69 @@ const PublicacionesIndex = () => {
         }
     }, [flash]);
 
+    const resetearFiltros = () => {
+        setFiltroModo('');
+        setFiltroRango('');
+        setFiltroRol('');
+        setFiltroHoraInicio('');
+        setFiltroHoraFin('');
+    };
+
+    const publicacionesFiltradas = publicaciones.data.filter(p => {
+        return (!filtroModo || p.modo.id.toString() === filtroModo) &&
+            (!filtroRango || p.rango.id.toString() === filtroRango) &&
+            (!filtroRol || p.rol.id.toString() === filtroRol) &&
+            (!filtroHoraInicio || p.hora_preferente_inicio >= filtroHoraInicio) &&
+            (!filtroHoraFin || p.hora_preferente_final <= filtroHoraFin);
+    });
+
     return (
         <ControladorLayout>
-            <div className="flex">
-                <div className="p-4">
-                    <div className="mb-4">
-                        <InputLabel>Filtrar por Modo</InputLabel>
-                        <Select
-                            value={filtroModo}
-                            onChange={(e) => setFiltroModo(e.target.value)}
-                            options={modos.map((modo) => ({ value: modo.id, label: modo.nombre }))}
-                            id="modo_id"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel>Filtrar por Rango</InputLabel>
-                        <Select
-                            value={filtroRango}
-                            onChange={(e) => setFiltroRango(e.target.value)}
-                            options={rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))}
-                            id="rango_id"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel>Filtrar por Rol</InputLabel>
-                        <Select
-                            value={filtroRol}
-                            onChange={(e) => setFiltroRol(e.target.value)}
-                            options={roles.map((rol) => ({ value: rol.id, label: rol.nombre }))}
-                            id="rol_id"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <InputLabel htmlFor="horaInicio">Desde:</InputLabel>
-                        <TextInput
-                            type="time"
-                            id="horaInicio"
-                            value={horaInicio}
-                            onChange={(e) => setHoraInicio(e.target.value)}
-                        />
-                        <InputLabel htmlFor="horaFin">Hasta:</InputLabel>
-                        <TextInput
-                            type="time"
-                            id="horaFin"
-                            value={horaFin}
-                            onChange={(e) => setHoraFin(e.target.value)}
-                        />
-                    </div>
-                    <ButtonColores color="blue" onClick={resetearFiltros}>
-                        Resetear Filtros
-                    </ButtonColores>
+            <div className="flex flex-col sm:flex-row">
+                <div className="p-4 2xl:w-96 xl:w-96 lg:w-96 md:w-96 sm:w-96">
+                    <FiltroPublicaciones
+                        modos={modos}
+                        roles={roles}
+                        rangos={rangos}
+                        onFiltrar={(modo, rango, rol, horaInicio, horaFin) => {
+                            setFiltroModo(modo);
+                            setFiltroRango(rango);
+                            setFiltroRol(rol);
+                            setFiltroHoraInicio(horaInicio);
+                            setFiltroHoraFin(horaFin);
+                        }}
+                        onReset={resetearFiltros}
+                        setFiltroModo={setFiltroModo}
+                        setFiltroRango={setFiltroRango}
+                        setFiltroRol={setFiltroRol}
+                        setFiltroHoraInicio={setFiltroHoraInicio}
+                        setFiltroHoraFin={setFiltroHoraFin}
+                    />
                 </div>
-                <div className="w-3/4 p-6 overflow-hidden sm:rounded-lg">
-                    {success && (
-                        <MensajeSuccess message={success} onClose={() => setSuccess('')} />
-                    )}
-                    {error && (
-                        <MensajeError message={error} onClose={() => setError('')} />
-                    )}
-                    <Link href={route('publicaciones.create')}>
-                        <ButtonColores color="blue">
-                            Crear Publicación
-                        </ButtonColores>
-                    </Link>
-                    <div className="mt-6">
+                <div className="w-full p-6">
+                    <div className="ml-2 mb-4 flex justify-center sm:justify-start">
+                        {success && (
+                            <MensajeSuccess message={success} onClose={() => setSuccess('')} />
+                        )}
+                        {error && (
+                            <MensajeError message={error} onClose={() => setError('')} />
+                        )}
+                    </div>
+                    <div className="flex justify-center sm:justify-start">
+                        <Link href={route('publicaciones.create')}>
+                            <ButtonColores color="blue">
+                                Añadir nueva publicación
+                            </ButtonColores>
+                        </Link>
+                    </div>
+                    <div className="mt-6 flex flex-wrap justify-center sm:justify-start">
                         {publicacionesFiltradas.map((publicacion) => (
-                            <TarjetaPublicacion key={publicacion.id} publicacion={publicacion} />
+                            <div key={publicacion.id} className="m-2">
+                                <TarjetaPublicacion publicacion={publicacion} />
+                            </div>
                         ))}
                     </div>
-                    <div className="flex justify-center space-x-1">
+                    <div className="flex justify-center space-x-1 mt-4">
                         {publicaciones.links.map((link, index) => (
                             <Link
                                 key={index}

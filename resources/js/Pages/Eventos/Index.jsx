@@ -3,7 +3,7 @@ import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import ButtonColores from '@/Components/ButtonColores';
-import DesplegableEvento from '@/Components/DesplegableEvento'; // Asegúrate de que el nombre sea correcto
+import FiltroEvento from '@/Components/FiltroEvento';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import MensajeError from '@/Components/MensajeError';
 import MensajeSuccess from '@/Components/MensajeSuccess';
@@ -53,8 +53,8 @@ const EventosIndex = () => {
     return (
         <ControladorLayout>
             <div className="flex flex-col sm:flex-row">
-                <div className="p-4 lg:w-1/6">
-                    <DesplegableEvento
+                <div className="p-4 2xl:w-96 xl:w-96 lg:w-96 md:w-96 sm:w-96">
+                    <FiltroEvento
                         onReset={handleReset}
                         setFiltroPublico={setFiltroPublico}
                         setFiltroAmigos={setFiltroAmigos}
@@ -71,7 +71,14 @@ const EventosIndex = () => {
                             <MensajeError message={error} onClose={() => setError('')} />
                         )}
                     </div>
-                    <div className="flex gap-4 flex-wrap justify-center sm:justify-start">
+                    <div className="flex justify-center sm:justify-start mb-4 ml-2">
+                        <Link href={route('eventos.create')}>
+                            <ButtonColores color="blue">
+                                Añadir Nuevo Evento
+                            </ButtonColores>
+                        </Link>
+                    </div>
+                    <div className="flex gap-4 flex-wrap justify-center sm:justify-start ml-4">
                         {eventosFiltrados.map(evento => (
                             <div key={evento.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-sm relative mb-4">
                                 <div className="p-6">
@@ -125,13 +132,6 @@ const EventosIndex = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                    <div className="flex justify-left mt-4 mb-4">
-                        <Link href={route('eventos.create')}>
-                            <ButtonColores color="green">
-                                Añadir Nuevo Evento
-                            </ButtonColores>
-                        </Link>
                     </div>
                 </div>
             </div>

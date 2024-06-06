@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import Select from '@/Components/Select';
 import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
 import ButtonColores from '@/Components/ButtonColores';
 
-const DesplegableFiltrado = ({ modos, rangos, onFiltrar, onReset, setFiltroModo, setFiltroRango, setFiltroPrivacidad }) => {
+const FiltroPublicaciones = ({ modos, roles, rangos, onReset, setFiltroModo, setFiltroRango, setFiltroRol, setFiltroHoraInicio, setFiltroHoraFin }) => {
     const [filtroModo, setFiltroModoLocal] = useState('');
     const [filtroRango, setFiltroRangoLocal] = useState('');
-    const [filtroPrivacidad, setFiltroPrivacidadLocal] = useState('');
+    const [filtroRol, setFiltroRolLocal] = useState('');
+    const [filtroHoraInicio, setFiltroHoraInicioLocal] = useState('');
+    const [filtroHoraFin, setFiltroHoraFinLocal] = useState('');
 
     const handleReset = () => {
         setFiltroModo('');
         setFiltroRango('');
-        setFiltroPrivacidad('');
+        setFiltroRol('');
+        setFiltroHoraInicio('');
+        setFiltroHoraFin('');
+        setFiltroModoLocal('');
+        setFiltroRangoLocal('');
+        setFiltroRolLocal('');
+        setFiltroHoraInicioLocal('');
+        setFiltroHoraFinLocal('');
         onReset();
     };
 
@@ -28,7 +38,7 @@ const DesplegableFiltrado = ({ modos, rangos, onFiltrar, onReset, setFiltroModo,
                     { value: '', label: 'Todos' },
                     ...modos.map((modo) => ({ value: modo.id, label: modo.nombre }))
                 ]}
-                id="filtroModo"
+                id="modo_id"
             />
 
             <InputLabel className="mt-4">Filtrar por Rango</InputLabel>
@@ -42,24 +52,42 @@ const DesplegableFiltrado = ({ modos, rangos, onFiltrar, onReset, setFiltroModo,
                     { value: '', label: 'Todos' },
                     ...rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))
                 ]}
-                id="filtroRango"
+                id="rango_id"
             />
 
-            <InputLabel className="mt-4">Filtrar por Privacidad</InputLabel>
+            <InputLabel className="mt-4">Filtrar por Rol</InputLabel>
             <Select
-                value={filtroPrivacidad}
+                value={filtroRol}
                 onChange={(e) => {
-                    setFiltroPrivacidadLocal(e.target.value);
-                    setFiltroPrivacidad(e.target.value);
+                    setFiltroRolLocal(e.target.value);
+                    setFiltroRol(e.target.value);
                 }}
                 options={[
                     { value: '', label: 'Todos' },
-                    { value: 'publico', label: 'Público' },
-                    { value: 'privado', label: 'Privado' }
+                    ...roles.map((rol) => ({ value: rol.id, label: rol.nombre }))
                 ]}
-                id="filtroPrivacidad"
+                id="rol_id"
             />
 
+            <InputLabel htmlFor="horaInicio">Desde:</InputLabel>
+            <TextInput
+                type="time"
+                id="horaInicio"
+                value={filtroHoraInicio}
+                onChange={(e) => {
+                    setFiltroHoraInicioLocal(e.target.value);
+                    setFiltroHoraInicio(e.target.value);
+                }}
+            />
+            <InputLabel htmlFor="horaFin">Hasta:</InputLabel>
+            <TextInput
+                type="time"
+                id="horaFin"
+                value={filtroHoraFin}
+                onChange={(e) => {
+                    setFiltroHoraFinLocal(e.target.value);
+                    setFiltroHoraFin(e.target.value);
+                }}            />
             <div className="flex justify-between mt-6">
                 <ButtonColores color="red" onClick={handleReset}>
                     Resetear
@@ -69,4 +97,4 @@ const DesplegableFiltrado = ({ modos, rangos, onFiltrar, onReset, setFiltroModo,
     );
 };
 
-export default DesplegableFiltrado;
+export default FiltroPublicaciones;
