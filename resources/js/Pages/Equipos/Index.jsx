@@ -127,7 +127,7 @@ const EquiposIndex = () => {
                                         <Link href={route('equipos.show', equipo.id)}>
                                             <ButtonColores color="green">Mirar Equipo</ButtonColores>
                                         </Link>
-                                        {auth.user && auth.user.id === equipo.lider.id && (
+                                        {auth.user && (auth.user.id === equipo.lider.id || auth.user.admin) && (
                                             <>
                                                 <Link href={route('equipos.edit', equipo.id)}>
                                                     <ButtonColores color="yellow">Editar</ButtonColores>

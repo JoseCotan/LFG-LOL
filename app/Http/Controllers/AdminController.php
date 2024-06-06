@@ -26,6 +26,11 @@ class AdminController extends Controller
 
     public function equipos()
     {
+        $equipos = Equipo::with('lider')->get();
+
+        return Inertia::render('Admin/Equipos', [
+            'equipos' => $equipos,
+        ]);
     }
 
     public function eventos()

@@ -220,7 +220,7 @@ class PublicacionController extends Controller
 
         // Si el usuario es un administrador, redirige de vuelta a la página anterior.
         if (Auth::user()->admin) {
-            return Inertia::location(back());
+            return Inertia::location(route('admin.index'));
         }
 
         // Redirige al índice de publicaciones.

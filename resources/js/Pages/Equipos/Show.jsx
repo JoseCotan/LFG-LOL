@@ -139,12 +139,12 @@ const EquipoShow = () => {
                                         <h4 className="text-xl font-semibold text-black">Miembro {index + 1}:</h4>
                                         <p className="text-lg text-gray-900">{miembro.name}</p>
                                     </div>
-                                    {auth.user && equipo.lider && equipo.lider.id === auth.user.id && (
+                                    {auth.user && (equipo.lider.id === auth.user.id || auth.user.admin) && (
                                         <>
                                             <ButtonColores color="blue" onClick={() => handleExpulsarMiembro(miembro.id)}>
                                                 Expulsar
                                             </ButtonColores>
-                                            {miembro.id !== auth.user.id && (
+                                            {(miembro.id !== auth.user.id || auth.user.admin ) && miembro.id !== equipo.lider.id && (
                                                 <ButtonColores color="blue" onClick={() => handleHacerLider(miembro.id)}>
                                                     Hacer Líder
                                                 </ButtonColores>
@@ -166,7 +166,7 @@ const EquipoShow = () => {
                                 Abandonar Equipo
                             </ButtonColores>
                         )}
-                        {auth.user?.id === equipo.lider.id && (
+                        {auth.user && (auth.user?.id === equipo.lider.id || auth.user.admin) && (
                             <div className="flex space-x-4 mt-4">
                                 <Link href={route('equipos.edit', equipo.id)}>
                                     <ButtonColores color="yellow">
