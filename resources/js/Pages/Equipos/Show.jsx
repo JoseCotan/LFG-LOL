@@ -88,7 +88,7 @@ const EquipoShow = () => {
                 {error && (
                     <MensajeError message={error} onClose={() => setError('')} />
                 )}
-                <div className="bg-sky-950  mr-2 shadow-lg rounded-xl p-6 space-y-6" style={{ fontFamily: 'Spiegel' }}>
+                <div className="bg-sky-950 ml-2 mr-2 shadow-lg rounded-xl p-6 space-y-6" style={{ fontFamily: 'Spiegel' }}>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
                         <h3 className="text-4xl font-semibold text-gray-800 mb-2">{equipo.nombre_equipo}</h3>
                         <div className="flex items-center space-x-4">

@@ -69,7 +69,7 @@ const TarjetaPublicacion = ({ publicacion }) => {
                     className="w-16 h-16 mt-2 absolute right-2"
                 />
             )}
-            {creador && (
+            {auth.user && (creador || auth.user.admin) && (
                 <Link href={route('publicaciones.edit', publicacion.id)}>
                     <img
                         src="/images/edit.svg"

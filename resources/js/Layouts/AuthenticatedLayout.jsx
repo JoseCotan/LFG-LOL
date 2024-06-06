@@ -72,7 +72,7 @@ export default function Authenticated({ user, header, children }) {
                                             Cerrar sesión
                                         </Dropdown.Link>
                                         {user.admin && (
-                                            <Dropdown.Link href={route('profile.edit')}>Panel de administración</Dropdown.Link>
+                                            <Dropdown.Link href={route('admin.index')}>Panel de administración</Dropdown.Link>
                                         )}
                                     </Dropdown.Content>
                                 </Dropdown>
