@@ -19,9 +19,7 @@ import DislikeButton from '@/Components/DislikeButton';
 import ButtonColores from '@/Components/ButtonColores';
 
 
-
-
-const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado, haDadoLike, haDadoDislike, flash }) => {
+const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado, haDadoLike, haDadoDislike, flash, totalComentarios, paginacion }) => {
     const { auth } = usePage().props;
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
@@ -56,9 +54,10 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
     };
 
     const handleEliminarComentario = () => {
-        const comentarioId = comentarios.find(comment => comment.user_id === auth.user.id).id;
+        const comentarioId = comentarios.data.find(comment => comment.user_id === auth.user.id).id;
         Inertia.delete(route('comentarios.eliminar', { comentarioId }));
     };
+
 
     useEffect(() => {
         if (flash && flash.type === 'success') {
@@ -126,10 +125,12 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                         </>
                     )}
 
-                    {haComentado && (
+                    {haComentado && comentarios.data && (
                         <div className="max-w-xs w-full flex justify-center mt-6 mb-6">
                             <div className="bg-gray-100 p-4 rounded shadow-md text-center">
-                                <p className="text-gray-800 mb-2">{comentarios.find(comment => comment.user_id === auth.user.id).descripcion}</p>
+                                <p className="text-gray-800 mb-2">
+                                    {comentarios.data.find(comment => comment.user_id === auth.user.id)?.descripcion}
+                                </p>
                                 <ButtonColores color="red" onClick={handleEliminarComentario}>
                                     Eliminar Comentario
                                 </ButtonColores>
@@ -138,7 +139,11 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                     )}
 
                     <DesplegableAmigos amigos={amigos} user={user} />
-                    <DesplegableComentarios comentarios={comentarios} />
+                    <DesplegableComentarios
+                        comentarios={comentarios.data}
+                        totalComentarios={totalComentarios}
+                        paginacion={comentarios.links}
+                    />
                     {/*<p className="text-center mt-4 text-gray-800 mb-4 "><Link href="/dashboard" className="text-blue-600">Volver al inicio</Link></p>*/}
                 </div>
                 <div className="flex-grow flex justify-center items-center p-4 lg:justify-start lg:ml-56">

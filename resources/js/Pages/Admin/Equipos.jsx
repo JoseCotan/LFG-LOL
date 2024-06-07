@@ -4,9 +4,11 @@ import { Inertia } from '@inertiajs/inertia';
 import AdminIndex from './Index';
 import ButtonColores from '@/Components/ButtonColores';
 
-const Equipos = ({ equipos }) => {
+const Equipos = ({ equipos, panelAdmin = true }) => {
     const handleDelete = (id) => {
-        Inertia.delete(route('equipos.destroy', id));
+        Inertia.delete(route('equipos.destroy', id), {
+            data: { panelAdmin }
+        });
     };
 
     return (

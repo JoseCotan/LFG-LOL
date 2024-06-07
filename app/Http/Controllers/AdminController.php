@@ -35,5 +35,10 @@ class AdminController extends Controller
 
     public function eventos()
     {
+        $eventos = Evento::with('creador')->get();
+
+        return Inertia::render('Admin/Eventos', [
+            'eventos' => $eventos,
+        ]);
     }
 }

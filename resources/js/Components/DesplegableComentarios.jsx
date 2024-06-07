@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ListaComentarios from './ListaComentarios';
+import { Link } from '@inertiajs/react';
 
-const DesplegableComentarios = ({ comentarios }) => {
+const DesplegableComentarios = ({ comentarios, totalComentarios, paginacion }) => {
     const [visible, setVisible] = useState(false);
 
     const toggleVisible = () => {
@@ -14,7 +15,7 @@ const DesplegableComentarios = ({ comentarios }) => {
                 onClick={toggleVisible}
                 className="text-blue-600 hover:underline focus:outline-none flex items-center"
             >
-                Mostrar Comentarios ({comentarios.length})
+                Mostrar Comentarios ({totalComentarios})
                 <img
                     src="/images/arrow.svg"
                     alt="Flecha abajo"
@@ -23,7 +24,23 @@ const DesplegableComentarios = ({ comentarios }) => {
                 />
             </button>
             {visible && (
-                <ListaComentarios comentarios={comentarios}/>
+                <>
+                    <ListaComentarios comentarios={comentarios} />
+                    {paginacion && (
+                        <div className="flex justify-center space-x-1 mt-4">
+                            {paginacion.map((link, index) => (
+                                <Link
+                                    key={index}
+                                    href={link.url}
+                                    preserveScroll
+                                    preserveState
+                                    className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </>
             )}
         </div>
     );

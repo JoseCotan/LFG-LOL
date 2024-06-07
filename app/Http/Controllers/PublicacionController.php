@@ -206,7 +206,7 @@ class PublicacionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $publicacion = Publicacion::findOrFail($id); // Busca la publicación por ID.
 
@@ -219,8 +219,8 @@ class PublicacionController extends Controller
         $publicacion->delete(); // Elimina la publicación.
 
         // Si el usuario es un administrador, redirige de vuelta a la página anterior.
-        if (Auth::user()->admin) {
-            return Inertia::location(route('admin.index'));
+        if ($request->input('panelAdmin')) {
+            return Inertia::location(route('admin.publicaciones.index'));
         }
 
         // Redirige al índice de publicaciones.

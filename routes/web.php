@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AmigoController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\EventoComentarioController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MensajeController;
@@ -74,8 +75,9 @@ Route::resource('rangos', RangoController::class)
 
 Route::resource('eventos', EventoController::class);
 Route::get('/eventos/create', [EventoController::class, 'create'])->name('eventos.create')->middleware('auth');
-Route::post('eventos/{evento}/unirse', [EventoController::class, 'unirse'])->name('eventos.unirse')->middleware('auth');
-Route::post('eventos/{evento}/abandonar', [EventoController::class, 'abandonar'])->name('eventos.abandonar')->middleware('auth');
+Route::post('/eventos/{evento}/unirse', [EventoController::class, 'unirse'])->name('eventos.unirse')->middleware('auth');
+Route::post('/eventos/{evento}/abandonar', [EventoController::class, 'abandonar'])->name('eventos.abandonar')->middleware('auth');
+Route::post('/eventos/{eventoId}/expulsar/{miembroId}', [EventoController::class, 'expulsarMiembro'])->name('eventos.expulsarMiembro')->middleware('auth');
 
 
 
@@ -98,6 +100,7 @@ Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'envia
 Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
 Route::delete('/comentarios/{comentarioId}', [ComentarioController::class, 'destroy'])->name('comentarios.eliminar');
+Route::post('/eventos/{evento}/comentarios', [EventoComentarioController::class, 'store'])->name('eventos.comentarios.store');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/publicaciones', [AdminController::class, 'publicaciones'])->name('admin.publicaciones.index');

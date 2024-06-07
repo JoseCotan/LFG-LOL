@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Session;
 
 class EventoController extends Controller
 {
@@ -23,6 +24,7 @@ class EventoController extends Controller
 
         return Inertia::render('Eventos/Index', [
             'eventos' => $eventos,
+            'flash' => session('flash'),
         ]);
     }
 
@@ -59,6 +61,7 @@ class EventoController extends Controller
 
         $evento->save();
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'Creaste el evento correctamente.']);
         return Inertia::location(route('eventos.index'));
     }
 
@@ -68,22 +71,35 @@ class EventoController extends Controller
     public function show(Evento $evento)
     {
         $evento->load('usuarios', 'creador');
+        $comentarios = $evento->comentarios()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        $totalComentarios = $comentarios->total();
 
         return Inertia::render('Eventos/Show', [
             'evento' => $evento,
+            'comentarios' => $comentarios,
+            'totalComentarios' => $totalComentarios,
             'flash' => session('flash'),
         ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Evento $evento)
     {
-        if (Auth::user()->id !== $evento->creador_evento) {
-            abort(403, 'No estás autorizado para editar este evento.');
+        // Verifica si el usuario logueado es el creador del evento o un administrador.
+        if (Auth::user()->id !== $evento->creador_evento && !Auth::user()->admin) {
+            // Si no es el creador ni un administrador, redirige de vuelta con un mensaje de error.
+            Session::flash('flash', ['type' => 'error', 'message' => 'No tienes permiso para editar este evento.']);
+            return Inertia::location(route('eventos.index'));
         }
 
+        // Retorna la vista de edición del evento.
         return Inertia::render('Eventos/Edit', [
             'evento' => $evento,
         ]);
@@ -116,38 +132,50 @@ class EventoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Evento $evento)
+    public function destroy(Evento $evento, Request $request)
     {
-        if (Auth::user()->id !== $evento->creador_evento) {
+        // Verifica si el usuario logueado es el creador del evento o un administrador.
+        if (Auth::user()->id !== $evento->creador_evento && !Auth::user()->admin) {
+            // Si no es el creador ni un administrador, redirige de vuelta con un mensaje de error.
+            Session::flash('flash', ['type' => 'error', 'message' => 'No tienes permiso para eliminar este evento.']);
             return Inertia::location(route('eventos.index'));
         }
 
         $evento->delete();
+
+        Session::flash('flash', ['type' => 'success', 'message' => 'Evento eliminado con éxito.']);
+        // Si el usuario es un administrador, redirige a la ruta del administrador.
+        if ($request->input('panelAdmin')) {
+            return Inertia::location(route('admin.eventos.index'));
+        }
+
+        // Redirige a la página de eventos si el usuario no es administrador.
         return Inertia::location(route('eventos.index'));
     }
+
 
     public function unirse(Evento $evento)
     {
         $user_id = Auth::user()->id;
 
-        // Log details for debugging
-        Log::info('Detalles del evento:', $evento->toArray());
-
         // Verificar si el evento ya tiene 10 usuarios o si el usuario ya está unido
         if ($evento->usuarios()->count() >= 10 || $evento->usuarios->contains($user_id)) {
-            return Inertia::location(route('eventos.index'));
+            Session::flash('flash', ['type' => 'error', 'message' => 'El evento está lleno.']);
+            return Inertia::location(back());
         }
 
         // Verificar si el usuario es el creador del evento
         if ($user_id === $evento->creador_evento) {
+            Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
             $evento->usuarios()->attach($user_id);
-            return Inertia::location(route('eventos.index'));
+            return Inertia::location(back());
         }
 
         // Verificar si el evento es público
         if ($evento->acceso_publico) {
+            Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
             $evento->usuarios()->attach($user_id);
-            return Inertia::location(route('eventos.index'));
+            return Inertia::location(back());
         }
 
         // Verificar si el usuario es amigo del creador del evento si acceso_amigos es verdadero
@@ -167,7 +195,8 @@ class EventoController extends Controller
 
             if ($esAmigo) {
                 $evento->usuarios()->attach($user_id);
-                return Inertia::location(route('eventos.index'));
+                Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
+                return Inertia::location(back());
             }
         }
 
@@ -203,14 +232,43 @@ class EventoController extends Controller
 
                 if ($esMismoEquipo) {
                     $evento->usuarios()->attach($user_id);
+                    Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
                     return Inertia::location(route('eventos.index'));
                 }
             }
         }
 
+        Session::flash('flash', ['type' => 'error', 'message' => 'No puedes unirte al evento.']);
         // Si ninguna de las condiciones anteriores se cumple, redirigir al índice de eventos
         return Inertia::location(route('eventos.index'));
     }
+
+    public function expulsarMiembro($eventoId, $miembroId)
+    {
+        $evento = Evento::findOrFail($eventoId); // Busca el evento por ID.
+        $userId = Auth::user()->id; // ID del usuario logueado.
+
+        // Verifica si el usuario logueado es el creador del evento o un administrador.
+        if ($evento->creador_evento !== $userId && !Auth::user()->admin) {
+            // Si no es el creador ni un administrador, redirige a la vista del evento.
+            Session::flash('flash', ['type' => 'error', 'message' => 'No tienes permiso para realizar esta acción.']);
+            return Inertia::location(route('eventos.show', ['evento' => $eventoId]));
+        }
+
+        // Busca al usuario y lo elimina del evento.
+        $usuario = $evento->usuarios()->find($miembroId);
+
+        if ($usuario) {
+            $evento->usuarios()->detach($miembroId);
+            Session::flash('flash', ['type' => 'success', 'message' => 'El usuario ha sido expulsado del evento.']);
+        } else {
+            // Si no encuentra al miembro, redirige a la vista del evento.
+            Session::flash('flash', ['type' => 'error', 'message' => 'El usuario especificado no es un miembro del evento.']);
+        }
+
+        return Inertia::location(route('eventos.show', ['evento' => $eventoId]));
+    }
+
 
 
 
@@ -221,6 +279,7 @@ class EventoController extends Controller
             // Si el usuario está en la lista, lo elimina de la lista de usuarios del evento.
             $evento->usuarios()->detach(Auth::user()->id);
         }
-        return Inertia::location(route('eventos.index'));
+        Session::flash('flash', ['type' => 'success', 'message' => 'Abandonaste el evento correctamente.']);
+        return Inertia::location(back());
     }
 }

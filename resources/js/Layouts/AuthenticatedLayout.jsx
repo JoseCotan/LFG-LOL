@@ -137,7 +137,7 @@ export default function Authenticated({ user, header, children }) {
                                 <img src="/images/right-from-bracket-solid-white.svg" alt="Icono cerrar sesión" className="ml-2 w-7 h-7" />
                             </ResponsiveNavLink>
                             {user.admin && (
-                                <ResponsiveNavLink href={route('logout')} as="button" className="flex items-center justify-between">
+                                <ResponsiveNavLink href={route('admin.index')} as="button" className="flex items-center justify-between">
                                     <span>Panel de Administración</span>
                                     <img src="/images/user-admin-white.png" alt="Icono administrador" className="ml-2 w-7 h-7" />
                                 </ResponsiveNavLink>
