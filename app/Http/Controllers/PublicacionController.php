@@ -21,15 +21,32 @@ class PublicacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $publicaciones = Publicacion::with(['modo', 'rango', 'rol', 'usuario'])
+        $query = Publicacion::with(['modo', 'rango', 'rol', 'usuario'])
             ->join('users', 'publicaciones.usuario_id', '=', 'users.id')
             ->orderBy('users.VIP', 'DESC')
             ->orderBy('publicaciones.created_at', 'DESC')
-            ->select('publicaciones.*')
-            ->paginate(20);
+            ->select('publicaciones.*');
 
+        // Aplicar filtros
+        if ($request->filled('modo')) {
+            $query->where('publicaciones.modo_id', $request->modo);
+        }
+        if ($request->filled('rango')) {
+            $query->where('publicaciones.rango_id', $request->rango);
+        }
+        if ($request->filled('rol')) {
+            $query->where('publicaciones.rol_id', $request->rol);
+        }
+        if ($request->filled('hora_inicio')) {
+            $query->where('publicaciones.hora_preferente_inicio', '>=', $request->hora_inicio);
+        }
+        if ($request->filled('hora_fin')) {
+            $query->where('publicaciones.hora_preferente_final', '<=', $request->hora_fin);
+        }
+
+        $publicaciones = $query->paginate(20);
 
         // Verifica la reputación del usuario y obtiene la imagen correspondiente
         foreach ($publicaciones as $publicacion) {
@@ -42,13 +59,7 @@ class PublicacionController extends Controller
             $publicacion->reputacion_img = $reputacion > 0;
         }
 
-        Log::info($publicaciones[0]);
-        Log::info($publicaciones[1]);
-        Log::info($publicaciones[2]);
-
-
         $existePublicacion = false;
-
         if (Auth::check()) {
             $existePublicacion = Publicacion::where('usuario_id', Auth::user()->id)->exists();
         }
@@ -60,6 +71,7 @@ class PublicacionController extends Controller
             'roles' => Rol::all(),
             'existePublicacion' => $existePublicacion,
             'flash' => session('flash'),
+            'filtros' => $request->only(['modo', 'rango', 'rol', 'hora_inicio', 'hora_fin']),
         ]);
     }
 

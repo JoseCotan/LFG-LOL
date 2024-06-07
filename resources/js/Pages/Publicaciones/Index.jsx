@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, useForm } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import ButtonColores from '@/Components/ButtonColores';
 import MensajeSuccess from '@/Components/MensajeSuccess';
@@ -8,14 +8,17 @@ import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
 import FiltroPublicaciones from '@/Components/FiltroPublicaciones';
 
 const PublicacionesIndex = () => {
-    const { publicaciones, modos, roles, rangos, auth, flash } = usePage().props;
+    const { publicaciones, modos, roles, rangos, auth, flash, filtros } = usePage().props;
+    const { data, setData, get } = useForm({
+        modo: filtros.modo || '',
+        rango: filtros.rango || '',
+        rol: filtros.rol || '',
+        hora_inicio: filtros.hora_inicio || '',
+        hora_fin: filtros.hora_fin || '',
+    });
+
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-    const [filtroModo, setFiltroModo] = useState('');
-    const [filtroRango, setFiltroRango] = useState('');
-    const [filtroRol, setFiltroRol] = useState('');
-    const [filtroHoraInicio, setFiltroHoraInicio] = useState('');
-    const [filtroHoraFin, setFiltroHoraFin] = useState('');
 
     useEffect(() => {
         if (flash && flash.type === 'success') {
@@ -27,21 +30,34 @@ const PublicacionesIndex = () => {
         }
     }, [flash]);
 
-    const resetearFiltros = () => {
-        setFiltroModo('');
-        setFiltroRango('');
-        setFiltroRol('');
-        setFiltroHoraInicio('');
-        setFiltroHoraFin('');
+    const applyFilters = () => {
+        get(route('publicaciones.index'), {
+            preserveState: true,
+            preserveScroll: true,
+        });
     };
 
-    const publicacionesFiltradas = publicaciones.data.filter(p => {
-        return (!filtroModo || p.modo.id.toString() === filtroModo) &&
-            (!filtroRango || p.rango.id.toString() === filtroRango) &&
-            (!filtroRol || p.rol.id.toString() === filtroRol) &&
-            (!filtroHoraInicio || p.hora_preferente_inicio >= filtroHoraInicio) &&
-            (!filtroHoraFin || p.hora_preferente_final <= filtroHoraFin);
-    });
+    const resetFilters = () => {
+        setData({
+            modo: '',
+            rango: '',
+            rol: '',
+            hora_inicio: '',
+            hora_fin: '',
+        });
+    };
+
+    useEffect(() => {
+        if (data.modo || data.rango || data.rol || data.hora_inicio || data.hora_fin) {
+            applyFilters();
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (!data.modo && !data.rango && !data.rol && !data.hora_inicio && !data.hora_fin) {
+            applyFilters();
+        }
+    }, [data.modo, data.rango, data.rol, data.hora_inicio, data.hora_fin]);
 
     return (
         <ControladorLayout>
@@ -52,18 +68,9 @@ const PublicacionesIndex = () => {
                         roles={roles}
                         rangos={rangos}
                         onFiltrar={(modo, rango, rol, horaInicio, horaFin) => {
-                            setFiltroModo(modo);
-                            setFiltroRango(rango);
-                            setFiltroRol(rol);
-                            setFiltroHoraInicio(horaInicio);
-                            setFiltroHoraFin(horaFin);
+                            setData({ modo, rango, rol, hora_inicio: horaInicio, hora_fin: horaFin });
                         }}
-                        onReset={resetearFiltros}
-                        setFiltroModo={setFiltroModo}
-                        setFiltroRango={setFiltroRango}
-                        setFiltroRol={setFiltroRol}
-                        setFiltroHoraInicio={setFiltroHoraInicio}
-                        setFiltroHoraFin={setFiltroHoraFin}
+                        onReset={resetFilters}
                     />
                 </div>
                 <div className="w-full p-6">
@@ -83,7 +90,7 @@ const PublicacionesIndex = () => {
                         </Link>
                     </div>
                     <div className="mt-6 flex flex-wrap justify-center sm:justify-start">
-                        {publicacionesFiltradas.map((publicacion) => (
+                        {publicaciones.data.map((publicacion) => (
                             <div key={publicacion.id} className="m-2">
                                 <TarjetaPublicacion publicacion={publicacion} />
                             </div>

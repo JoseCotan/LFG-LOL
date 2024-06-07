@@ -4,12 +4,16 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import ButtonColores from '@/Components/ButtonColores';
 
-const FiltroPublicaciones = ({ modos, roles, rangos, onReset, setFiltroModo, setFiltroRango, setFiltroRol, setFiltroHoraInicio, setFiltroHoraFin }) => {
-    const [filtroModo, setFiltroModoLocal] = useState('');
-    const [filtroRango, setFiltroRangoLocal] = useState('');
-    const [filtroRol, setFiltroRolLocal] = useState('');
-    const [filtroHoraInicio, setFiltroHoraInicioLocal] = useState('');
-    const [filtroHoraFin, setFiltroHoraFinLocal] = useState('');
+const FiltroPublicaciones = ({ modos, roles, rangos, onFiltrar, onReset }) => {
+    const [filtroModo, setFiltroModo] = useState('');
+    const [filtroRango, setFiltroRango] = useState('');
+    const [filtroRol, setFiltroRol] = useState('');
+    const [filtroHoraInicio, setFiltroHoraInicio] = useState('');
+    const [filtroHoraFin, setFiltroHoraFin] = useState('');
+
+    const handleFiltrar = () => {
+        onFiltrar(filtroModo, filtroRango, filtroRol, filtroHoraInicio, filtroHoraFin);
+    };
 
     const handleReset = () => {
         setFiltroModo('');
@@ -17,11 +21,6 @@ const FiltroPublicaciones = ({ modos, roles, rangos, onReset, setFiltroModo, set
         setFiltroRol('');
         setFiltroHoraInicio('');
         setFiltroHoraFin('');
-        setFiltroModoLocal('');
-        setFiltroRangoLocal('');
-        setFiltroRolLocal('');
-        setFiltroHoraInicioLocal('');
-        setFiltroHoraFinLocal('');
         onReset();
     };
 
@@ -30,10 +29,7 @@ const FiltroPublicaciones = ({ modos, roles, rangos, onReset, setFiltroModo, set
             <InputLabel>Filtrar por Modo</InputLabel>
             <Select
                 value={filtroModo}
-                onChange={(e) => {
-                    setFiltroModoLocal(e.target.value);
-                    setFiltroModo(e.target.value);
-                }}
+                onChange={(e) => setFiltroModo(e.target.value)}
                 options={[
                     { value: '', label: 'Todos' },
                     ...modos.map((modo) => ({ value: modo.id, label: modo.nombre }))
@@ -44,10 +40,7 @@ const FiltroPublicaciones = ({ modos, roles, rangos, onReset, setFiltroModo, set
             <InputLabel className="mt-4">Filtrar por Rango</InputLabel>
             <Select
                 value={filtroRango}
-                onChange={(e) => {
-                    setFiltroRangoLocal(e.target.value);
-                    setFiltroRango(e.target.value);
-                }}
+                onChange={(e) => setFiltroRango(e.target.value)}
                 options={[
                     { value: '', label: 'Todos' },
                     ...rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))
@@ -58,10 +51,7 @@ const FiltroPublicaciones = ({ modos, roles, rangos, onReset, setFiltroModo, set
             <InputLabel className="mt-4">Filtrar por Rol</InputLabel>
             <Select
                 value={filtroRol}
-                onChange={(e) => {
-                    setFiltroRolLocal(e.target.value);
-                    setFiltroRol(e.target.value);
-                }}
+                onChange={(e) => setFiltroRol(e.target.value)}
                 options={[
                     { value: '', label: 'Todos' },
                     ...roles.map((rol) => ({ value: rol.id, label: rol.nombre }))
@@ -74,21 +64,19 @@ const FiltroPublicaciones = ({ modos, roles, rangos, onReset, setFiltroModo, set
                 type="time"
                 id="horaInicio"
                 value={filtroHoraInicio}
-                onChange={(e) => {
-                    setFiltroHoraInicioLocal(e.target.value);
-                    setFiltroHoraInicio(e.target.value);
-                }}
+                onChange={(e) => setFiltroHoraInicio(e.target.value)}
             />
             <InputLabel htmlFor="horaFin">Hasta:</InputLabel>
             <TextInput
                 type="time"
                 id="horaFin"
                 value={filtroHoraFin}
-                onChange={(e) => {
-                    setFiltroHoraFinLocal(e.target.value);
-                    setFiltroHoraFin(e.target.value);
-                }}            />
+                onChange={(e) => setFiltroHoraFin(e.target.value)}
+            />
             <div className="flex justify-between mt-6">
+                <ButtonColores color="green" onClick={handleFiltrar}>
+                    Filtrar
+                </ButtonColores>
                 <ButtonColores color="red" onClick={handleReset}>
                     Resetear
                 </ButtonColores>
