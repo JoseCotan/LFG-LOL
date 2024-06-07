@@ -20,16 +20,30 @@ class EquipoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Se obtiene todos los equipos y carga las relaciones 'lider' y 'modo' de una vez.
-        $equipos = Equipo::with(['lider', 'modo', 'rango'])->get();
+        $query = Equipo::with(['lider', 'modo', 'rango'])->orderBy('created_at', 'DESC');
+
+        if ($request->filled('modo')) {
+            $query->where('equipos.modo_juego_preferente', $request->modo);
+        }
+        if ($request->filled('rango')) {
+            $query->where('equipos.rango_id', $request->rango);
+        }
+        if ($request->filled('privacidad')) {
+            $query->where('privado', $request->privacidad === 'privado');
+        }
+
+        $equipos = $query->paginate(1);
+
+        Log::info('Solicitud recibida:', $request->all());
 
         return Inertia::render('Equipos/Index', [
             'equipos' => $equipos,
             'modos' => Modo::all(),
             'rangos' => Rango::all(),
             'flash' => session('flash'),
+            'filtros' => $request->only(['modo', 'rango', 'privacidad']),
         ]);
     }
 

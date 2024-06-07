@@ -53,12 +53,6 @@ const PublicacionesIndex = () => {
         }
     }, [data]);
 
-    useEffect(() => {
-        if (!data.modo && !data.rango && !data.rol && !data.hora_inicio && !data.hora_fin) {
-            applyFilters();
-        }
-    }, [data.modo, data.rango, data.rol, data.hora_inicio, data.hora_fin]);
-
     return (
         <ControladorLayout>
             <div className="flex flex-col sm:flex-row">

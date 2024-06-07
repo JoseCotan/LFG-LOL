@@ -17,16 +17,33 @@ class EventoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Se obtiene todos los eventos y carga la relación creador y usuarios de una vez.
-        $eventos = Evento::with(['creador', 'usuarios'])->get();
+        $query = Evento::with(['creador', 'usuarios'])->orderBy('created_at', 'DESC');
+
+        if ($request->filled('publico')) {
+            $query->where('acceso_publico', $request->publico === 'si');
+        }
+
+        if ($request->filled('amigos')) {
+            $query->where('acceso_amigos', $request->amigos === 'si');
+        }
+
+        if ($request->filled('miembros_equipo')) {
+            $query->where('acceso_miembros_equipo', $request->miembros_equipo === 'si');
+        }
+
+        Log::info('Solicitud recibida:', $request->all());
+
+        $eventos = $query->paginate(10);
 
         return Inertia::render('Eventos/Index', [
             'eventos' => $eventos,
             'flash' => session('flash'),
+            'filtros' => $request->only(['publico', 'amigos', 'miembros_equipo']),
         ]);
     }
+
 
 
     /**
@@ -85,7 +102,6 @@ class EventoController extends Controller
             'flash' => session('flash'),
         ]);
     }
-
 
     /**
      * Show the form for editing the specified resource.

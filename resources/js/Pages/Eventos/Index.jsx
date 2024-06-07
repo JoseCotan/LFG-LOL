@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Inertia } from '@inertiajs/inertia';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, useForm } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import ButtonColores from '@/Components/ButtonColores';
 import FiltroEvento from '@/Components/FiltroEvento';
@@ -9,20 +8,15 @@ import MensajeError from '@/Components/MensajeError';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 
 const EventosIndex = () => {
-    const { eventos, auth, flash } = usePage().props;
+    const { eventos, auth, flash, filtros } = usePage().props;
+    const { data, setData, get } = useForm({
+        publico: filtros.publico || '',
+        amigos: filtros.amigos || '',
+        miembros_equipo: filtros.miembros_equipo || '',
+    });
+
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-    const [filtroPublico, setFiltroPublico] = useState('');
-    const [filtroAmigos, setFiltroAmigos] = useState('');
-    const [filtroMiembrosEquipo, setFiltroMiembrosEquipo] = useState('');
-
-    const handleUnirse = (eventoId) => {
-        Inertia.post(route('eventos.unirse', eventoId));
-    };
-
-    const handleAbandonar = (eventoId) => {
-        Inertia.post(route('eventos.abandonar', eventoId));
-    };
 
     useEffect(() => {
         if (flash && flash.type === 'success') {
@@ -34,31 +28,36 @@ const EventosIndex = () => {
         }
     }, [flash]);
 
-    const handleReset = () => {
-        setFiltroPublico('');
-        setFiltroAmigos('');
-        setFiltroMiembrosEquipo('');
+    const aplicarFiltros = () => {
+        get(route('eventos.index'), {
+            preserveState: true,
+            preserveScroll: true,
+        });
     };
 
-    const eventosFiltrados = eventos.filter(evento => {
-        const accesoPublico = Boolean(evento.acceso_publico);
-        const accesoAmigos = Boolean(evento.acceso_amigos);
-        const accesoMiembrosEquipo = Boolean(evento.acceso_miembros_equipo);
+    const resetFilters = () => {
+        setData({
+            publico: '',
+            amigos: '',
+            miembros_equipo: '',
+        });
+    };
 
-        return (!filtroPublico || (filtroPublico === "si" && accesoPublico) || (filtroPublico === "no" && !accesoPublico)) &&
-            (!filtroAmigos || (filtroAmigos === "si" && accesoAmigos) || (filtroAmigos === "no" && !accesoAmigos)) &&
-            (!filtroMiembrosEquipo || (filtroMiembrosEquipo === "si" && accesoMiembrosEquipo) || (filtroMiembrosEquipo === "no" && !accesoMiembrosEquipo));
-    });
+    useEffect(() => {
+        if (data.publico || data.amigos || data.miembros_equipo) {
+            aplicarFiltros();
+        }
+    }, [data]);
 
     return (
         <ControladorLayout>
             <div className="flex flex-col sm:flex-row">
                 <div className="p-4 2xl:w-96 xl:w-96 lg:w-96 md:w-96 sm:w-96">
                     <FiltroEvento
-                        onReset={handleReset}
-                        setFiltroPublico={setFiltroPublico}
-                        setFiltroAmigos={setFiltroAmigos}
-                        setFiltroMiembrosEquipo={setFiltroMiembrosEquipo}
+                        onFiltrar={(publico, amigos, miembros_equipo) => {
+                            setData({ publico, amigos, miembros_equipo });
+                        }}
+                        onReset={resetFilters}
                     />
                 </div>
 
@@ -79,7 +78,7 @@ const EventosIndex = () => {
                         </Link>
                     </div>
                     <div className="flex gap-4 flex-wrap justify-center sm:justify-start ml-4">
-                        {eventosFiltrados.map(evento => (
+                        {eventos.data.map(evento => (
                             <div key={evento.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-sm relative mb-4">
                                 <div className="p-6">
                                     <h3 className="text-lg font-semibold text-white mb-2">{evento.titulo}</h3>
@@ -131,6 +130,18 @@ const EventosIndex = () => {
                                     </div>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                    <div className="flex justify-center space-x-1 mt-4">
+                        {eventos.links.map((link, index) => (
+                            <Link
+                                key={index}
+                                href={link.url}
+                                preserveScroll
+                                preserveState
+                                className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                            />
                         ))}
                     </div>
                 </div>

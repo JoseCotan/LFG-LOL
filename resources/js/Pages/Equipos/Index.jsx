@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, useForm } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import ButtonColores from '@/Components/ButtonColores';
-import ImagenResponsive from '@/Components/ImagenResponsive';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
 import FiltroEquipo from '@/Components/FiltroEquipo';
+import ImagenResponsive from '@/Components/ImagenResponsive';
 
 const EquiposIndex = () => {
-    const { equipos, modos, rangos, auth, flash } = usePage().props;
+    const { equipos, modos, rangos, auth, flash, filtros } = usePage().props;
+    const { data, setData, get } = useForm({
+        modo: filtros.modo || '',
+        rango: filtros.rango || '',
+        privacidad: filtros.privacidad || '',
+    });
+
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-    const [filtroModo, setFiltroModo] = useState('');
-    const [filtroRango, setFiltroRango] = useState('');
-    const [filtroPrivacidad, setFiltroPrivacidad] = useState('');
 
     const convertirRango = (nombreRango) => {
         const rangos = {
@@ -43,25 +46,26 @@ const EquiposIndex = () => {
         }
     }, [flash]);
 
-    const handleFiltrar = (modo, rango, privacidad) => {
-        setFiltroModo(modo);
-        setFiltroRango(rango);
-        setFiltroPrivacidad(privacidad);
+    const aplicarFiltros = () => {
+        get(route('equipos.index'), {
+            preserveState: true,
+            preserveScroll: true,
+        });
     };
 
-    const handleReset = () => {
-        setFiltroModo('');
-        setFiltroRango('');
-        setFiltroPrivacidad('');
+    const resetFilters = () => {
+        setData({
+            modo: '',
+            rango: '',
+            privacidad: '',
+        });
     };
 
-    const equiposFiltrados = equipos.filter(e => {
-        return (!filtroModo || e.modo.id.toString() === filtroModo) &&
-            (!filtroRango || e.rango.id.toString() === filtroRango) &&
-            (!filtroPrivacidad || (filtroPrivacidad === 'publico' && !e.privado) || (filtroPrivacidad === 'privado' && e.privado));
-    });
-
-
+    useEffect(() => {
+        if (data.modo || data.rango || data.privacidad) {
+            aplicarFiltros();
+        }
+    }, [data]);
 
     return (
         <ControladorLayout>
@@ -70,15 +74,14 @@ const EquiposIndex = () => {
                     <FiltroEquipo
                         modos={modos}
                         rangos={rangos}
-                        onFiltrar={handleFiltrar}
-                        onReset={handleReset}
-                        setFiltroModo={setFiltroModo}
-                        setFiltroRango={setFiltroRango}
-                        setFiltroPrivacidad={setFiltroPrivacidad}
+                        onFiltrar={(modo, rango, privacidad) => {
+                            setData({ modo, rango, privacidad });
+                        }}
+                        onReset={resetFilters}
                     />
                 </div>
                 <div className="w-full lg:w-3/4 p-4 mt-4">
-                <div className="ml-4 flex justify-center sm:justify-start">
+                    <div className="ml-4 flex justify-center sm:justify-start">
                         {success && (
                             <MensajeSuccess message={success} onClose={() => setSuccess('')} />
                         )}
@@ -94,7 +97,7 @@ const EquiposIndex = () => {
                         </Link>
                     </div>
                     <div className="flex flex-wrap justify-center sm:justify-start ml-4">
-                        {equiposFiltrados.map((equipo) => (
+                        {equipos.data.map((equipo) => (
                             <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4">
                                 <div className="p-6">
                                     <h3 className="text-lg font-semibold text-white mb-2">{equipo.nombre_equipo}</h3>
@@ -142,7 +145,18 @@ const EquiposIndex = () => {
                             </div>
                         ))}
                     </div>
-
+                    <div className="flex justify-center space-x-1 mt-4">
+                        {equipos.links.map((link, index) => (
+                            <Link
+                                key={index}
+                                href={link.url}
+                                preserveScroll
+                                preserveState
+                                className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </ControladorLayout>
