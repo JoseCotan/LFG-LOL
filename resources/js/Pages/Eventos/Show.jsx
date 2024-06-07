@@ -133,19 +133,11 @@ const EventoShow = () => {
                     <div className="bg-white p-4 rounded-xl shadow-lg">
                         {auth.user && <ComentarioEvento eventoId={evento.id} />}
                         <div className="mt-4">
-                            <DesplegableComentariosEvento comentarios={comentarios.data} totalComentarios={totalComentarios}/>
-                        </div>
-                        <div className="flex justify-center space-x-1 mt-4">
-                            {comentarios.links && comentarios.links.map((link, index) => (
-                                <Link
-                                    key={index}
-                                    href={link.url}
-                                    preserveScroll
-                                    preserveState
-                                    className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                />
-                            ))}
+                            <DesplegableComentariosEvento
+                                comentarios={comentarios.data}
+                                totalComentarios={totalComentarios}
+                                paginacion={comentarios.links}
+                            />
                         </div>
                     </div>
 
