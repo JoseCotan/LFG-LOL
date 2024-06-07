@@ -114,12 +114,12 @@ const EventosIndex = () => {
                                         <Link href={route('eventos.show', evento.id)}>
                                             <ButtonColores color="green">Mirar Evento</ButtonColores>
                                         </Link>
-                                        {auth.user && auth.user.id === evento.creador_evento && (
+                                        {auth.user && (auth.user.id === evento.creador_evento || auth.user.admin) && (
                                             <Link href={route('eventos.edit', evento.id)}>
                                                 <ButtonColores color="yellow">Editar</ButtonColores>
                                             </Link>
                                         )}
-                                        {evento.usuarios.some(user => user.id === auth.user.id) ? (
+                                        {evento.usuarios.some(user => user.id === auth.user?.id) ? (
                                             <ButtonColores color="red" onClick={() => handleAbandonar(evento.id)}>
                                                 Abandonar
                                             </ButtonColores>

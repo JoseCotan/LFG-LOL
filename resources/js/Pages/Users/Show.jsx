@@ -19,8 +19,6 @@ import DislikeButton from '@/Components/DislikeButton';
 import ButtonColores from '@/Components/ButtonColores';
 
 
-
-
 const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado, haDadoLike, haDadoDislike, flash }) => {
     const { auth } = usePage().props;
     const [success, setSuccess] = useState('');

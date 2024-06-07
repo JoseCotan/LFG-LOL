@@ -1,7 +1,8 @@
 import React from 'react';
-import ImagenResponsive from './ImagenResponsive';
+import ImagenResponsive from '@/Components/ImagenResponsive';
 
 const ListaComentarios = ({ comentarios }) => {
+    console.log(comentarios)
     return (
         <div className="mt-4">
             {comentarios.map((comentario) => (

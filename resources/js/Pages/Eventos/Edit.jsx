@@ -1,10 +1,12 @@
 import React from 'react';
 import { useForm, usePage, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import PrimaryButton from '@/Components/PrimaryButton';
+import ButtonColores from '@/Components/ButtonColores';
 import TextInput from '@/Components/TextInput';
 import Checkbox from '@/Components/Checkbox';
 import InputLabel from '@/Components/InputLabel';
+import TextArea from '@/Components/TextArea';
+
 
 const EventosEdit = () => {
     const { auth, evento } = usePage().props;
@@ -46,11 +48,9 @@ const EventosEdit = () => {
                     </div>
                     <div className="mb-6">
                         <InputLabel value="Descripción" />
-                        <textarea
-                            id="descripcion"
+                        <TextArea
                             value={data.descripcion}
                             onChange={(e) => setData('descripcion', e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         />
                     </div>
                     <div className="mb-6">
@@ -81,8 +81,12 @@ const EventosEdit = () => {
                         <span>Acceso Miembros del Equipo</span>
                     </div>
                     <div className="flex items-center justify-between">
-                        <PrimaryButton disabled={processing}>Actualizar Evento</PrimaryButton>
-                        <Link href={route('eventos.index')} className="text-blue-600 hover:text-blue-800">Cancelar</Link>
+                        <ButtonColores color="green" disabled={processing}>Crear Evento</ButtonColores>
+                        <Link href={route('eventos.index')}>
+                            <ButtonColores color="blue">
+                                Cancelar
+                            </ButtonColores>
+                        </Link>
                     </div>
                 </form>
             </div>

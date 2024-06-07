@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
@@ -177,8 +178,10 @@ class EquipoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        Log::info('Panel Admin:', ['panelAdmin' => $request->input('panelAdmin')]);
+
         $equipo = Equipo::findOrFail($id); // Busca el equipo por ID.
 
         // Verifica si el usuario logueado es el líder del equipo o un administrador.
@@ -191,8 +194,8 @@ class EquipoController extends Controller
         $equipo->delete(); // Elimina el equipo.
 
         // Si el usuario es un administrador, redirige de vuelta a la página anterior.
-        if (Auth::user()->admin) {
-            return Inertia::location(route('admin.index'));
+        if ($request->input('panelAdmin')) {
+            return Inertia::location(route('admin.equipos.index'));
         }
 
         Session::flash('flash', ['type' => 'success', 'message' => 'Eliminaste el equipo con éxito.']);
