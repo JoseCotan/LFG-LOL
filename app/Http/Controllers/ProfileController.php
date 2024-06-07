@@ -128,6 +128,8 @@ class ProfileController extends Controller
         $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
         $reputacion = $likes - $dislikes;
 
+        $comentarios = $user->comentarios()->with('user')->paginate(1);
+
         return Inertia::render('Users/Show', [
             'user' => $user,
             'amistad' => $amistad,
@@ -135,7 +137,8 @@ class ProfileController extends Controller
             'reputacion' => $reputacion,
             'name' => $user->name,
             'perfilNombreLOL' => $user->nombreLOL,
-            'comentarios' => $user->comentarios()->with('user')->get(),
+            'totalComentarios' => $comentarios->total(),
+            'comentarios' => $comentarios,
             'haComentado' => $haComentado,
             'haDadoLike' => $haDadoLike,
             'haDadoDislike' => $haDadoDislike,
