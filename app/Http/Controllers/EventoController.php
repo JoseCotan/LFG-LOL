@@ -67,7 +67,12 @@ class EventoController extends Controller
      */
     public function show(Evento $evento)
     {
-        //
+        $evento->load('usuarios', 'creador');
+
+        return Inertia::render('Eventos/Show', [
+            'evento' => $evento,
+            'flash' => session('flash'),
+        ]);
     }
 
     /**

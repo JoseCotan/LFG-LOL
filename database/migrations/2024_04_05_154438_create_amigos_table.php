@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('amigos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained('users');
-            $table->foreignId('amigo_id')->constrained('users');
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('amigo_id')->constrained('users')->onDelete('cascade');
             $table->enum('estado', ['pendiente', 'aceptado', 'rechazado'])->default('pendiente');
             $table->unique(['usuario_id', 'amigo_id']);
             $table->timestamps();

@@ -1,0 +1,75 @@
+import React, { useState } from 'react';
+import Select from '@/Components/Select';
+import InputLabel from '@/Components/InputLabel';
+import ButtonColores from '@/Components/ButtonColores';
+
+const FiltroEquipo = ({ modos, rangos, onReset, setFiltroModo, setFiltroRango, setFiltroPrivacidad }) => {
+    const [filtroModo, setFiltroModoLocal] = useState('');
+    const [filtroRango, setFiltroRangoLocal] = useState('');
+    const [filtroPrivacidad, setFiltroPrivacidadLocal] = useState('');
+
+    const handleReset = () => {
+        setFiltroModo('');
+        setFiltroRango('');
+        setFiltroPrivacidad('');
+        setFiltroModoLocal('');
+        setFiltroRangoLocal('');
+        setFiltroPrivacidadLocal('');
+        onReset();
+    };
+
+    return (
+        <div className="bg-white p-4 mb-4 rounded-lg shadow-md">
+            <InputLabel>Filtrar por Modo</InputLabel>
+            <Select
+                value={filtroModo}
+                onChange={(e) => {
+                    setFiltroModoLocal(e.target.value);
+                    setFiltroModo(e.target.value);
+                }}
+                options={[
+                    { value: '', label: 'Todos' },
+                    ...modos.map((modo) => ({ value: modo.id, label: modo.nombre }))
+                ]}
+                id="filtroModo"
+            />
+
+            <InputLabel className="mt-4">Filtrar por Rango</InputLabel>
+            <Select
+                value={filtroRango}
+                onChange={(e) => {
+                    setFiltroRangoLocal(e.target.value);
+                    setFiltroRango(e.target.value);
+                }}
+                options={[
+                    { value: '', label: 'Todos' },
+                    ...rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))
+                ]}
+                id="filtroRango"
+            />
+
+            <InputLabel className="mt-4">Filtrar por Privacidad</InputLabel>
+            <Select
+                value={filtroPrivacidad}
+                onChange={(e) => {
+                    setFiltroPrivacidadLocal(e.target.value);
+                    setFiltroPrivacidad(e.target.value);
+                }}
+                options={[
+                    { value: '', label: 'Todos' },
+                    { value: 'publico', label: 'Público' },
+                    { value: 'privado', label: 'Privado' }
+                ]}
+                id="filtroPrivacidad"
+            />
+
+            <div className="flex justify-between mt-6">
+                <ButtonColores color="red" onClick={handleReset}>
+                    Resetear
+                </ButtonColores>
+            </div>
+        </div>
+    );
+};
+
+export default FiltroEquipo;

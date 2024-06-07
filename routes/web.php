@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AmigoController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\EquipoController;
@@ -47,10 +48,6 @@ Route::get('/google-auth/callback', function () {
 
     return redirect('/');
 });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -101,6 +98,11 @@ Route::post('/enviarMensaje/{destinatarioId}', [MensajeController::class, 'envia
 Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
 Route::delete('/comentarios/{comentarioId}', [ComentarioController::class, 'destroy'])->name('comentarios.eliminar');
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin/publicaciones', [AdminController::class, 'publicaciones'])->name('admin.publicaciones.index');
+Route::get('/admin/equipos', [AdminController::class, 'equipos'])->name('admin.equipos.index');
+Route::get('/admin/eventos', [AdminController::class, 'eventos'])->name('admin.eventos.index');
 
 
 Route::get('/vip', [PaypalController::class, 'index'])->name('vip')->middleware('auth');

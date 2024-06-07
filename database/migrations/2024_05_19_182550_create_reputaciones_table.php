@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reputaciones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained('users');
-            $table->foreignId('valorador_id')->constrained('users');
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('valorador_id')->constrained('users')->onDelete('cascade');
             $table->enum('valoracion', ['like', 'dislike']);
             $table->unique(['usuario_id', 'valorador_id']);
             $table->timestamps();

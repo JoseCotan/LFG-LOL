@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('rango_id')->nullable()->constrained();
             $table->foreignId('rol_id')->nullable()->constrained('roles');
             $table->foreignId('modo_id')->nullable()->constrained();
-            $table->foreignId('usuario_id')->constrained('users');
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

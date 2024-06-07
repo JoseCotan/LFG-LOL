@@ -138,7 +138,12 @@ class PublicacionController extends Controller
         $roles = Rol::all();
         $rangos = Rango::all();
 
-        if (!Auth::check() || Auth::user()->id !== $publicacion->usuario_id) {
+        if (!Auth::check()) {
+            Session::flash('flash', ['type' => 'error', 'message' => 'Debes estar autenticado para editar una publicación.']);
+            return Inertia::location(back());
+        }
+
+        if (!Auth::user()->admin && Auth::user()->id !== $publicacion->usuario_id) {
             Session::flash('flash', ['type' => 'error', 'message' => 'No puedes editar esta publicación.']);
             return Inertia::location(back());
         }
@@ -205,13 +210,18 @@ class PublicacionController extends Controller
     {
         $publicacion = Publicacion::findOrFail($id); // Busca la publicación por ID.
 
-        // Verifica si el usuario logueado es el creador de la publicación.
-        if (Auth::user()->id !== $publicacion->usuario_id) {
-            // Si no es el líder, redirige al índice sin eliminar.
+        // Verifica si el usuario no es el creador de la publicación y no es un administrador.
+        if (Auth::user()->id !== $publicacion->usuario_id && !Auth::user()->admin) {
+            // Si no es el creador ni un administrador, redirige al índice sin eliminar.
             return Inertia::location(route('publicaciones.index'));
         }
 
         $publicacion->delete(); // Elimina la publicación.
+
+        // Si el usuario es un administrador, redirige de vuelta a la página anterior.
+        if (Auth::user()->admin) {
+            return Inertia::location(route('admin.index'));
+        }
 
         // Redirige al índice de publicaciones.
         return Inertia::location(route('publicaciones.index'));

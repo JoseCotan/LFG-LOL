@@ -105,19 +105,15 @@ export default function GuestLayout({ header, children }) {
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <Link
-                                href={route('login')}
-                                className="block rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Log in
-                            </Link>
-                            <Link
-                                href={route('register')}
-                                className="block rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Registrarse
-                            </Link>
+                    <div className="space-y-1">
+                            <ResponsiveNavLink href={route('login')} className="flex items-center justify-between">
+                                <span>Iniciar sesión</span>
+                                <img src="/images/right-to-bracket-solid-white.svg" alt="Icono perfil" className="ml-2 w-4 h-4" />
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink method="post" href={route('register')} as="button" className="flex items-center justify-between">
+                                <span>Registrarse</span>
+                                <img src="/images/right-from-bracket-solid-white.svg" alt="Icono cerrar sesión" className="ml-2 w-4 h-4" />
+                            </ResponsiveNavLink>
                         </div>
                     </div>
                 </div>

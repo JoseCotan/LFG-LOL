@@ -43,17 +43,17 @@ const TarjetaPublicacion = ({ publicacion }) => {
 
     // Si el usuario no está logeado, devolverá false.
     const creador = auth.user && auth.user.id === publicacion.usuario_id;
+    const fondoVIP = publicacion.usuario.VIP ? 'bg-amber-100' : 'bg-blue-100';
 
     return (
-        <div className="flex w-380 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 bg-blue-100 relative" style={{ maxWidth: '400px' }}>
-            <div className="w-24 h-full flex flex-col items-center p-2 border-r border-gray-300">
-                <div className="w-20 h-1/2">
-                    <img src={`/images/posiciones/${convertirRol(publicacion.rol.nombre)}.webp`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
-                </div>
-                <div className="w-20 h-1/2">
-                    <img src={`/images/rangos/${convertirRango(publicacion.rango.nombre)}.png`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
-                </div>
+        <div className={`flex w-380 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 ${fondoVIP} relative`} style={{ maxWidth: '400px' }}>            <div className="w-24 h-full flex flex-col items-center p-2 border-r border-gray-300">
+            <div className="w-20 h-1/2">
+                <img src={`/images/posiciones/${convertirRol(publicacion.rol.nombre)}.webp`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
             </div>
+            <div className="w-20 h-1/2">
+                <img src={`/images/rangos/${convertirRango(publicacion.rango.nombre)}.png`} alt={`Posición ${publicacion.posicion}`} title="aaaaaa" className="w-full h-full object-cover" />
+            </div>
+        </div>
             <div className="flex flex-col justify-center p-2 text-sm overflow-hidden pr-16">
                 <h2 className="text-lg font-bold mb-2">{publicacion.titulo}</h2>
                 <div className="mb-2">Horario: {publicacion.hora_preferente_inicio} - {publicacion.hora_preferente_final}</div>
@@ -69,7 +69,7 @@ const TarjetaPublicacion = ({ publicacion }) => {
                     className="w-16 h-16 mt-2 absolute right-2"
                 />
             )}
-            {creador && (
+            {auth.user && (creador || auth.user.admin) && (
                 <Link href={route('publicaciones.edit', publicacion.id)}>
                     <img
                         src="/images/edit.svg"
