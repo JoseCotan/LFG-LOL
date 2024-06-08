@@ -1,8 +1,11 @@
+// DesplegableComentarios.jsx
 import React, { useState } from 'react';
 import ListaComentarios from './ListaComentarios';
 import { Link } from '@inertiajs/react';
+import Paginacion from '@/Components/Paginacion';
+import ButtonColores from '@/Components/ButtonColores';
 
-const DesplegableComentarios = ({ comentarios, totalComentarios, paginacion }) => {
+const DesplegableComentarios = ({ comentarios, totalComentarios, paginacion, haComentado, authUser, handleEliminarComentario }) => {
     const [visible, setVisible] = useState(false);
 
     const toggleVisible = () => {
@@ -25,20 +28,9 @@ const DesplegableComentarios = ({ comentarios, totalComentarios, paginacion }) =
             </button>
             {visible && (
                 <>
-                    <ListaComentarios comentarios={comentarios} />
+                    <ListaComentarios comentarios={comentarios} handleEliminarComentario={handleEliminarComentario} /> {/* Pasa la función de eliminación de comentarios */}
                     {paginacion && (
-                        <div className="flex justify-center space-x-1 mt-4">
-                            {paginacion.map((link, index) => (
-                                <Link
-                                    key={index}
-                                    href={link.url}
-                                    preserveScroll
-                                    preserveState
-                                    className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
-                                />
-                            ))}
-                        </div>
+                        <Paginacion links={paginacion} />
                     )}
                 </>
             )}

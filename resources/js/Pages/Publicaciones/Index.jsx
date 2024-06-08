@@ -19,6 +19,7 @@ const PublicacionesIndex = () => {
 
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
+    const [filtrosCambiados, setFiltrosCambiados] = useState(false);
 
     useEffect(() => {
         if (flash && flash.type === 'success') {
@@ -30,14 +31,14 @@ const PublicacionesIndex = () => {
         }
     }, [flash]);
 
-    const applyFilters = () => {
+    const aplicarFiltros = () => {
         get(route('publicaciones.index'), {
             preserveState: true,
             preserveScroll: true,
         });
     };
 
-    const resetFilters = () => {
+    const resetearFiltros = () => {
         setData({
             modo: '',
             rango: '',
@@ -45,13 +46,15 @@ const PublicacionesIndex = () => {
             hora_inicio: '',
             hora_fin: '',
         });
+        setFiltrosCambiados(true);
     };
 
     useEffect(() => {
-        if (data.modo || data.rango || data.rol || data.hora_inicio || data.hora_fin) {
-            applyFilters();
+        if (filtrosCambiados) {
+            aplicarFiltros();
+            setFiltrosCambiados(false);
         }
-    }, [data]);
+    }, [data, filtrosCambiados]);
 
     return (
         <ControladorLayout>
@@ -63,8 +66,12 @@ const PublicacionesIndex = () => {
                         rangos={rangos}
                         onFiltrar={(modo, rango, rol, horaInicio, horaFin) => {
                             setData({ modo, rango, rol, hora_inicio: horaInicio, hora_fin: horaFin });
+                            setFiltrosCambiados(true);
                         }}
-                        onReset={resetFilters}
+                        onReset={() => {
+                            resetearFiltros();
+                            aplicarFiltros();
+                        }}
                     />
                 </div>
                 <div className="w-full p-6">

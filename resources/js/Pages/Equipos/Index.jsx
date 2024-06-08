@@ -17,6 +17,7 @@ const EquiposIndex = () => {
 
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
+    const [filtrosCambiados, setFiltrosCambiados] = useState(false);
 
     const convertirRango = (nombreRango) => {
         const rangos = {
@@ -53,19 +54,21 @@ const EquiposIndex = () => {
         });
     };
 
-    const resetFilters = () => {
+    const resetearFiltros = () => {
         setData({
             modo: '',
             rango: '',
             privacidad: '',
         });
+        setFiltrosCambiados(true);
     };
 
     useEffect(() => {
-        if (data.modo || data.rango || data.privacidad) {
+        if (filtrosCambiados) {
             aplicarFiltros();
+            setFiltrosCambiados(false);
         }
-    }, [data]);
+    }, [data, filtrosCambiados]);
 
     return (
         <ControladorLayout>
@@ -76,8 +79,12 @@ const EquiposIndex = () => {
                         rangos={rangos}
                         onFiltrar={(modo, rango, privacidad) => {
                             setData({ modo, rango, privacidad });
+                            setFiltrosCambiados(true);
                         }}
-                        onReset={resetFilters}
+                        onReset={() => {
+                            resetearFiltros();
+                            aplicarFiltros();
+                        }}
                     />
                 </div>
                 <div className="w-full lg:w-3/4 p-4 mt-4">

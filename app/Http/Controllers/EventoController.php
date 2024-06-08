@@ -35,7 +35,7 @@ class EventoController extends Controller
 
         Log::info('Solicitud recibida:', $request->all());
 
-        $eventos = $query->paginate(10);
+        $eventos = $query->paginate(1);
 
         return Inertia::render('Eventos/Index', [
             'eventos' => $eventos,

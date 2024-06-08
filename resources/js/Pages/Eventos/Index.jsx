@@ -6,6 +6,7 @@ import FiltroEvento from '@/Components/FiltroEvento';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import MensajeError from '@/Components/MensajeError';
 import MensajeSuccess from '@/Components/MensajeSuccess';
+import Paginacion from '@/Components/Paginacion';
 
 const EventosIndex = () => {
     const { eventos, auth, flash, filtros } = usePage().props;
@@ -17,6 +18,7 @@ const EventosIndex = () => {
 
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
+    const [filtrosCambiados, setFiltrosCambiados] = useState(false);
 
     useEffect(() => {
         if (flash && flash.type === 'success') {
@@ -35,19 +37,21 @@ const EventosIndex = () => {
         });
     };
 
-    const resetFilters = () => {
+    const resetearFiltros = () => {
         setData({
             publico: '',
             amigos: '',
             miembros_equipo: '',
         });
+        setFiltrosCambiados(true);
     };
 
     useEffect(() => {
-        if (data.publico || data.amigos || data.miembros_equipo) {
+        if (filtrosCambiados) {
             aplicarFiltros();
+            setFiltrosCambiados(false);
         }
-    }, [data]);
+    }, [data, filtrosCambiados]);
 
     return (
         <ControladorLayout>
@@ -56,8 +60,12 @@ const EventosIndex = () => {
                     <FiltroEvento
                         onFiltrar={(publico, amigos, miembros_equipo) => {
                             setData({ publico, amigos, miembros_equipo });
+                            setFiltrosCambiados(true);
                         }}
-                        onReset={resetFilters}
+                        onReset={() => {
+                            resetearFiltros();
+                            aplicarFiltros();
+                        }}
                     />
                 </div>
 
@@ -132,18 +140,7 @@ const EventosIndex = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-center space-x-1 mt-4">
-                        {eventos.links.map((link, index) => (
-                            <Link
-                                key={index}
-                                href={link.url}
-                                preserveScroll
-                                preserveState
-                                className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                            />
-                        ))}
-                    </div>
+                    <Paginacion links={eventos.links} />
                 </div>
             </div>
         </ControladorLayout>
