@@ -1,15 +1,16 @@
 import React from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import AdminIndex from './Index';
 import ButtonColores from '@/Components/ButtonColores';
 
 const Publicaciones = ({ publicaciones, panelAdmin = true }) => {
-
-    const handleDelete = (id) => {
-        Inertia.delete(route('publicaciones.destroy', id), {
-            data: { panelAdmin }
-        });
+    const handleDelete = (id, publicacionTitulo) => {
+        if (confirm(`¿Estás seguro de que deseas eliminar la publicación "${publicacionTitulo}"? Esta acción no se puede deshacer.`)) {
+            Inertia.delete(route('publicaciones.destroy', id), {
+                data: { panelAdmin }
+            });
+        }
     };
 
     return (
@@ -34,7 +35,7 @@ const Publicaciones = ({ publicaciones, panelAdmin = true }) => {
                                         Editar
                                     </ButtonColores>
                                 </Link>
-                                <ButtonColores color="red" onClick={() => handleDelete(publicacion.id)}>
+                                <ButtonColores color="red" onClick={() => handleDelete(publicacion.id, publicacion.titulo)}>
                                     Eliminar
                                 </ButtonColores>
                             </td>

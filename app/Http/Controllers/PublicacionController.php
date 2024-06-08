@@ -210,6 +210,10 @@ class PublicacionController extends Controller
             'hora_preferente_final' => $request->input('hora_preferente_final'),
         ]);
 
+        if ($request->input('panelAdmin')) {
+            return Inertia::location(route('admin.publicaciones.index'));
+        }
+
         Session::flash('flash', ['type' => 'success', 'message' => 'La publicación ha sido actualizada.']);
         // Redirige al usuario a la lista de publicaciones.
         return Inertia::location(route('publicaciones.index'));
@@ -229,7 +233,8 @@ class PublicacionController extends Controller
             return Inertia::location(route('publicaciones.index'));
         }
 
-        $publicacion->delete(); // Elimina la publicación.
+
+        $publicacion->delete();
 
         // Si el usuario es un administrador, redirige de vuelta a la página anterior.
         if ($request->input('panelAdmin')) {

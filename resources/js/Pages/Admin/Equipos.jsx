@@ -5,10 +5,12 @@ import AdminIndex from './Index';
 import ButtonColores from '@/Components/ButtonColores';
 
 const Equipos = ({ equipos, panelAdmin = true }) => {
-    const handleDelete = (id) => {
-        Inertia.delete(route('equipos.destroy', id), {
-            data: { panelAdmin }
-        });
+    const handleDelete = (id, equipoNombre) => {
+        if (confirm(`¿Estás seguro de que deseas eliminar el equipo "${equipoNombre}"? Esta acción no se puede deshacer.`)) {
+            Inertia.delete(route('equipos.destroy', id), {
+                data: { panelAdmin }
+            });
+        }
     };
 
     return (
@@ -18,7 +20,7 @@ const Equipos = ({ equipos, panelAdmin = true }) => {
                 <thead className="bg-gray-900 text-white">
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Líder del equipo</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Nombre del equipo</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Título del equipo</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Acciones</th>
                     </tr>
                 </thead>
@@ -33,7 +35,7 @@ const Equipos = ({ equipos, panelAdmin = true }) => {
                                         Editar
                                     </ButtonColores>
                                 </Link>
-                                <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
+                                <ButtonColores color="red" onClick={() => handleDelete(equipo.id, equipo.nombre_equipo)}>
                                     Eliminar
                                 </ButtonColores>
                             </td>

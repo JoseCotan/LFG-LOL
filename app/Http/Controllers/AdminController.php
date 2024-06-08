@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipo;
 use App\Models\Evento;
 use App\Models\Publicacion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -41,4 +42,13 @@ class AdminController extends Controller
             'eventos' => $eventos,
         ]);
     }
+
+    public function usuarios()
+{
+    $usuarios = User::all();
+
+    return Inertia::render('Admin/Usuarios', [
+        'usuarios' => $usuarios,
+    ]);
+}
 }

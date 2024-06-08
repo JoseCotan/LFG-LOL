@@ -5,11 +5,14 @@ import AdminIndex from './Index';
 import ButtonColores from '@/Components/ButtonColores';
 
 const Eventos = ({ eventos, panelAdmin = true }) => {
-    const handleDelete = (id) => {
-        Inertia.delete(route('eventos.destroy', id), {
-            data: { panelAdmin }
-        });
+    const handleDelete = (id, eventoTitulo) => {
+        if (confirm(`¿Estás seguro de que deseas eliminar el evento "${eventoTitulo}"? Esta acción no se puede deshacer.`)) {
+            Inertia.delete(route('eventos.destroy', id), {
+                data: { panelAdmin }
+            });
+        }
     };
+
     return (
         <AdminIndex>
             <h2 className="text-2xl mb-4">Eventos</h2>
@@ -32,7 +35,7 @@ const Eventos = ({ eventos, panelAdmin = true }) => {
                                         Editar
                                     </ButtonColores>
                                 </Link>
-                                <ButtonColores color="red" onClick={() => handleDelete(evento.id)}>
+                                <ButtonColores color="red" onClick={() => handleDelete(evento.id, evento.titulo)}>
                                     Eliminar
                                 </ButtonColores>
                             </td>

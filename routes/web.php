@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RangoController;
 use App\Http\Controllers\RiotController;
+use App\Http\Controllers\UsuarioController;
 use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -104,6 +105,8 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/publicaciones', [AdminController::class, 'publicaciones'])->name('admin.publicaciones.index');
 Route::get('/admin/equipos', [AdminController::class, 'equipos'])->name('admin.equipos.index');
 Route::get('/admin/eventos', [AdminController::class, 'eventos'])->name('admin.eventos.index');
+Route::get('/admin/usuarios', [AdminController::class, 'usuarios'])->name('admin.usuarios.index');
+Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
 
 
 Route::get('/vip', [PaypalController::class, 'index'])->name('vip')->middleware('auth');

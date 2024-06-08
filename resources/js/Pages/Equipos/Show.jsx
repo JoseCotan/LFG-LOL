@@ -174,7 +174,7 @@ const EquipoShow = () => {
                                     </ButtonColores>
                                 </Link>
                                 <ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
-                                    Eliminar
+                                    Eliminar equipo
                                 </ButtonColores>
                             </div>
                         )}
