@@ -2,10 +2,10 @@ import React from 'react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import { usePage } from '@inertiajs/react';
 import CarouselUsuarios from '@/Components/CarouselUsuarios';
-import CarouselPublicaciones from '@/Components/CarouselPublicaciones'; // Importa el nuevo componente
+import CarouselPublicaciones from '@/Components/CarouselPublicaciones';
 
 const Inicio = () => {
-    const { ultimosUsuarios, ultimasPublicaciones } = usePage().props; // Asume que tienes `ultimasPublicaciones` en tus props
+    const { ultimosUsuarios, ultimasPublicaciones } = usePage().props;
 
     return (
         <ControladorLayout>

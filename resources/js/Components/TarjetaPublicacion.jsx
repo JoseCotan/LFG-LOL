@@ -46,7 +46,8 @@ const TarjetaPublicacion = ({ publicacion }) => {
     const fondoVIP = publicacion.usuario.VIP ? 'bg-amber-100' : 'bg-blue-100';
 
     return (
-        <div className={`flex w-380 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 ${fondoVIP} relative`} style={{ maxWidth: '400px' }}>            <div className="w-24 h-full flex flex-col items-center p-2 border-r border-gray-300">
+        <div className={`flex w-96 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 ${fondoVIP} relative`} style={{ maxWidth: '400px' }}>
+            <div className="w-24 h-full flex flex-col items-center p-2 border-r border-gray-300">
             <div className="w-20 h-1/2">
                 <img src={`/images/posiciones/${convertirRol(publicacion.rol.nombre)}.webp`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
             </div>
@@ -55,7 +56,7 @@ const TarjetaPublicacion = ({ publicacion }) => {
             </div>
         </div>
             <div className="flex flex-col justify-center p-2 text-sm overflow-hidden pr-16">
-                <h2 className="text-lg font-bold mb-2">{publicacion.titulo}</h2>
+                <h2 className="text-lg font-bold max-w-44 break-words mb-8">{publicacion.titulo}</h2>
                 <div className="mb-2">Horario: {publicacion.hora_preferente_inicio} - {publicacion.hora_preferente_final}</div>
                 <div className="mb-2">Modo: {publicacion.modo.nombre}</div>
                 <ButtonColores color="green" onClick={handlePerfilClick}>

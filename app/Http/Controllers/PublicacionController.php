@@ -151,7 +151,8 @@ class PublicacionController extends Controller
         $rangos = Rango::all();
 
         if (!Auth::check()) {
-            Session::flash('flash', ['type' => 'error', 'message' => 'Debes estar autenticado para editar una publicación.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'Debes estar autenticado para editar una publicación.']);
             return Inertia::location(back());
         }
 

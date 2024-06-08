@@ -10,9 +10,8 @@ import '../../../css/Spiegel.css';
 import DesplegableComentariosEvento from '@/Components/DesplegableComentariosEvento';
 import ComentarioEvento from '@/Components/ComentarioEvento';
 
-
 const EventoShow = () => {
-    const { evento, auth, flash, comentarios, user, totalComentarios } = usePage().props;
+    const { evento, auth, flash, comentarios, totalComentarios } = usePage().props;
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
 
@@ -42,6 +41,17 @@ const EventoShow = () => {
 
     const handleExpulsarMiembro = (miembroId) => {
         Inertia.post(route('eventos.expulsarMiembro', { eventoId: evento.id, miembroId }));
+    };
+
+    const handleEliminarComentario = (comentarioId) => {
+        Inertia.delete(route('comentarios.eliminar', { comentarioId }), {
+            onSuccess: () => {
+                setSuccess('Comentario eliminado correctamente.');
+            },
+            onError: () => {
+                setError('No se pudo eliminar el comentario.');
+            },
+        });
     };
 
     return (
@@ -126,7 +136,7 @@ const EventoShow = () => {
                                 </ButtonColores>
                             </Link>
                             <ButtonColores color="red" onClick={() => handleDelete(evento.id)}>
-                                Eliminar
+                                Eliminar evento
                             </ButtonColores>
                         </div>
                     )}
@@ -137,6 +147,9 @@ const EventoShow = () => {
                                 comentarios={comentarios.data}
                                 totalComentarios={totalComentarios}
                                 paginacion={comentarios.links}
+                                handleEliminarComentario={handleEliminarComentario}
+                                auth={auth}
+                                evento={evento}
                             />
                         </div>
                     </div>

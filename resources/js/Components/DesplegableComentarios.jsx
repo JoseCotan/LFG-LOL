@@ -1,4 +1,3 @@
-// DesplegableComentarios.jsx
 import React, { useState } from 'react';
 import ListaComentarios from './ListaComentarios';
 import { Link } from '@inertiajs/react';
@@ -28,7 +27,7 @@ const DesplegableComentarios = ({ comentarios, totalComentarios, paginacion, haC
             </button>
             {visible && (
                 <>
-                    <ListaComentarios comentarios={comentarios} handleEliminarComentario={handleEliminarComentario} /> {/* Pasa la función de eliminación de comentarios */}
+                    <ListaComentarios comentarios={comentarios} handleEliminarComentario={handleEliminarComentario} />
                     {paginacion && (
                         <Paginacion links={paginacion} />
                     )}

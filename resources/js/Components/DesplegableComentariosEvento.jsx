@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import ListaComentariosEvento from './ListaComentariosEvento';
-import { Link } from '@inertiajs/react';
+import Paginacion from './Paginacion';
 
-
-const DesplegableComentariosEvento = ({ comentarios, totalComentarios, paginacion }) => {
+const DesplegableComentariosEvento = ({ comentarios, totalComentarios, paginacion, handleEliminarComentario, auth, evento }) => {
     const [visible, setVisible] = useState(false);
 
     const toggleVisible = () => {
@@ -21,19 +20,13 @@ const DesplegableComentariosEvento = ({ comentarios, totalComentarios, paginacio
             </button>
             {visible && (
                 <>
-                    <ListaComentariosEvento comentarios={comentarios} />
-                    <div className="flex justify-center space-x-1 mt-4">
-                        {paginacion && paginacion.map((link, index) => (
-                            <Link
-                                key={index}
-                                href={link.url}
-                                preserveScroll
-                                preserveState
-                                className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                            />
-                        ))}
-                    </div>
+                    <ListaComentariosEvento
+                        comentarios={comentarios}
+                        handleEliminarComentario={handleEliminarComentario}
+                        auth={auth}
+                        evento={evento}
+                    />
+                    <Paginacion links={paginacion} />
                 </>
             )}
         </div>

@@ -6,6 +6,7 @@ import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
 import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
 import FiltroPublicaciones from '@/Components/FiltroPublicaciones';
+import Paginacion from '@/Components/Paginacion';
 
 const PublicacionesIndex = () => {
     const { publicaciones, modos, roles, rangos, auth, flash, filtros } = usePage().props;
@@ -97,18 +98,7 @@ const PublicacionesIndex = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-center space-x-1 mt-4">
-                        {publicaciones.links.map((link, index) => (
-                            <Link
-                                key={index}
-                                href={link.url}
-                                preserveScroll
-                                preserveState
-                                className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                            />
-                        ))}
-                    </div>
+                    <Paginacion links={publicaciones.links} />
                 </div>
             </div>
         </ControladorLayout>

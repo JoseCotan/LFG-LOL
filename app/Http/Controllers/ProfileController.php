@@ -128,7 +128,7 @@ class ProfileController extends Controller
         $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
         $reputacion = $likes - $dislikes;
 
-        $comentarios = $user->comentarios()->with('user')->paginate(1);
+        $comentarios = $user->comentarios()->with('user')->paginate(10);
 
         return Inertia::render('Users/Show', [
             'user' => $user,

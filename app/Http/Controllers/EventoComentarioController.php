@@ -30,22 +30,4 @@ class EventoComentarioController extends Controller
         Session::flash('flash', ['type' => 'success', 'message' => 'Creaste el comentario correctamente.']);
         return Inertia::location(back());
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        $comentario = Comentario::findOrFail($id);
-
-        if ($comentario->user_id !== Auth::id()) {
-            Session::flash('flash', ['type' => 'error', 'message' => 'Este comentario no es tuyo.']);
-            return Inertia::location(back());
-        }
-
-        $comentario->delete();
-        Session::flash('flash', ['type' => 'success', 'message' => 'El comentario se eliminó correctamente']);
-        return Inertia::location(back());
-    }
 }

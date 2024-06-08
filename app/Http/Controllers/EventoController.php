@@ -33,9 +33,11 @@ class EventoController extends Controller
             $query->where('acceso_miembros_equipo', $request->miembros_equipo === 'si');
         }
 
+        $query->withCount('usuarios');
+
         Log::info('Solicitud recibida:', $request->all());
 
-        $eventos = $query->paginate(1);
+        $eventos = $query->paginate(20);
 
         return Inertia::render('Eventos/Index', [
             'eventos' => $eventos,
@@ -87,21 +89,53 @@ class EventoController extends Controller
      */
     public function show(Evento $evento)
     {
-        $evento->load('usuarios', 'creador');
-        $comentarios = $evento->comentarios()
-            ->with('user')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
 
-        $totalComentarios = $comentarios->total();
+            // Verificar si el usuario es miembro del evento
+            $esMiembro = $evento->usuarios->contains($user_id);
 
-        return Inertia::render('Eventos/Show', [
-            'evento' => $evento,
-            'comentarios' => $comentarios,
-            'totalComentarios' => $totalComentarios,
-            'flash' => session('flash'),
-        ]);
+            // Verificar si el usuario es el creador del evento o un administrador
+            $esCreadorOAdmin = $user_id === $evento->creador_evento || Auth::user()->admin;
+
+            // Verificar si el evento es público o si el usuario es miembro o el creador/administrador
+            if ($esMiembro || $esCreadorOAdmin) {
+                // Cargar los datos necesarios para mostrar el evento
+                $evento->load('usuarios', 'creador');
+                $comentarios = $evento->comentarios()
+                    ->with('user')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+                $totalComentarios = $comentarios->total();
+
+                // Renderizar la vista del evento
+                return Inertia::render('Eventos/Show', [
+                    'evento' => $evento,
+                    'comentarios' => $comentarios,
+                    'totalComentarios' => $totalComentarios,
+                    'flash' => session('flash'),
+                ]);
+            }
+        } else {
+            // Si el usuario no está logeado, vuelve al index.
+            Session::flash('flash', ['type' => 'error', 'message' => 'Inicia sesión para poder ver algún evento.']);
+            return Inertia::location(route('eventos.index'));
+        }
+
+
+
+        // Si el evento es público, le avisará al usuario
+        if ($evento->acceso_publico && $evento->usuarios()->count() < 10) {
+            Session::flash('flash', ['type' => 'error', 'message' => 'Este evento es público, únete para verlo.']);
+            return Inertia::location(route('eventos.index'));
+        }
+
+        // Si el usuario no es miembro del evento y el evento no es público, redirigir al índice de eventos
+        Session::flash('flash', ['type' => 'error', 'message' => 'No puedes ver este evento.']);
+        return Inertia::location(route('eventos.index'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -276,10 +310,12 @@ class EventoController extends Controller
 
         if ($usuario) {
             $evento->usuarios()->detach($miembroId);
-            Session::flash('flash', ['type' => 'success', 'message' => 'El usuario ha sido expulsado del evento.']);
+            Session::flash('flash', ['type' => 'success', 'message' =>
+            'El usuario ha sido expulsado del evento.']);
         } else {
             // Si no encuentra al miembro, redirige a la vista del evento.
-            Session::flash('flash', ['type' => 'error', 'message' => 'El usuario especificado no es un miembro del evento.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'El usuario especificado no es un miembro del evento.']);
         }
 
         return Inertia::location(route('eventos.show', ['evento' => $eventoId]));

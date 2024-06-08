@@ -54,10 +54,8 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
     };
 
     const handleEliminarComentario = (comentarioId) => {
-        // Elimina el comentario localmente
         const updatedComentarios = comentariosList.filter(comment => comment.id !== comentarioId);
         setComentariosList(updatedComentarios);
-        // Envía la solicitud de eliminación al servidor
         Inertia.delete(route('comentarios.eliminar', { comentarioId }));
     };
 

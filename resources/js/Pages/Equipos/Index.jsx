@@ -6,6 +6,7 @@ import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
 import FiltroEquipo from '@/Components/FiltroEquipo';
 import ImagenResponsive from '@/Components/ImagenResponsive';
+import Paginacion from '@/Components/Paginacion';
 
 const EquiposIndex = () => {
     const { equipos, modos, rangos, auth, flash, filtros } = usePage().props;
@@ -105,9 +106,19 @@ const EquiposIndex = () => {
                     </div>
                     <div className="flex flex-wrap justify-center sm:justify-start ml-4">
                         {equipos.data.map((equipo) => (
-                            <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4">
+                            <div key={equipo.id} className={`bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4 ${auth.user &&
+                                    (auth.user.id === equipo.lider.id || auth.user.admin ||
+                                    auth.user.id === equipo.miembro_1 || auth.user.id === equipo.miembro_2 ||
+                                    auth.user.id === equipo.miembro_3 || auth.user.id === equipo.miembro_4 ||
+                                    auth.user.id === equipo.miembro_5) ? 'border border-blue-500' : ''} ${auth.user && auth.user.id === equipo.lider.id ? 'bg-sky-950' : ''}`}>
                                 <div className="p-6">
-                                    <h3 className="text-lg font-semibold text-white mb-2">{equipo.nombre_equipo}</h3>
+                                    <h3 className={`text-lg font-semibold ${auth.user &&
+                                            (auth.user.id === equipo.lider.id || auth.user.admin ||
+                                            auth.user.id === equipo.miembro_1 ||
+                                            auth.user.id === equipo.miembro_2 ||
+                                            auth.user.id === equipo.miembro_3 ||
+                                            auth.user.id === equipo.miembro_4 ||
+                                            auth.user.id === equipo.miembro_5) ? 'text-blue-500' : 'text-white'} mb-2`}>{equipo.nombre_equipo}</h3>
                                     <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="absolute top-0 right-6 w-20 h-20" />
                                     <div className="flex items-center mb-2">
                                         <ImagenResponsive
@@ -151,19 +162,9 @@ const EquiposIndex = () => {
                                 </div>
                             </div>
                         ))}
+
                     </div>
-                    <div className="flex justify-center space-x-1 mt-4">
-                        {equipos.links.map((link, index) => (
-                            <Link
-                                key={index}
-                                href={link.url}
-                                preserveScroll
-                                preserveState
-                                className={`px-4 py-2 ${link.active ? 'text-blue-500' : 'text-gray-500'}`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                            />
-                        ))}
-                    </div>
+                    <Paginacion links={equipos.links} />
                 </div>
             </div>
         </ControladorLayout>

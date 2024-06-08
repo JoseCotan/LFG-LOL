@@ -20,4 +20,9 @@ class Comentario extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function evento()
+    {
+        return $this->belongsTo(Evento::class);
+    }
 }

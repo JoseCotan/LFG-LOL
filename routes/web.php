@@ -63,7 +63,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/users/{name}', [ProfileController::class, 'show'])->name('users.show');
 Route::post('/users/{user}/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 
-
 Route::post('/amigos/enviar/{amistadId}', [AmigoController::class, 'enviarSolicitud'])->name('amigos.enviar');
 Route::patch('/amigos/aceptar/{amistadId}', [AmigoController::class, 'aceptarSolicitud'])->name('amigos.aceptar');
 Route::patch('/amigos/rechazar/{amistadId}', [AmigoController::class, 'rechazarSolicitud'])->name('amigos.rechazar');
@@ -101,7 +100,6 @@ Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
 Route::delete('/comentarios/{comentarioId}', [ComentarioController::class, 'destroy'])->name('comentarios.eliminar');
 Route::post('/eventos/{evento}/comentarios', [EventoComentarioController::class, 'store'])->name('eventos.comentarios.store');
-
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/publicaciones', [AdminController::class, 'publicaciones'])->name('admin.publicaciones.index');
 Route::get('/admin/equipos', [AdminController::class, 'equipos'])->name('admin.equipos.index');

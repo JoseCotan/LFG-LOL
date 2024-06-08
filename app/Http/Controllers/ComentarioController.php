@@ -93,11 +93,20 @@ class ComentarioController extends Controller
     {
         $comentario = Comentario::findOrFail($id);
 
-        if ($comentario->user_id !== Auth::id()) {
-            Session::flash('flash', ['type' => 'error', 'message' => 'Este comentario no es tuyo.']);
+        // Obtener el modelo al que pertenece el comentario
+        $comentable = $comentario->comentable;
+
+        // Verificar si el usuario tiene permisos para eliminar el comentario
+        if (
+            $comentario->user_id !== Auth::user()->id &&
+            (!empty($comentable->creador_id) && $comentable->creador_id !== Auth::user()->id) &&
+            !Auth::user()->admin
+        ) {
+            Session::flash('flash', ['type' => 'error', 'message' => 'No tienes permisos para eliminar este comentario.']);
             return Inertia::location(back());
         }
 
+        // Eliminar el comentario
         $comentario->delete();
         Session::flash('flash', ['type' => 'success', 'message' => 'El comentario se eliminó correctamente']);
         return Inertia::location(back());
