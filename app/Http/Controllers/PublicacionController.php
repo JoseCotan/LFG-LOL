@@ -29,7 +29,6 @@ class PublicacionController extends Controller
             ->orderBy('publicaciones.created_at', 'DESC')
             ->select('publicaciones.*');
 
-        // Aplicar filtros
         if ($request->filled('modo')) {
             $query->where('publicaciones.modo_id', $request->modo);
         }

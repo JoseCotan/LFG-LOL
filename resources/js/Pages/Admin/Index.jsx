@@ -13,7 +13,7 @@ const AdminIndex = ({ children }) => {
     return (
         <ControladorLayout>
             <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-2/5 lg:w-1/4 xl:w-1/4 2xl:w-96 bg-gray-800 text-white">
+                <div className="w-full md:w-1/4 bg-gray-800 text-white">
                     <ul className="py-4">
                         <li className={`py-2 px-4 ${url.includes('/admin/usuarios') ? 'bg-gray-700' : ''}`}>
                             <Link href={route('admin.usuarios.index')} className="hover:text-gray-300 block">
@@ -41,7 +41,7 @@ const AdminIndex = ({ children }) => {
                         </li>
                     </ul>
                 </div>
-                <main className="w-full md:w-3/5 lg:w-3/4 xl:w-3/4 2xl:w-3/4 p-4 bg-gray-900 text-white">
+                <main className="flex-grow p-4 bg-gray-900 text-white">
                     {children}
                 </main>
             </div>

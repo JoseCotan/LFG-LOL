@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import { usePage } from '@inertiajs/react';
 import CarouselUsuarios from '@/Components/CarouselUsuarios';
 import CarouselPublicaciones from '@/Components/CarouselPublicaciones';
 import ButtonColores from '@/Components/ButtonColores';
+import MensajeSuccess from '@/Components/MensajeSuccess';
+import MensajeError from '@/Components/MensajeError';
 import '../../../css/Spiegel.css';
 import '../../../css/Beaufort.css';
 
 const Inicio = () => {
-    const { auth, ultimosUsuarios, ultimasPublicaciones } = usePage().props;
+    const { auth, ultimosUsuarios, ultimasPublicaciones, flash } = usePage().props;
+
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (flash && flash.type === 'success') {
+            setSuccess(flash.message);
+            setError('');
+        } else if (flash && flash.type === 'error') {
+            setError(flash.message);
+            setSuccess('');
+        }
+    }, [flash]);
 
     return (
         <ControladorLayout>
             <div className="mx-auto px-6 py-6">
+                {success && (
+                    <MensajeSuccess message={success} onClose={() => setSuccess('')} />
+                )}
+                {error && (
+                    <MensajeError message={error} onClose={() => setError('')} />
+                )}
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold mb-4 text-blue-800" style={{ fontFamily: 'Beaufort' }}>¡Bienvenido a la comunidad LFG-LOL!</h1>
                     <p className="text-lg text-gray-700" style={{ fontFamily: 'Spiegel' }}>Aquí puedes compartir tus ideas, interactuar con otros usuarios y mucho más.</p>

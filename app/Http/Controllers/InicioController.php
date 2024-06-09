@@ -21,6 +21,7 @@ class InicioController extends Controller
         return Inertia::render('Inicio/Index', [
             'ultimosUsuarios' => $ultimosUsuarios,
             'ultimasPublicaciones' => $ultimasPublicaciones,
+            'flash' => session('flash'),
         ]);
     }
 }

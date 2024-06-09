@@ -113,7 +113,5 @@ Route::post('/paypal', [PaypalController::class, 'paypal'])->name('paypal');
 Route::get('/success', [PaypalController::class, 'success'])->name('success');
 Route::get('/cancel', [PaypalController::class, 'cancel'])->name('cancel');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-});
+
 require __DIR__ . '/auth.php';
