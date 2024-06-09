@@ -176,6 +176,7 @@ class EventoController extends Controller
             'acceso_miembros_equipo' => $request->input('acceso_miembros_equipo'),
         ]);
 
+        Session::flash('flash', ['type' => 'success', 'message' => 'Editaste el evento correctamente.']);
         return Inertia::location(route('eventos.index'));
     }
 
