@@ -7,10 +7,9 @@ import Checkbox from '@/Components/Checkbox';
 import InputLabel from '@/Components/InputLabel';
 import TextArea from '@/Components/TextArea';
 
-
 const EventosEdit = () => {
     const { auth, evento } = usePage().props;
-    const { data, setData, put, processing } = useForm({
+    const { data, setData, put, processing, errors, setError, clearErrors } = useForm({
         titulo: evento.titulo || '',
         descripcion: evento.descripcion || '',
         acceso_publico: evento.acceso_publico || false,
@@ -18,17 +17,42 @@ const EventosEdit = () => {
         acceso_miembros_equipo: evento.acceso_miembros_equipo || false,
     });
 
+    const validateTitulo = () => {
+        if (!data.titulo) {
+            setError('titulo', 'El título es obligatorio.');
+        } else if (data.titulo.length > 30) {
+            setError('titulo', 'El título no puede exceder los 30 caracteres.');
+        } else {
+            clearErrors('titulo');
+        }
+    };
+
+    const validateDescripcion = () => {
+        if (data.descripcion.length > 255) {
+            setError('descripcion', 'La descripción no puede exceder los 255 caracteres.');
+        } else {
+            clearErrors('descripcion');
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('eventos.update', evento.id), {
-            onSuccess: () => {
-                setData('titulo', '');
-                setData('descripcion', '');
-                setData('acceso_publico', true);
-                setData('acceso_amigos', true);
-                setData('acceso_miembros_equipo', true);
-            }
-        });
+        // Validar antes de enviar
+        validateTitulo();
+        validateDescripcion();
+        if (!errors.titulo && !errors.descripcion) {
+            put(route('eventos.update', evento.id), {
+                onSuccess: () => {
+                    setData({
+                        titulo: '',
+                        descripcion: '',
+                        acceso_publico: true,
+                        acceso_amigos: true,
+                        acceso_miembros_equipo: true,
+                    });
+                }
+            });
+        }
     };
 
     return (
@@ -42,16 +66,22 @@ const EventosEdit = () => {
                             type="text"
                             value={data.titulo}
                             onChange={(e) => setData('titulo', e.target.value)}
+                            onBlur={validateTitulo}
                             required
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         />
+                        {errors.titulo && <p className="text-red-600 text-sm mt-1">{errors.titulo}</p>}
                     </div>
                     <div className="mb-6">
                         <InputLabel value="Descripción" />
                         <TextArea
+                            id="descripcion"
                             value={data.descripcion}
                             onChange={(e) => setData('descripcion', e.target.value)}
+                            onBlur={validateDescripcion}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         />
+                        {errors.descripcion && <p className="text-red-600 text-sm mt-1">{errors.descripcion}</p>}
                     </div>
                     <div className="mb-6">
                         <InputLabel value="Acceso Público" />
@@ -81,7 +111,7 @@ const EventosEdit = () => {
                         <span>Acceso Miembros del Equipo</span>
                     </div>
                     <div className="flex items-center justify-between">
-                        <ButtonColores color="green" disabled={processing}>Crear Evento</ButtonColores>
+                        <ButtonColores color="green" disabled={processing}>Actualizar Evento</ButtonColores>
                         <Link href={route('eventos.index')}>
                             <ButtonColores color="blue">
                                 Cancelar

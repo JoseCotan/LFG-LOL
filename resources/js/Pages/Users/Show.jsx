@@ -126,7 +126,10 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                         </>
                     )}
 
-                    <DesplegableAmigos amigos={amigos} user={user} />
+                    <DesplegableAmigos
+                        amigos={amigos}
+                        user={user}
+                        paginacion={amigos.links}/>
                     <DesplegableComentarios
                         comentarios={comentarios.data}
                         totalComentarios={totalComentarios}

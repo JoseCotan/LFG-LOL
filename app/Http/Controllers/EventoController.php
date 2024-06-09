@@ -62,8 +62,8 @@ class EventoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
+            'titulo' => 'required|string|max:30',
+            'descripcion' => 'required|string|max:255',
             'acceso_publico' => 'required|boolean',
             'acceso_amigos' => 'required|boolean',
             'acceso_miembros_equipo' => 'required|boolean',
@@ -161,8 +161,8 @@ class EventoController extends Controller
     public function update(Request $request, Evento $evento)
     {
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
+            'titulo' => 'required|string|max:30',
+            'descripcion' => 'required|string|max:255',
             'acceso_publico' => 'required|boolean',
             'acceso_amigos' => 'required|boolean',
             'acceso_miembros_equipo' => 'required|boolean',

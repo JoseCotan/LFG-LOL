@@ -102,7 +102,7 @@ const EventosIndex = () => {
                         {eventos.data.map(evento => (
                             <div key={evento.id} className={`${usuarioEnEvento(evento.usuarios) ? 'border border-blue-500 bg-sky-950' : 'bg-gray-900'} overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-sm relative mb-4`}>
                                 <div className="p-6">
-                                    <h3 className={`text-xl font-semibold ${usuarioEnEvento(evento.usuarios) ? 'text-blue-500' : 'text-white'} mb-2`}>{evento.titulo}</h3>
+                                    <h3 className={`text-xl font-semibold ${usuarioEnEvento(evento.usuarios) ? 'text-blue-500' : 'text-white'} mb-2 max-w-80 break-words`}>{evento.titulo}</h3>
                                     <div className="flex items-center mb-4">
                                         <p className="text-lg text-gray-400">Creador:</p>
                                         <p className="text-lg text-white ml-2 m">{evento.creador.name}</p>
@@ -120,7 +120,7 @@ const EventosIndex = () => {
                                     </div>
                                     <div className="mb-4">
                                         <p className="text-lg text-gray-400 mb-1">Descripción:</p>
-                                        <p className="text-lg text-white">{evento.descripcion}</p>
+                                        <p className="text-lg text-white max-w-80 break-words">{evento.descripcion}</p>
                                     </div>
                                     <div className="flex items-center mb-4">
                                         <p className="text-lg text-gray-400">Acceso Público:</p>

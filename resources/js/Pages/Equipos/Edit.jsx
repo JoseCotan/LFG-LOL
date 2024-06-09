@@ -30,8 +30,8 @@ const EquiposEdit = () => {
     const validateNombreEquipo = () => {
         if (!data.nombre_equipo) {
             setError('nombre_equipo', 'El nombre del equipo es obligatorio.');
-        } else if (data.nombre_equipo.length > 16) {
-            setError('nombre_equipo', 'El nombre del equipo no puede exceder los 16 caracteres.');
+        } else if (data.nombre_equipo.length > 30) {
+            setError('nombre_equipo', 'El nombre del equipo no puede exceder los 30 caracteres.');
         } else {
             clearErrors('nombre_equipo');
         }
@@ -56,7 +56,6 @@ const EquiposEdit = () => {
                             value={data.nombre_equipo}
                             onChange={e => setData('nombre_equipo', e.target.value)}
                             onBlur={validateNombreEquipo}
-                            maxLength={16}
                             required
                         />
                         {errors.nombre_equipo && <p className="text-red-600 text-sm mt-1">{errors.nombre_equipo}</p>}

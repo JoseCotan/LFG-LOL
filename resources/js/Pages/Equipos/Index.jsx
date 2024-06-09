@@ -118,7 +118,7 @@ const EquiposIndex = () => {
                                             auth.user.id === equipo.miembro_2 ||
                                             auth.user.id === equipo.miembro_3 ||
                                             auth.user.id === equipo.miembro_4 ||
-                                            auth.user.id === equipo.miembro_5) ? 'text-blue-500' : 'text-white'} mb-2`}>{equipo.nombre_equipo}</h3>
+                                            auth.user.id === equipo.miembro_5) ? 'text-blue-500' : 'text-white'} max-w-44 break-words mb-2`}>{equipo.nombre_equipo}</h3>
                                     <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="absolute top-0 right-6 w-20 h-20" />
                                     <div className="flex items-center mb-2">
                                         <ImagenResponsive

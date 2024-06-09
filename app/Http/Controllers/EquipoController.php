@@ -78,7 +78,7 @@ class EquipoController extends Controller
     {
         // Validación de los datos recibidos del formulario.
         $request->validate([
-            'nombre_equipo' => 'required|string|unique:equipos,nombre_equipo',
+            'nombre_equipo' => 'required|string|max:30|unique:equipos,nombre_equipo',
             'modo_juego_preferente' => 'nullable|exists:modos,id',
             'rango_id' => 'nullable|exists:rangos,id',
             'privado' => 'required|boolean',
@@ -167,7 +167,7 @@ class EquipoController extends Controller
 
         // Validación de los datos recibidos del formulario.
         $request->validate([
-            'nombre_equipo' => 'required|string|unique:equipos,nombre_equipo,' . $id,
+            'nombre_equipo' => 'required|string|max:30|unique:equipos,nombre_equipo,' . $id,
             'modo_juego_preferente' => 'nullable|exists:modos,id',
             'rango_id' => 'nullable|exists:rangos,id',
             'privado' => 'required|boolean',

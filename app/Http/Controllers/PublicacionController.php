@@ -103,7 +103,7 @@ class PublicacionController extends Controller
     {
         // Valida los datos ingresados en el formulario.
         $request->validate([
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:60',
             'descripcion' => 'nullable|string',
             'modo_id' => 'nullable|exists:modos,id',
             'rol_id' => 'nullable|exists:roles,id',
@@ -191,7 +191,7 @@ class PublicacionController extends Controller
         }
 
         $request->validate([
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:60',
             'modo_id' => 'nullable|exists:modos,id',
             'rol_id' => 'nullable|exists:roles,id',
             'rango_id' => 'nullable|exists:rangos,id',
