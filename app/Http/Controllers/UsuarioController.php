@@ -15,6 +15,6 @@ class UsuarioController extends Controller
         $usuario = User::findOrFail($id);
         $usuario->delete();
 
-        return Inertia::location(back());
+        return Inertia::location(route('inicio'));
     }
 }

@@ -23,7 +23,7 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
     const { auth } = usePage().props;
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-    const [comentariosList, setComentariosList] = useState(comentarios.data);
+    const [listaComentarios, setListaComentarios] = useState(comentarios.data);
 
     const handleAnyadirAmigo = () => {
         Inertia.post(route('amigos.enviar', { amistadId: user.id }));
@@ -54,8 +54,8 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
     };
 
     const handleEliminarComentario = (comentarioId) => {
-        const updatedComentarios = comentariosList.filter(comment => comment.id !== comentarioId);
-        setComentariosList(updatedComentarios);
+        const comentariosActualizados = listaComentarios.filter(comment => comment.id !== comentarioId);
+        setListaComentarios(comentariosActualizados);
         Inertia.delete(route('comentarios.eliminar', { comentarioId }));
     };
 
@@ -135,8 +135,6 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                         authUser={auth.user}
                         handleEliminarComentario={handleEliminarComentario}
                     />
-
-                    {/*<p className="text-center mt-4 text-gray-800 mb-4 "><Link href="/dashboard" className="text-blue-600">Volver al inicio</Link></p>*/}
                 </div>
                 <div className="flex-grow flex justify-center items-center p-4 lg:justify-start lg:ml-56">
                     <RiotData />

@@ -7,6 +7,8 @@ import MensajeError from '@/Components/MensajeError';
 import TarjetaPublicacion from '@/Components/TarjetaPublicacion';
 import FiltroPublicaciones from '@/Components/FiltroPublicaciones';
 import Paginacion from '@/Components/Paginacion';
+import '../../../css/Spiegel.css';
+
 
 const PublicacionesIndex = () => {
     const { publicaciones, modos, roles, rangos, auth, flash, filtros } = usePage().props;

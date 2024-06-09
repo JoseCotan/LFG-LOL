@@ -108,9 +108,12 @@ Route::get('/admin/eventos', [AdminController::class, 'eventos'])->name('admin.e
 Route::get('/admin/usuarios', [AdminController::class, 'usuarios'])->name('admin.usuarios.index');
 Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
 
-
 Route::get('/vip', [PaypalController::class, 'index'])->name('vip')->middleware('auth');
 Route::post('/paypal', [PaypalController::class, 'paypal'])->name('paypal');
 Route::get('/success', [PaypalController::class, 'success'])->name('success');
 Route::get('/cancel', [PaypalController::class, 'cancel'])->name('cancel');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+});
 require __DIR__ . '/auth.php';
