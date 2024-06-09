@@ -20,16 +20,28 @@ class EquipoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Se obtiene todos los equipos y carga las relaciones 'lider' y 'modo' de una vez.
-        $equipos = Equipo::with(['lider', 'modo', 'rango'])->get();
+        $query = Equipo::with(['lider', 'modo', 'rango'])->orderBy('created_at', 'DESC');
+
+        if ($request->filled('modo')) {
+            $query->where('equipos.modo_juego_preferente', $request->modo);
+        }
+        if ($request->filled('rango')) {
+            $query->where('equipos.rango_id', $request->rango);
+        }
+        if ($request->filled('privacidad')) {
+            $query->where('privado', $request->privacidad === 'privado');
+        }
+
+        $equipos = $query->paginate(20);
 
         return Inertia::render('Equipos/Index', [
             'equipos' => $equipos,
             'modos' => Modo::all(),
             'rangos' => Rango::all(),
             'flash' => session('flash'),
+            'filtros' => $request->only(['modo', 'rango', 'privacidad']),
         ]);
     }
 
@@ -66,7 +78,7 @@ class EquipoController extends Controller
     {
         // Validación de los datos recibidos del formulario.
         $request->validate([
-            'nombre_equipo' => 'required|string|unique:equipos,nombre_equipo',
+            'nombre_equipo' => 'required|string|max:30|unique:equipos,nombre_equipo',
             'modo_juego_preferente' => 'nullable|exists:modos,id',
             'rango_id' => 'nullable|exists:rangos,id',
             'privado' => 'required|boolean',
@@ -155,7 +167,7 @@ class EquipoController extends Controller
 
         // Validación de los datos recibidos del formulario.
         $request->validate([
-            'nombre_equipo' => 'required|string|unique:equipos,nombre_equipo,' . $id,
+            'nombre_equipo' => 'required|string|max:30|unique:equipos,nombre_equipo,' . $id,
             'modo_juego_preferente' => 'nullable|exists:modos,id',
             'rango_id' => 'nullable|exists:rangos,id',
             'privado' => 'required|boolean',
@@ -169,7 +181,8 @@ class EquipoController extends Controller
             'privado' => $request->privado,
         ]);
 
-        Session::flash('flash', ['type' => 'success', 'message' => 'Editaste correctamente el equipo ' . $equipo->nombre_equipo . '.']);
+        Session::flash('flash', ['type' => 'success', 'message' => 'Editaste correctamente el equipo ' .
+            $equipo->nombre_equipo . '.']);
         // Redirige al usuario a la lista de equipos.
         return Inertia::location(route('equipos.index'));
     }
@@ -227,19 +240,25 @@ class EquipoController extends Controller
                 ->exists(); // verifica si existe al menos un registro que cumpla con las condiciones
 
             if (!$esAmigo) {
-                Session::flash('flash', ['type' => 'error', 'message' => 'No te puedes unir, no eres amigo de ' . $equipo->lider->name . '.']);
+                Session::flash('flash', ['type' => 'error', 'message' => 'No te puedes unir, no eres amigo de ' .
+                    $equipo->lider->name . '.']);
                 return Inertia::location(route('equipos.show', ['equipo' => $id]));
                 // Redirige al usuario a la vista del equipo si no es amigo del líder del equipo privado
             }
         }
 
         // Verifica si el usuario ya es miembro de algún equipo.
-        $yaEsMiembro = Equipo::where('miembro_1', $userId)
+        $yaEsMiembro = Equipo::where('lider_id', $userId)
+            ->orWhere('miembro_1', $userId)
             ->orWhere('miembro_2', $userId)
             ->orWhere('miembro_3', $userId)
             ->orWhere('miembro_4', $userId)
             ->orWhere('miembro_5', $userId)
             ->exists();
+
+        if ($userId === $equipo->lider_id) {
+            $yaEsMiembro = false;
+        }
 
         // Si ya es miembro de otro equipo, no permite la unión y redirige.
         if ($yaEsMiembro) {
@@ -260,7 +279,8 @@ class EquipoController extends Controller
 
         $equipo->save();
 
-        Session::flash('flash', ['type' => 'success', 'message' => 'Te acabas de unir a ' . $equipo->nombre_equipo . '.']);
+        Session::flash('flash', ['type' => 'success', 'message' => 'Te acabas de unir a ' .
+        $equipo->nombre_equipo . '.']);
         // Redirige a la vista del equipo.
         return Inertia::location(route('equipos.show', ['equipo' => $id]));
     }
@@ -309,7 +329,11 @@ class EquipoController extends Controller
         $userId = Auth::user()->id; // ID del usuario logueado.
 
         // Verifica si el usuario es miembro y no el líder.
-        if ($equipo->lider_id !== $userId && in_array($userId, [$equipo->miembro_1, $equipo->miembro_2, $equipo->miembro_3, $equipo->miembro_4, $equipo->miembro_5])) {
+        if ($equipo->lider_id !== $userId && in_array($userId, [$equipo->miembro_1,
+                                                                $equipo->miembro_2,
+                                                                $equipo->miembro_3,
+                                                                $equipo->miembro_4,
+                                                                $equipo->miembro_5])) {
             if ($equipo->miembro_1 === $userId) $equipo->miembro_1 = null; // Si es miembro, lo quita del equipo.
             else if ($equipo->miembro_2 === $userId) $equipo->miembro_2 = null; // Si es miembro, lo quita del equipo.
             else if ($equipo->miembro_3 === $userId) $equipo->miembro_3 = null; // Si es miembro, lo quita del equipo.
@@ -336,7 +360,11 @@ class EquipoController extends Controller
         }
 
         // Verifica si el miembro especificado es un miembro del equipo.
-        if (!in_array($miembroId, [$equipo->miembro_1, $equipo->miembro_2, $equipo->miembro_3, $equipo->miembro_4, $equipo->miembro_5])) {
+        if (!in_array($miembroId, [$equipo->miembro_1,
+                                   $equipo->miembro_2,
+                                   $equipo->miembro_3,
+                                   $equipo->miembro_4,
+                                   $equipo->miembro_5])) {
             // Si no es un miembro, redirige a la vista del equipo.
             Session::flash('flash', ['type' => 'error', 'message' => 'El miembro no existe en el equipo.']);
             return Inertia::location(route('equipos.show', ['equipo' => $equipoId]));

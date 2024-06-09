@@ -29,7 +29,7 @@ class Mensaje extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->remitente->name . ' quiere jugar contigo!')
+        return $this->subject('¡' . $this->remitente->name . ' quiere jugar contigo!')
                     ->view('emails.user_message');
     }
 }

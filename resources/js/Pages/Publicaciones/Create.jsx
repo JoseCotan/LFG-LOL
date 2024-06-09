@@ -89,8 +89,8 @@ const CreatePublicacion = () => {
     const validateTitulo = () => {
         if (!data.titulo) {
             setError('titulo', 'El título no puede estar vacío.');
-        } else if (data.titulo.length > 20) {
-            setError('titulo', 'El título no puede exceder los 20 caracteres.');
+        } else if (data.titulo.length > 60) {
+            setError('titulo', 'El título no puede exceder los 60 caracteres.');
         } else {
             clearErrors('titulo');
         }
@@ -168,7 +168,7 @@ const CreatePublicacion = () => {
                     </div>
 
                     <div className="mb-6">
-                        <InputLabel htmlFor="rango_id" value="Rango del juego mínimo preferente" />
+                        <InputLabel htmlFor="rango_id" value="Rango del juego" />
                         <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}

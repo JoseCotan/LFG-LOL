@@ -25,8 +25,8 @@ export default function UpdateProfilePhotoForm() {
         <form onSubmit={handleSubmit} className="space-y-6 text-white">
             <div className="flex justify-between items-center">
                 <div className="flex-grow flex flex-col">
-                    <label for="foto_perfil" class="block w-full mb-4 cursor-pointer relative">
-                        <label class="inline-block">
+                    <label htmlFor="foto_perfil" className="block w-full mb-4 cursor-pointer relative">
+                        <label className="inline-block">
                             <input
                                 type="file"
                                 id="foto_perfil"
@@ -35,7 +35,7 @@ export default function UpdateProfilePhotoForm() {
                                 disabled={processing}
                             />
                             <ButtonColores onClick={() => document.getElementById('foto_perfil').click()}>
-                                <img src="/images/upload-solid-white.svg" alt="Subir imagen" class="h-6 w-6 mr-2" />
+                                <img src="/images/upload-solid-white.svg" alt="Subir imagen" className="h-6 w-6 mr-2" />
                                 <span>Seleccionar foto</span>
                             </ButtonColores>
                         </label>

@@ -70,7 +70,7 @@ const CarouselPublicaciones = ({ publicaciones }) => {
                                 />
                             </div>
                             <div>
-                                <p className="font-semibold text-lg text-gray-800">{publicacion.titulo}</p>
+                                <p className="font-semibold text-lg text-gray-800 max-w-44 break-words">{publicacion.titulo}</p>
                                 <p className="text-sm text-gray-600">{`${publicacion.hora_preferente_inicio} - ${publicacion.hora_preferente_final}`}</p>
                             </div>
                             <div className="ml-auto flex items-center">

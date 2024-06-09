@@ -10,9 +10,8 @@ import '../../../css/Spiegel.css';
 import DesplegableComentariosEvento from '@/Components/DesplegableComentariosEvento';
 import ComentarioEvento from '@/Components/ComentarioEvento';
 
-
 const EventoShow = () => {
-    const { evento, auth, flash, comentarios, user, totalComentarios } = usePage().props;
+    const { evento, auth, flash, comentarios, totalComentarios } = usePage().props;
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
 
@@ -44,6 +43,17 @@ const EventoShow = () => {
         Inertia.post(route('eventos.expulsarMiembro', { eventoId: evento.id, miembroId }));
     };
 
+    const handleEliminarComentario = (comentarioId) => {
+        Inertia.delete(route('comentarios.eliminar', { comentarioId }), {
+            onSuccess: () => {
+                setSuccess('Comentario eliminado correctamente.');
+            },
+            onError: () => {
+                setError('No se pudo eliminar el comentario.');
+            },
+        });
+    };
+
     return (
         <ControladorLayout>
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8 mb-4">
@@ -55,8 +65,8 @@ const EventoShow = () => {
                         <MensajeError message={error} onClose={() => setError('')} />
                     )}
 
-                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
-                        <h3 className="text-4xl font-semibold text-gray-800 mb-2">{evento.titulo}</h3>
+                    <div className="bg-gradient-to-r from-white to-sky-200 p-4 rounded-xl shadow-sm">
+                        <h3 className="text-4xl max-w-80 break-words font-semibold text-gray-800 mb-2">{evento.titulo}</h3>
                         <div className="flex items-center space-x-4">
                             <ImagenResponsive
                                 srcPC={evento.creador.foto_perfil_PC}
@@ -71,11 +81,11 @@ const EventoShow = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                    <div className="bg-gradient-to-r from-white to-sky-200 p-4 rounded-xl shadow-sm">
                         <h4 className="text-xl font-semibold text-black">Descripción:</h4>
-                        <p className="text-lg text-gray-900">{evento.descripcion}</p>
+                        <p className="text-lg text-gray-900 max-w-2xl break-words">{evento.descripcion}</p>
                     </div>
-                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                    <div className="bg-gradient-to-r from-white to-sky-200 p-4 rounded-xl shadow-sm">
                         <div className="flex items-center space-x-2">
                             <h4 className="text-xl font-semibold text-black">Acceso:</h4>
                             <p className="text-lg text-gray-900">
@@ -85,7 +95,7 @@ const EventoShow = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
+                    <div className="bg-gradient-to-r from-white to-sky-200 p-4 rounded-xl shadow-sm">
                         <h4 className="text-xl font-semibold text-black">Usuarios:</h4>
                         {evento.usuarios?.map((usuario, index) => (
                             <div key={usuario.id} className="flex items-center space-x-4">
@@ -126,7 +136,7 @@ const EventoShow = () => {
                                 </ButtonColores>
                             </Link>
                             <ButtonColores color="red" onClick={() => handleDelete(evento.id)}>
-                                Eliminar
+                                Eliminar evento
                             </ButtonColores>
                         </div>
                     )}
@@ -137,6 +147,9 @@ const EventoShow = () => {
                                 comentarios={comentarios.data}
                                 totalComentarios={totalComentarios}
                                 paginacion={comentarios.links}
+                                handleEliminarComentario={handleEliminarComentario}
+                                auth={auth}
+                                evento={evento}
                             />
                         </div>
                     </div>

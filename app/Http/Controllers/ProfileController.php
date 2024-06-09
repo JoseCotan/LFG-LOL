@@ -86,7 +86,7 @@ class ProfileController extends Controller
                 $query->where('usuario_id', $user->id)->orWhere('amigo_id', $user->id);
             })
             ->whereIn('estado', ['aceptado'])
-            ->get();
+            ->paginate(12);
 
         // Si el usuario está autenticado, se comprueba su interacción con el perfil del usuario visitado
         if (Auth::check()) {
@@ -128,7 +128,7 @@ class ProfileController extends Controller
         $dislikes = Reputacion::where('usuario_id', $user->id)->where('valoracion', 'dislike')->count();
         $reputacion = $likes - $dislikes;
 
-        $comentarios = $user->comentarios()->with('user')->paginate(1);
+        $comentarios = $user->comentarios()->with('user')->paginate(10);
 
         return Inertia::render('Users/Show', [
             'user' => $user,

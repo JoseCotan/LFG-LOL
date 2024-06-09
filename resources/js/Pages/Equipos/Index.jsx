@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, useForm } from '@inertiajs/react';
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import ButtonColores from '@/Components/ButtonColores';
-import ImagenResponsive from '@/Components/ImagenResponsive';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 import MensajeError from '@/Components/MensajeError';
 import FiltroEquipo from '@/Components/FiltroEquipo';
+import ImagenResponsive from '@/Components/ImagenResponsive';
+import Paginacion from '@/Components/Paginacion';
 
 const EquiposIndex = () => {
-    const { equipos, modos, rangos, auth, flash } = usePage().props;
+    const { equipos, modos, rangos, auth, flash, filtros } = usePage().props;
+    const { data, setData, get } = useForm({
+        modo: filtros.modo || '',
+        rango: filtros.rango || '',
+        privacidad: filtros.privacidad || '',
+    });
+
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-    const [filtroModo, setFiltroModo] = useState('');
-    const [filtroRango, setFiltroRango] = useState('');
-    const [filtroPrivacidad, setFiltroPrivacidad] = useState('');
+    const [filtrosCambiados, setFiltrosCambiados] = useState(false);
 
     const convertirRango = (nombreRango) => {
         const rangos = {
@@ -43,25 +48,28 @@ const EquiposIndex = () => {
         }
     }, [flash]);
 
-    const handleFiltrar = (modo, rango, privacidad) => {
-        setFiltroModo(modo);
-        setFiltroRango(rango);
-        setFiltroPrivacidad(privacidad);
+    const aplicarFiltros = () => {
+        get(route('equipos.index'), {
+            preserveState: true,
+            preserveScroll: true,
+        });
     };
 
-    const handleReset = () => {
-        setFiltroModo('');
-        setFiltroRango('');
-        setFiltroPrivacidad('');
+    const resetearFiltros = () => {
+        setData({
+            modo: '',
+            rango: '',
+            privacidad: '',
+        });
+        setFiltrosCambiados(true);
     };
 
-    const equiposFiltrados = equipos.filter(e => {
-        return (!filtroModo || e.modo.id.toString() === filtroModo) &&
-            (!filtroRango || e.rango.id.toString() === filtroRango) &&
-            (!filtroPrivacidad || (filtroPrivacidad === 'publico' && !e.privado) || (filtroPrivacidad === 'privado' && e.privado));
-    });
-
-
+    useEffect(() => {
+        if (filtrosCambiados) {
+            aplicarFiltros();
+            setFiltrosCambiados(false);
+        }
+    }, [data, filtrosCambiados]);
 
     return (
         <ControladorLayout>
@@ -70,15 +78,18 @@ const EquiposIndex = () => {
                     <FiltroEquipo
                         modos={modos}
                         rangos={rangos}
-                        onFiltrar={handleFiltrar}
-                        onReset={handleReset}
-                        setFiltroModo={setFiltroModo}
-                        setFiltroRango={setFiltroRango}
-                        setFiltroPrivacidad={setFiltroPrivacidad}
+                        onFiltrar={(modo, rango, privacidad) => {
+                            setData({ modo, rango, privacidad });
+                            setFiltrosCambiados(true);
+                        }}
+                        onReset={() => {
+                            resetearFiltros();
+                            aplicarFiltros();
+                        }}
                     />
                 </div>
                 <div className="w-full lg:w-3/4 p-4 mt-4">
-                <div className="ml-4 flex justify-center sm:justify-start">
+                    <div className="ml-4 flex justify-center sm:justify-start">
                         {success && (
                             <MensajeSuccess message={success} onClose={() => setSuccess('')} />
                         )}
@@ -94,10 +105,20 @@ const EquiposIndex = () => {
                         </Link>
                     </div>
                     <div className="flex flex-wrap justify-center sm:justify-start ml-4">
-                        {equiposFiltrados.map((equipo) => (
-                            <div key={equipo.id} className="bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4">
+                        {equipos.data.map((equipo) => (
+                            <div key={equipo.id} className={`bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4 ${auth.user &&
+                                    (auth.user.id === equipo.lider.id || auth.user.admin ||
+                                    auth.user.id === equipo.miembro_1 || auth.user.id === equipo.miembro_2 ||
+                                    auth.user.id === equipo.miembro_3 || auth.user.id === equipo.miembro_4 ||
+                                    auth.user.id === equipo.miembro_5) ? 'border border-blue-500' : ''} ${auth.user && auth.user.id === equipo.lider.id ? 'bg-sky-950' : ''}`}>
                                 <div className="p-6">
-                                    <h3 className="text-lg font-semibold text-white mb-2">{equipo.nombre_equipo}</h3>
+                                    <h3 className={`text-lg font-semibold ${auth.user &&
+                                            (auth.user.id === equipo.lider.id || auth.user.admin ||
+                                            auth.user.id === equipo.miembro_1 ||
+                                            auth.user.id === equipo.miembro_2 ||
+                                            auth.user.id === equipo.miembro_3 ||
+                                            auth.user.id === equipo.miembro_4 ||
+                                            auth.user.id === equipo.miembro_5) ? 'text-blue-500' : 'text-white'} max-w-44 break-words mb-2`}>{equipo.nombre_equipo}</h3>
                                     <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="absolute top-0 right-6 w-20 h-20" />
                                     <div className="flex items-center mb-2">
                                         <ImagenResponsive
@@ -141,8 +162,9 @@ const EquiposIndex = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
 
+                    </div>
+                    <Paginacion links={equipos.links} />
                 </div>
             </div>
         </ControladorLayout>

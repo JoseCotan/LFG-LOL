@@ -3,18 +3,19 @@ import Select from '@/Components/Select';
 import InputLabel from '@/Components/InputLabel';
 import ButtonColores from '@/Components/ButtonColores';
 
-const FiltroEquipo = ({ modos, rangos, onReset, setFiltroModo, setFiltroRango, setFiltroPrivacidad }) => {
-    const [filtroModo, setFiltroModoLocal] = useState('');
-    const [filtroRango, setFiltroRangoLocal] = useState('');
-    const [filtroPrivacidad, setFiltroPrivacidadLocal] = useState('');
+const FiltroEquipo = ({ modos, rangos, onFiltrar, onReset }) => {
+    const [filtroModo, setFiltroModo] = useState('');
+    const [filtroRango, setFiltroRango] = useState('');
+    const [filtroPrivacidad, setFiltroPrivacidad] = useState('');
+
+    const handleFiltrar = () => {
+        onFiltrar(filtroModo, filtroRango, filtroPrivacidad);
+    };
 
     const handleReset = () => {
         setFiltroModo('');
         setFiltroRango('');
         setFiltroPrivacidad('');
-        setFiltroModoLocal('');
-        setFiltroRangoLocal('');
-        setFiltroPrivacidadLocal('');
         onReset();
     };
 
@@ -23,10 +24,7 @@ const FiltroEquipo = ({ modos, rangos, onReset, setFiltroModo, setFiltroRango, s
             <InputLabel>Filtrar por Modo</InputLabel>
             <Select
                 value={filtroModo}
-                onChange={(e) => {
-                    setFiltroModoLocal(e.target.value);
-                    setFiltroModo(e.target.value);
-                }}
+                onChange={(e) => setFiltroModo(e.target.value)}
                 options={[
                     { value: '', label: 'Todos' },
                     ...modos.map((modo) => ({ value: modo.id, label: modo.nombre }))
@@ -37,10 +35,7 @@ const FiltroEquipo = ({ modos, rangos, onReset, setFiltroModo, setFiltroRango, s
             <InputLabel className="mt-4">Filtrar por Rango</InputLabel>
             <Select
                 value={filtroRango}
-                onChange={(e) => {
-                    setFiltroRangoLocal(e.target.value);
-                    setFiltroRango(e.target.value);
-                }}
+                onChange={(e) => setFiltroRango(e.target.value)}
                 options={[
                     { value: '', label: 'Todos' },
                     ...rangos.map((rango) => ({ value: rango.id, label: rango.nombre }))
@@ -51,10 +46,7 @@ const FiltroEquipo = ({ modos, rangos, onReset, setFiltroModo, setFiltroRango, s
             <InputLabel className="mt-4">Filtrar por Privacidad</InputLabel>
             <Select
                 value={filtroPrivacidad}
-                onChange={(e) => {
-                    setFiltroPrivacidadLocal(e.target.value);
-                    setFiltroPrivacidad(e.target.value);
-                }}
+                onChange={(e) => setFiltroPrivacidad(e.target.value)}
                 options={[
                     { value: '', label: 'Todos' },
                     { value: 'publico', label: 'Público' },
@@ -64,6 +56,9 @@ const FiltroEquipo = ({ modos, rangos, onReset, setFiltroModo, setFiltroRango, s
             />
 
             <div className="flex justify-between mt-6">
+                <ButtonColores color="green" onClick={handleFiltrar}>
+                    Filtrar
+                </ButtonColores>
                 <ButtonColores color="red" onClick={handleReset}>
                     Resetear
                 </ButtonColores>

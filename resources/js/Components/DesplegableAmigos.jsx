@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import ImagenResponsive from './ImagenResponsive';
+import Paginacion from '@/Components/Paginacion';
 
-const DesplegableAmigos = ({ amigos, user }) => {
+
+const DesplegableAmigos = ({ amigos, user, paginacion }) => {
     const [visible, setVisible] = useState(false);
 
     const toggleVisible = () => {
@@ -14,7 +16,7 @@ const DesplegableAmigos = ({ amigos, user }) => {
                 onClick={toggleVisible}
                 className="text-blue-600 hover:underline focus:outline-none flex items-center"
             >
-                Mostrar Amigos ({amigos.length})
+                Mostrar Amigos ({amigos.data.length})
                 <img
                     src="/images/arrow.svg"
                     alt="Flecha abajo"
@@ -23,8 +25,9 @@ const DesplegableAmigos = ({ amigos, user }) => {
                 />
             </button>
             {visible && (
+                <>
                 <div className="grid gap-4 grid-cols-3 mb-6">
-                    {amigos.map(amigo => (
+                    {amigos.data.map(amigo => (
                         <div key={amigo.id} className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center">
                             <ImagenResponsive
                                 srcPC={amigo.usuario_id === user.id ? amigo.amigo_agregado.foto_perfil_Tablet : amigo.amigo_agregador.foto_perfil_Tablet}
@@ -39,6 +42,8 @@ const DesplegableAmigos = ({ amigos, user }) => {
                         </div>
                     ))}
                 </div>
+                <Paginacion links={amigos.links} />
+            </>
             )}
         </div>
     );

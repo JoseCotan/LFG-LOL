@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; ////////////////////////
 import ControladorLayout from '@/Layouts/ControladorLayout';
 import { Link, usePage } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
@@ -23,7 +23,7 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
     const { auth } = usePage().props;
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
-
+    const [listaComentarios, setListaComentarios] = useState(comentarios.data);
 
     const handleAnyadirAmigo = () => {
         Inertia.post(route('amigos.enviar', { amistadId: user.id }));
@@ -53,8 +53,9 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
         Inertia.post(route('users.dislike', { id: user.id }));
     };
 
-    const handleEliminarComentario = () => {
-        const comentarioId = comentarios.data.find(comment => comment.user_id === auth.user.id).id;
+    const handleEliminarComentario = (comentarioId) => {
+        const comentariosActualizados = listaComentarios.filter(comment => comment.id !== comentarioId);
+        setListaComentarios(comentariosActualizados);
         Inertia.delete(route('comentarios.eliminar', { comentarioId }));
     };
 
@@ -114,7 +115,7 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                     )}
                     {auth.user && auth.user.id !== user.id && (
                         <>
-                            <div className="mt-4 flex justify-center">
+                            <div className="mt-4 mb-4 flex justify-center">
                                 <EnviarMensajeForm destinatarioId={user.id} />
                             </div>
                             {!haComentado && (
@@ -125,26 +126,18 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                         </>
                     )}
 
-                    {haComentado && comentarios.data && (
-                        <div className="max-w-xs w-full flex justify-center mt-6 mb-6">
-                            <div className="bg-gray-100 p-4 rounded shadow-md text-center">
-                                <p className="text-gray-800 mb-2">
-                                    {comentarios.data.find(comment => comment.user_id === auth.user.id)?.descripcion}
-                                </p>
-                                <ButtonColores color="red" onClick={handleEliminarComentario}>
-                                    Eliminar Comentario
-                                </ButtonColores>
-                            </div>
-                        </div>
-                    )}
-
-                    <DesplegableAmigos amigos={amigos} user={user} />
+                    <DesplegableAmigos
+                        amigos={amigos}
+                        user={user}
+                        paginacion={amigos.links}/>
                     <DesplegableComentarios
                         comentarios={comentarios.data}
                         totalComentarios={totalComentarios}
                         paginacion={comentarios.links}
+                        haComentado={haComentado}
+                        authUser={auth.user}
+                        handleEliminarComentario={handleEliminarComentario}
                     />
-                    {/*<p className="text-center mt-4 text-gray-800 mb-4 "><Link href="/dashboard" className="text-blue-600">Volver al inicio</Link></p>*/}
                 </div>
                 <div className="flex-grow flex justify-center items-center p-4 lg:justify-start lg:ml-56">
                     <RiotData />

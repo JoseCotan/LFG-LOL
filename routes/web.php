@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RangoController;
 use App\Http\Controllers\RiotController;
+use App\Http\Controllers\UsuarioController;
 use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -63,7 +64,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/users/{name}', [ProfileController::class, 'show'])->name('users.show');
 Route::post('/users/{user}/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
 
-
 Route::post('/amigos/enviar/{amistadId}', [AmigoController::class, 'enviarSolicitud'])->name('amigos.enviar');
 Route::patch('/amigos/aceptar/{amistadId}', [AmigoController::class, 'aceptarSolicitud'])->name('amigos.aceptar');
 Route::patch('/amigos/rechazar/{amistadId}', [AmigoController::class, 'rechazarSolicitud'])->name('amigos.rechazar');
@@ -101,15 +101,17 @@ Route::get('/riot-data/{name}', [RiotController::class, 'getRiotData']);
 
 Route::delete('/comentarios/{comentarioId}', [ComentarioController::class, 'destroy'])->name('comentarios.eliminar');
 Route::post('/eventos/{evento}/comentarios', [EventoComentarioController::class, 'store'])->name('eventos.comentarios.store');
-
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/admin/publicaciones', [AdminController::class, 'publicaciones'])->name('admin.publicaciones.index');
 Route::get('/admin/equipos', [AdminController::class, 'equipos'])->name('admin.equipos.index');
 Route::get('/admin/eventos', [AdminController::class, 'eventos'])->name('admin.eventos.index');
-
+Route::get('/admin/usuarios', [AdminController::class, 'usuarios'])->name('admin.usuarios.index');
+Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
 
 Route::get('/vip', [PaypalController::class, 'index'])->name('vip')->middleware('auth');
 Route::post('/paypal', [PaypalController::class, 'paypal'])->name('paypal');
 Route::get('/success', [PaypalController::class, 'success'])->name('success');
 Route::get('/cancel', [PaypalController::class, 'cancel'])->name('cancel');
+
+
 require __DIR__ . '/auth.php';
