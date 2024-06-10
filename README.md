@@ -1,6 +1,6 @@
-<p align="center"><img src="https://ibb.co/DYFjXkT" width="400" alt="Logo LFG-LOL"></a></p>
+<p align="center"><img src="https://i.ibb.co/T1GNXRd/logo.png" width="400" alt="Logo LFG-LOL"></a></p>
 
-<h1>LFG-LOL</h1>
+<h1 align="center">LFG-LOL</h1>
 
 ## Sobre LFG-LOL
 
@@ -15,8 +15,10 @@ Guía para iniciar el proyecto:
 - Instalar paquetes: composer install
 - Instalar dependencias: npm install
 - Crear base de datos:
+
 * sudo -u postgres createuser -P proyecto
 * sudo -u postgres createdb -O proyecto proyecto
+
 - Migraciones: php artisan migrate:fresh --seed
 - Iniciar servidor en local: php artisan serve y npm run dev
 
