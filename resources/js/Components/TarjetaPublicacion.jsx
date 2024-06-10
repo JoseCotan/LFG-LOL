@@ -54,7 +54,7 @@ const TarjetaPublicacion = ({ publicacion }) => {
                     <img src={`/images/posiciones/${convertirRol(publicacion.rol.nombre)}.webp`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
                 </div>
                 <div className="w-20 h-1/2">
-                    <img src={`/images/rangos/${convertirRango(publicacion.rango.nombre)}.png`} alt={`Posición ${publicacion.posicion}`} title="aaaaaa" className="w-full h-full object-cover" />
+                    <img src={`/images/rangos/${convertirRango(publicacion.rango.nombre)}.png`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
                 </div>
             </div>
             <div className="flex flex-col justify-center p-2 text-sm overflow-hidden pr-16" style={{ fontFamily: 'Spiegel' }}>
