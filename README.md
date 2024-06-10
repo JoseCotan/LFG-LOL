@@ -4,7 +4,7 @@
 
 ## Sobre LFG-LOL
 
-LFG-LOL es una aplicación web diseñada para reunir a jugadores de League of Legends (LoL) en un solo lugar, proporcionando una plataforma fácil de usar donde los usuarios pueden buscar compañeros de equipo, crear publicaciones, formar equipos y organizar eventos.
+LFG-LOL es una aplicación web diseñada para reunir a jugadores de League of Legends (LoL), proporcionando una plataforma fácil de usar donde los usuarios pueden buscar compañeros de equipo, crear publicaciones, formar equipos y organizar eventos.
 
 ## Instalación
 
