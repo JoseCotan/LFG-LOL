@@ -63,7 +63,7 @@ export default function Authenticated({ user, header, children }) {
                                             srcTablet={user.foto_perfil_Tablet}
                                             srcMobile={user.foto_perfil_Movil}
                                             alt="Foto de perfil"
-                                            className="h-10 w-10 cursor-pointer"
+                                            className="h-10 w-10 cursor-pointer rounded-full"
                                         />
                                     </Dropdown.Trigger>
                                     <Dropdown.Content>

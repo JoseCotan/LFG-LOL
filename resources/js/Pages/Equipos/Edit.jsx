@@ -73,7 +73,7 @@ const EquiposEdit = () => {
                         />
                     </div>
                     <div className="mb-6">
-                        <InputLabel htmlFor="rango_id" value="Rango del juego" />
+                        <InputLabel htmlFor="rango_id" value="Rango del juego preferente" />
                         <Select
                             value={data.rango_id}
                             onChange={(e) => setData('rango_id', e.target.value)}

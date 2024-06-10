@@ -3,6 +3,8 @@ import { usePage } from '@inertiajs/react';
 import RankedComponente from './RankedComponente';
 import TarjetaPartida from './TarjetaPartida';
 import CargandoDatos from './CargandoDatosRiot';
+import '../../css/Spiegel.css';
+
 
 const DatosRiot = () => {
     const { props } = usePage();
@@ -69,14 +71,15 @@ const DatosRiot = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="flex flex-col w-full max-w-md border rounded-lg overflow-hidden font-bold bg-blue-100 mx-auto ml-2 my-1">
-                <h1 className="text-xl font-bold p-4">Información</h1>
+            <div className="flex flex-col w-full max-w-md border rounded-lg overflow-hidden font-bold bg-blue-100 mx-auto ml-2 my-1" >
+                <h1 className="text-2xl font-bold text-blue-800 p-4">Información</h1>
                 {datosRiot.datosInvocadorSummonerv4 && (
-                    <div className="p-4">
-                        <p className="text-lg">Nombre: {datosRiot.datosInvocadorAccount.gameName + "#" + datosRiot.datosInvocadorAccount.tagLine}</p>
-                        <p className="text-lg">Nivel: {datosRiot.datosInvocadorSummonerv4.summonerLevel}</p>
+                    <div className="p-4 rounded-lg shadow-md">
+                        <p className="text-lg text-gray-800">Nombre: <span className="text-blue-600">{datosRiot.datosInvocadorAccount.gameName + "#" + datosRiot.datosInvocadorAccount.tagLine}</span></p>
+                        <p className="text-lg text-gray-800">Nivel: <span className="text-blue-600">{datosRiot.datosInvocadorSummonerv4.summonerLevel}</span></p>
                     </div>
                 )}
+
             </div>
 
             <div className="w-full max-w-md">
@@ -90,17 +93,17 @@ const DatosRiot = () => {
                 {datosRiot.partidasDetalles.map((partida, index) => {
                     console.log(partida.participante.teamPosition)
                     const runasImagen = partida.participante.perks.styles[0]?.selections[0]?.perk
-                    ? `/images/runas/${partida.participante.perks.styles[0].selections[0].perk}.webp`
-                    : '/images/runas/arena.webp';
+                        ? `/images/runas/${partida.participante.perks.styles[0].selections[0].perk}.webp`
+                        : '/images/runas/arena.webp';
 
                     const hechizo1Id = partida.participante.summoner1Id && partida.participante.summoner1Id < 1000
-                    ? partida.participante.summoner1Id
-                    : 4;
+                        ? partida.participante.summoner1Id
+                        : 4;
                     const hechizo1Imagen = `/images/hechizos/${hechizo1Id}.webp`;
 
                     const hechizo2Id = partida.participante.summoner2Id && partida.participante.summoner2Id < 1000
-                    ? partida.participante.summoner2Id
-                    : 6;
+                        ? partida.participante.summoner2Id
+                        : 6;
                     const hechizo2Imagen = `/images/hechizos/${hechizo2Id}.webp`;
 
                     return (

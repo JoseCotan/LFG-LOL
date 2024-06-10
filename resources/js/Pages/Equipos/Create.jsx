@@ -39,7 +39,6 @@ const EquiposCreate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-         // Validar antes de enviar
         validateNombreEquipo();
         if (!errors.nombre_equipo) {
             post(route('equipos.store'), data, {

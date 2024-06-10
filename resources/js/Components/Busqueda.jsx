@@ -12,12 +12,17 @@ function Busqueda({ onToggle }) {
         onToggle(true);
     };
 
-    const manejarBusqueda = (e) => {
+    const manejarBusqueda = async (e) => {
         e.preventDefault();
         if (nickBusqueda.trim()) {
-            window.location.href = `/users/${nickBusqueda.trim()}`;
+            const response = await fetch(`/users/${nickBusqueda.trim()}`);
+            if (response.status === 200) {
+                window.location.href = `/users/${nickBusqueda.trim()}`;
+            } else
+                window.location.href = '/';
         }
     };
+
 
     const manejarClickFuera = (e) => {
         if (formularioRef.current && !formularioRef.current.contains(e.target)) {

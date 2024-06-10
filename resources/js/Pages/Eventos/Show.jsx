@@ -67,7 +67,7 @@ const EventoShow = () => {
                     )}
 
                     <div className="bg-gradient-to-r from-white to-sky-200 p-4 rounded-xl shadow-sm">
-                        <h3 className="text-4xl max-w-80 break-words font-semibold text-gray-800 mb-2">
+                        <h3 className="text-4xl max-w-80 break-words font-semibold text-blue-900 mb-2">
                             {evento.titulo}</h3>
                         <div className="flex items-center space-x-4">
                             <ImagenResponsive

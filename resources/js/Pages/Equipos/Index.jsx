@@ -7,6 +7,7 @@ import MensajeError from '@/Components/MensajeError';
 import FiltroEquipo from '@/Components/FiltroEquipo';
 import ImagenResponsive from '@/Components/ImagenResponsive';
 import Paginacion from '@/Components/Paginacion';
+import '../../../css/Spiegel.css';
 
 const EquiposIndex = () => {
     const { equipos, modos, rangos, auth, flash, filtros } = usePage().props;
@@ -104,7 +105,7 @@ const EquiposIndex = () => {
                             </ButtonColores>
                         </Link>
                     </div>
-                    <div className="flex flex-wrap justify-center sm:justify-start ml-4">
+                    <div className="flex flex-wrap justify-center sm:justify-start ml-4" style={{ fontFamily: 'Spiegel' }}>
                         {equipos.data.map((equipo) => (
                             <div key={equipo.id} className={`bg-gray-900 overflow-hidden shadow-sm rounded-lg
                                 sm:rounded-lg w-full max-w-xs relative mb-4 mr-4 ${auth.user &&
@@ -119,7 +120,7 @@ const EquiposIndex = () => {
                                             auth.user.id === equipo.miembro_2 ||
                                             auth.user.id === equipo.miembro_3 ||
                                             auth.user.id === equipo.miembro_4 ||
-                                            auth.user.id === equipo.miembro_5) ? 'text-blue-500' : 'text-white'}
+                                            auth.user.id === equipo.miembro_5) ? 'text-blue-100' : 'text-white'}
                                             max-w-44 break-words mb-2`}>{equipo.nombre_equipo}</h3>
                                     <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`}
                                     alt={`Posición ${equipo.posicion}`} className="absolute top-0 right-6 w-20 h-20" />
@@ -129,9 +130,9 @@ const EquiposIndex = () => {
                                             srcTablet={equipo.lider.foto_perfil_Tablet}
                                             srcMobile={equipo.lider.foto_perfil_Movil}
                                             alt="Foto de perfil"
-                                            className="h-8 w-8 rounded-full mr-2"
+                                            className="h-16 w-16 rounded-full mr-2"
                                         />
-                                        <p className="text-lg text-white">{equipo.lider.name}</p>
+                                        <p className="text-xl text-white">{equipo.lider.name}</p>
                                     </div>
                                     <div className="mb-4">
                                         <p className="text-lg text-gray-400 mb-1">Modo de Juego:</p>

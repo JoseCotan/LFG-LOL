@@ -1,7 +1,9 @@
 import React from 'react';
-import Button from './Button';
+import ImagenResponsive from '@/Components/ImagenResponsive';
 import { Link, usePage } from '@inertiajs/react';
 import ButtonColores from './ButtonColores';
+import '../../css/Spiegel.css';
+
 
 const TarjetaPublicacion = ({ publicacion }) => {
     const { auth } = usePage().props;
@@ -48,17 +50,29 @@ const TarjetaPublicacion = ({ publicacion }) => {
     return (
         <div className={`flex w-96 h-38 border border-gray-300 rounded-lg overflow-hidden font-bold mb-5 ${fondoVIP} relative`} style={{ maxWidth: '400px' }}>
             <div className="w-24 h-full flex flex-col items-center p-2 border-r border-gray-300">
-            <div className="w-20 h-1/2">
-                <img src={`/images/posiciones/${convertirRol(publicacion.rol.nombre)}.webp`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
+                <div className="w-20 h-1/2">
+                    <img src={`/images/posiciones/${convertirRol(publicacion.rol.nombre)}.webp`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
+                </div>
+                <div className="w-20 h-1/2">
+                    <img src={`/images/rangos/${convertirRango(publicacion.rango.nombre)}.png`} alt={`Posición ${publicacion.posicion}`} className="w-full h-full object-cover" />
+                </div>
             </div>
-            <div className="w-20 h-1/2">
-                <img src={`/images/rangos/${convertirRango(publicacion.rango.nombre)}.png`} alt={`Posición ${publicacion.posicion}`} title="aaaaaa" className="w-full h-full object-cover" />
-            </div>
-        </div>
-            <div className="flex flex-col justify-center p-2 text-sm overflow-hidden pr-16">
-                <h2 className="text-lg font-bold max-w-44 break-words mb-8">{publicacion.titulo}</h2>
-                <div className="mb-2">Horario: {publicacion.hora_preferente_inicio} - {publicacion.hora_preferente_final}</div>
-                <div className="mb-2">Modo: {publicacion.modo.nombre}</div>
+            <div className="flex flex-col justify-center p-2 text-sm overflow-hidden pr-16" style={{ fontFamily: 'Spiegel' }}>
+                <h2 className="text-xl text-blue-900 font-bold max-w-44 break-words mb-4">{publicacion.titulo}</h2>
+                <div className="flex items-center mb-2">
+                    <ImagenResponsive
+                        srcPC={publicacion.usuario.foto_perfil_PC}
+                        srcTablet={publicacion.usuario.foto_perfil_Tablet}
+                        srcMobile={publicacion.usuario.foto_perfil_Movil}
+                        alt="Foto de perfil"
+                        className="h-16 w-16 rounded-full mr-2"
+                    />
+                    <span className="text-xl mr-2">{publicacion.usuario.name}</span>
+
+                </div>
+                <div className="text-lg mb-2">Horario:</div>
+                <div className="text-lg mb-2"> {publicacion.hora_preferente_inicio} - {publicacion.hora_preferente_final}</div>
+                <div className="text-lg mb-2">Modo: {publicacion.modo.nombre}</div>
                 <ButtonColores color="green" onClick={handlePerfilClick}>
                     Ver perfil
                 </ButtonColores>

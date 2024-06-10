@@ -74,6 +74,7 @@ const UserShow = ({ user, amistad, amigos, reputacion, comentarios, haComentado,
                     <p className="text-lg text-center text-gray-800 mb-2">Nombre: {user.name}</p>
                     <p className="text-lg text-center text-gray-800 mb-2">Nick de invocador: {user.nombreLOL}</p>
                     <p className="text-lg text-center text-gray-800 mb-2">Reputación: {reputacion}</p>
+                    <p className="text-2xl text-center text-blue-700 mb-2">¡Valora al usuario!</p>
                     {auth.user && auth.user.id !== user.id && (
                         <div className="flex justify-center mt-4">
                             <LikeButton liked={haDadoLike} onClick={handleLike}></LikeButton>

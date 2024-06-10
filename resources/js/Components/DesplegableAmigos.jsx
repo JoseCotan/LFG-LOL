@@ -34,7 +34,7 @@ const DesplegableAmigos = ({ amigos, user, paginacion }) => {
                                 srcTablet={amigo.usuario_id === user.id ? amigo.amigo_agregado.foto_perfil_Tablet : amigo.amigo_agregador.foto_perfil_Tablet}
                                 srcMobile={amigo.usuario_id === user.id ? amigo.amigo_agregado.foto_perfil_Movil : amigo.amigo_agregador.foto_perfil_Movil}
                                 alt="Foto de perfil"
-                                className="h-20 w-20 rounded-full mb-2"
+                                className="h-25 w-15 rounded-full mb-2"
                             />
                             <span className="text-gray-800 text-center overflow-hidden overflow-ellipsis max-w-full">
                                 {amigo.usuario_id === user.id ? amigo.amigo_agregado.name : amigo.amigo_agregador.name}
