@@ -45,7 +45,7 @@ class PublicacionController extends Controller
             $query->where('publicaciones.hora_preferente_final', '<=', $request->hora_fin);
         }
 
-        $publicaciones = $query->paginate(20);
+        $publicaciones = $query->paginate(12);
 
         // Verifica la reputación del usuario y obtiene la imagen correspondiente
         foreach ($publicaciones as $publicacion) {
