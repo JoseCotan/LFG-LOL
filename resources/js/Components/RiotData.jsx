@@ -87,23 +87,38 @@ const DatosRiot = () => {
             </div>
 
             <div className="tarjetas-partidas w-full max-w-md">
-                {datosRiot.partidasDetalles.map((partida, index) => (
-                    <TarjetaPartida
-                        key={index}
-                        imagenCampeon={`/images/campeones/${partida.participante.championId}.webp`}
-                        imagenesHechizos={[
-                            `/images/runas/${partida.participante.perks.styles[0].selections[0].perk}.webp`,
-                            `/images/hechizos/${partida.participante.summoner1Id}.webp`,
-                            `/images/hechizos/${partida.participante.summoner2Id}.webp`
-                        ]}
-                        estadisticas1={`${partida.participante.kills} / ${partida.participante.deaths} / ${partida.participante.assists}`}
-                        estadisticas2={`${partida.csTotal} CS - ${partida.participacionKills}% Kills P`}
-                        estadisticas3={`Hace ${partida.diferenciaTiempo}`}
-                        win={partida.participante.win}
-                        posicion={partida.participante.teamPosition}
-                    />
-                ))}
+                {datosRiot.partidasDetalles.map((partida, index) => {
+                    console.log(partida.participante.teamPosition)
+                    const runasImagen = partida.participante.perks.styles[0]?.selections[0]?.perk
+                    ? `/images/runas/${partida.participante.perks.styles[0].selections[0].perk}.webp`
+                    : '/images/runas/arena.webp';
+
+                    const hechizo1Id = partida.participante.summoner1Id && partida.participante.summoner1Id < 1000
+                    ? partida.participante.summoner1Id
+                    : 4;
+                    const hechizo1Imagen = `/images/hechizos/${hechizo1Id}.webp`;
+
+                    const hechizo2Id = partida.participante.summoner2Id && partida.participante.summoner2Id < 1000
+                    ? partida.participante.summoner2Id
+                    : 6;
+                    const hechizo2Imagen = `/images/hechizos/${hechizo2Id}.webp`;
+
+                    return (
+                        <TarjetaPartida
+                            key={index}
+                            imagenCampeon={`/images/campeones/${partida.participante.championId}.webp`}
+                            imagenesHechizos={[runasImagen, hechizo1Imagen, hechizo2Imagen]}
+                            estadisticas1={`${partida.participante.kills} / ${partida.participante.deaths} / ${partida.participante.assists}`}
+                            estadisticas2={`${partida.csTotal} CS - ${partida.participacionKills}% Kills P`}
+                            estadisticas3={`Hace ${partida.diferenciaTiempo}`}
+                            win={partida.participante.win}
+                            posicion={partida.participante.teamPosition}
+                        />
+                    );
+                })}
             </div>
+
+
         </div>
     );
 };
