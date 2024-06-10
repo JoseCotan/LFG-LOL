@@ -35,19 +35,24 @@ const Inicio = () => {
                     <MensajeError message={error} onClose={() => setError('')} />
                 )}
                 <div className="mb-8">
-                    <h1 className="text-5xl font-bold mb-4 text-blue-800" style={{ fontFamily: 'Beaufort' }}>¡Bienvenido a la comunidad LFG-LOL!</h1>
-                    <p className="text-2xl text-gray-700" style={{ fontFamily: 'Spiegel' }}>Aquí puedes compartir tus ideas, interactuar con otros usuarios y mucho más.</p>
+                    <h1 className="text-5xl font-bold mb-4 text-blue-800" style={{ fontFamily: 'Beaufort' }}>
+                        ¡Bienvenido a la comunidad LFG-LOL!</h1>
+                    <p className="text-2xl text-gray-700" style={{ fontFamily: 'Spiegel' }}>
+                        Aquí puedes compartir tus ideas, interactuar con otros usuarios y mucho más.</p>
                 </div>
                 {auth.user ? (
                     <>
                         <div className="mb-8" style={{ fontFamily: 'Spiegel' }}>
-                            <p className="text-xl text-gray-700">Explora las publicaciones, equipos y eventos para participar activamente en nuestra comunidad.</p>
+                            <p className="text-xl text-gray-700">
+                                Explora las publicaciones, equipos y eventos para
+                                participar activamente en nuestra comunidad.</p>
                             <div className="mt-4 flex flex-col space-y-4">
                                 <div className="flex items-center space-x-4">
-                                    <img src="/images/leesin.gif" alt="Lee Sin" className="w-32 h-16" />
+                                    <img src="/images/leesin.gif" alt="Lee Sin"
+                                    className="w-32 h-16" />
                                     <Link href="/publicaciones">
                                         <ButtonColores color="blue">
-                                            <span className="text-white text-xl">Ir a Publicaciones</span>
+                                            <span className="text-white text-sm">Ir a Publicaciones</span>
                                         </ButtonColores>
                                     </Link>
                                 </div>
@@ -55,7 +60,7 @@ const Inicio = () => {
                                     <img src="/images/leesin.gif" alt="Lee Sin" className="w-32 h-16" />
                                     <Link href="/equipos">
                                         <ButtonColores color="blue">
-                                            <span className="text-white text-xl">Ir a Equipos</span>
+                                            <span className="text-white text-sm">Ir a Equipos</span>
                                         </ButtonColores>
                                     </Link>
                                 </div>
@@ -63,26 +68,27 @@ const Inicio = () => {
                                     <img src="/images/leesin.gif" alt="Lee Sin" className="w-32 h-16" />
                                     <Link href="/eventos">
                                         <ButtonColores color="blue">
-                                            <span className="text-white text-xl">Ir a Eventos</span>
+                                            <span className="text-white text-sm">Ir a Eventos</span>
                                         </ButtonColores>
                                     </Link>
                                 </div>
                             </div>
                         </div>
                         <div className="mt-8" style={{ fontFamily: 'Spiegel' }}>
-                            <p className="text-xl text-gray-700 mb-4">Introduce tu nick de invocador para personalizar tu experiencia:</p>
+                            <p className="text-xl text-gray-700 mb-4">
+                                Introduce tu nick de invocador para personalizar tu experiencia:</p>
                             <div className="inline-flex items-center mb-4">
                                 <img src="/images/teemo.gif" alt="Teemo" className="w-16 h-16" />
                                 <Link href="/profile">
                                     <ButtonColores color="blue">
-                                        <span className="text-white text-xl">Ir a tu cuenta</span>
+                                        <span className="text-white text-sm">Ir a tu cuenta</span>
                                     </ButtonColores>
                                 </Link>
                                 <div className="ml-16 inline-flex items-center space-x-4">
                                     <img src="/images/teemo.gif" alt="Teemo" className="w-16 h-16" />
                                     <Link href={`/users/${auth.user.name}`}>
                                         <ButtonColores color="blue">
-                                            <span className="text-white text-xl">Ir a tu perfil</span>
+                                            <span className="text-white text-sm">Ir a tu perfil</span>
                                         </ButtonColores>
                                     </Link>
                                 </div>
@@ -97,7 +103,7 @@ const Inicio = () => {
                             <img src="/images/yone-lol.gif" alt="Yone" className="w-32 h-16" />
                             <Link href="/login">
                                 <ButtonColores color="blue">
-                                    <span className="text-white text-xl">Iniciar sesión</span>
+                                    <span className="text-white text-sm">Iniciar sesión</span>
                                 </ButtonColores>
                             </Link>
                         </div>
@@ -106,7 +112,7 @@ const Inicio = () => {
                             <img src="/images/yone-lol.gif" alt="Yone" className="w-32 h-16" />
                             <Link href="/register">
                                 <ButtonColores color="blue">
-                                    <span className="text-white text-xl">Registrarse</span>
+                                    <span className="text-white text-sm">Registrarse</span>
                                 </ButtonColores>
                             </Link>
                         </div>

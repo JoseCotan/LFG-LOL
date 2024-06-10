@@ -35,7 +35,8 @@ export default function UpdateProfilePhotoForm() {
                                 disabled={processing}
                             />
                             <ButtonColores onClick={() => document.getElementById('foto_perfil').click()}>
-                                <img src="/images/upload-solid-white.svg" alt="Subir imagen" className="h-6 w-6 mr-2" />
+                                <img src="/images/upload-solid-white.svg" alt="Subir imagen"
+                                className="h-6 w-6 mr-2" />
                                 <span>Seleccionar foto</span>
                             </ButtonColores>
                         </label>

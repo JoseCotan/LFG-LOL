@@ -37,7 +37,6 @@ const EventosEdit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Validar antes de enviar
         validateTitulo();
         validateDescripcion();
         if (!errors.titulo && !errors.descripcion) {
@@ -68,7 +67,8 @@ const EventosEdit = () => {
                             onChange={(e) => setData('titulo', e.target.value)}
                             onBlur={validateTitulo}
                             required
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            className="bg-gray-50 border border-gray-300 text-gray-900
+                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         />
                         {errors.titulo && <p className="text-red-600 text-sm mt-1">{errors.titulo}</p>}
                     </div>
@@ -79,7 +79,8 @@ const EventosEdit = () => {
                             value={data.descripcion}
                             onChange={(e) => setData('descripcion', e.target.value)}
                             onBlur={validateDescripcion}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            className="bg-gray-50 border border-gray-300 text-gray-900
+                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         />
                         {errors.descripcion && <p className="text-red-600 text-sm mt-1">{errors.descripcion}</p>}
                     </div>

@@ -81,7 +81,23 @@ class ProfileController extends Controller
                         break;
                     }
                 }
+                if ($user->id === $equipo->lider_id) {
+                    $equipo->delete();
+                }
             }
+        }
+
+        // Busca los equipos donde el usuario sea el único miembro
+        $equiposUnicoMiembro = Equipo::where('miembro_1', $user->id)
+            ->whereNull('miembro_2')
+            ->whereNull('miembro_3')
+            ->whereNull('miembro_4')
+            ->whereNull('miembro_5')
+            ->get();
+
+        // Elimina los equipos donde el usuario sea el único miembro
+        foreach ($equiposUnicoMiembro as $equipo) {
+            $equipo->delete();
         }
 
         // Actualiza los miembros de los equipos donde el usuario es miembro

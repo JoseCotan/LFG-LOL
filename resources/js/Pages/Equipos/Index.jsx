@@ -106,11 +106,12 @@ const EquiposIndex = () => {
                     </div>
                     <div className="flex flex-wrap justify-center sm:justify-start ml-4">
                         {equipos.data.map((equipo) => (
-                            <div key={equipo.id} className={`bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4 ${auth.user &&
+                            <div key={equipo.id} className={`bg-gray-900 overflow-hidden shadow-sm rounded-lg
+                                sm:rounded-lg w-full max-w-xs relative mb-4 mr-4 ${auth.user &&
                                     (auth.user.id === equipo.lider.id ||
                                     auth.user.id === equipo.miembro_1 || auth.user.id === equipo.miembro_2 ||
                                     auth.user.id === equipo.miembro_3 || auth.user.id === equipo.miembro_4 ||
-                                    auth.user.id === equipo.miembro_5) ? 'border border-blue-500' : ''} ${auth.user && auth.user.id === equipo.lider.id ? 'bg-sky-950' : ''}`}>
+                                    auth.user.id === equipo.miembro_5) ? 'border border-blue-500 bg-sky-950' : ''}`}>
                                 <div className="p-6">
                                     <h3 className={`text-xl font-semibold ${auth.user &&
                                             (auth.user.id === equipo.lider.id ||
@@ -118,8 +119,10 @@ const EquiposIndex = () => {
                                             auth.user.id === equipo.miembro_2 ||
                                             auth.user.id === equipo.miembro_3 ||
                                             auth.user.id === equipo.miembro_4 ||
-                                            auth.user.id === equipo.miembro_5) ? 'text-blue-500' : 'text-white'} max-w-44 break-words mb-2`}>{equipo.nombre_equipo}</h3>
-                                    <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="absolute top-0 right-6 w-20 h-20" />
+                                            auth.user.id === equipo.miembro_5) ? 'text-blue-500' : 'text-white'}
+                                            max-w-44 break-words mb-2`}>{equipo.nombre_equipo}</h3>
+                                    <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`}
+                                    alt={`Posición ${equipo.posicion}`} className="absolute top-0 right-6 w-20 h-20" />
                                     <div className="flex items-center mb-2">
                                         <ImagenResponsive
                                             srcPC={equipo.lider.foto_perfil_PC}
@@ -153,9 +156,6 @@ const EquiposIndex = () => {
                                                 <Link href={route('equipos.edit', equipo.id)}>
                                                     <ButtonColores color="yellow">Editar</ButtonColores>
                                                 </Link>
-                                                {/*<ButtonColores color="red" onClick={() => handleDelete(equipo.id)}>
-                                                    Eliminar
-                                                </ButtonColores>*/}
                                             </>
                                         )}
                                     </div>

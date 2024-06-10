@@ -29,7 +29,8 @@ function Footer() {
             </footer>
             <VentanaInfo isOpen={isVentanaInfoOpen} onClose={() => setVentanaInfoOpen(false)}>
                 <img src="/images/logo.png" alt="Logo de la aplicación" className="w-32 h-32 mx-auto"></img>
-                <p className="p-4 text-center">LFG-LOL fue creado bajo la política "Sección de parloteo legal" de Riot Games utilizando recursos que son propiedad de Riot Games.
+                <p className="p-4 text-center">LFG-LOL fue creado bajo la política "Sección de parloteo legal" de
+                    Riot Games utilizando recursos que son propiedad de Riot Games.
                     Riot Games no respalda ni patrocina este proyecto</p>
             </VentanaInfo>
         </>

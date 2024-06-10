@@ -82,13 +82,16 @@ const EquipoShow = () => {
     return (
         <ControladorLayout>
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8 mb-4">
+                <div className="ml-2">
                 {success && (
                     <MensajeSuccess message={success} onClose={() => setSuccess('')} />
                 )}
                 {error && (
                     <MensajeError message={error} onClose={() => setError('')} />
                 )}
-                <div className="bg-sky-950 ml-2 mr-2 shadow-lg rounded-xl p-6 space-y-6" style={{ fontFamily: 'Spiegel' }}>
+                </div>
+                <div className="bg-sky-950 ml-2 mr-2 shadow-lg rounded-xl p-6 space-y-6"
+                style={{ fontFamily: 'Spiegel' }}>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
                         <h3 className="text-4xl font-semibold text-gray-800 mb-2">{equipo.nombre_equipo}</h3>
                         <div className="flex items-center space-x-4">
@@ -111,7 +114,8 @@ const EquipoShow = () => {
                     </div>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
                         <h4 className="text-xl font-semibold text-black">Rango mínimo:</h4>
-                        <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`} alt={`Posición ${equipo.posicion}`} className="w-20 h-20" />
+                        <img src={`/images/rangos/${convertirRango(equipo.rango.nombre)}.png`}
+                        alt={`Posición ${equipo.posicion}`} className="w-20 h-20" />
                     </div>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm">
                         <div className="flex items-center space-x-2">
@@ -125,7 +129,8 @@ const EquipoShow = () => {
                         </div>
                     </div>
                     <div className="bg-gradient-to-r from-gray-100 p-4 rounded-xl shadow-sm space-y-4">
-                        {[equipo.miembro1, equipo.miembro2, equipo.miembro3, equipo.miembro4, equipo.miembro5].map((miembro, index) => (
+                        {[equipo.miembro1, equipo.miembro2, equipo.miembro3, equipo.miembro4,
+                          equipo.miembro5].map((miembro, index) => (
                             miembro && (
                                 <div key={miembro.id} className="flex items-center space-x-4">
                                     <ImagenResponsive
@@ -144,7 +149,8 @@ const EquipoShow = () => {
                                             <ButtonColores color="blue" onClick={() => handleExpulsarMiembro(miembro.id)}>
                                                 Expulsar
                                             </ButtonColores>
-                                            {(miembro.id !== auth.user.id || auth.user.admin ) && miembro.id !== equipo.lider.id && (
+                                            {(miembro.id !== auth.user.id || auth.user.admin )
+                                            && miembro.id !== equipo.lider.id && (
                                                 <ButtonColores color="blue" onClick={() => handleHacerLider(miembro.id)}>
                                                     Hacer Líder
                                                 </ButtonColores>

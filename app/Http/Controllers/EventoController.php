@@ -343,9 +343,6 @@ class EventoController extends Controller
         return Inertia::location(route('eventos.show', ['evento' => $eventoId]));
     }
 
-
-
-
     public function abandonar(Evento $evento)
     {
         // Verifica si el usuario autenticado está en la lista de usuarios del evento.
