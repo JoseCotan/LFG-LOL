@@ -7,6 +7,7 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import BotonLogueoGoogle from '@/Components/BotonLogueoGoogle';
 import 'tailwindcss/tailwind.css';
+import ButtonColores from '@/Components/ButtonColores';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset, setError, clearErrors } = useForm({
@@ -180,25 +181,25 @@ export default function Register() {
                             required
                         />
 
-                        <button
+                        <ButtonColores
                             type='button'
                             className='absolute inset-y-0 right-0 pr-3'
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? (
                                 <img
-                                    src='/storage/imagenes/eye-regular.png'
+                                    src='/images/eye-regular.svg'
                                     alt='Icono de ojo abierto'
                                     className='h-5 w-6'
                                 />
                             ) : (
                                 <img
-                                    src='/storage/imagenes/eye-slash-regular.png'
+                                    src='/images/eye-slash-regular.svg'
                                     alt='Icono de ojo cerrado'
                                     className='h-5 w-6'
                                 />
                             )}
-                        </button>
+                        </ButtonColores>
                     </div>
 
                     <InputError message={errors.password} className='mt-2' />
@@ -219,25 +220,25 @@ export default function Register() {
                             required
                         />
 
-                        <button
+                        <ButtonColores
                             type='button'
                             className='absolute inset-y-0 right-0 pr-3'
                             onClick={() => setShowConfirmationPassword(!showConfirmationPassword)}
                         >
                             {showConfirmationPassword ? (
                                 <img
-                                    src='/storage/imagenes/eye-regular.png'
+                                    src='/images/eye-regular.svg'
                                     alt='Icono de ojo abierto'
                                     className='h-5 w-6'
                                 />
                             ) : (
                                 <img
-                                    src='/storage/imagenes/eye-slash-regular.png'
+                                    src='/images/eye-slash-regular.svg'
                                     alt='Icono de ojo cerrado'
                                     className='h-5 w-6'
                                 />
                             )}
-                        </button>
+                        </ButtonColores>
                     </div>
 
                     <InputError message={errors.password_confirmation} className='mt-2' />
