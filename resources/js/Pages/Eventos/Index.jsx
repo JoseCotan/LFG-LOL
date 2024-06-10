@@ -143,15 +143,18 @@ const EventosIndex = () => {
                                                 <ButtonColores color="yellow">Editar</ButtonColores>
                                             </Link>
                                         )}
-                                        {usuarioEnEvento(evento.usuarios) ? (
-                                            <ButtonColores color="red" onClick={() => handleAbandonar(evento.id)}>
-                                                Abandonar
-                                            </ButtonColores>
-                                        ) : (
-                                            <ButtonColores color="blue" onClick={() => handleUnirse(evento.id)}>
-                                                Unirse
-                                            </ButtonColores>
-                                        )}
+                                        {auth.user ? (
+                                            usuarioEnEvento(evento.usuarios) ? (
+                                                <ButtonColores color="red" onClick={() => handleAbandonar(evento.id)}>
+                                                    Abandonar
+                                                </ButtonColores>
+                                            ) : (
+                                                <ButtonColores color="blue" onClick={() => handleUnirse(evento.id)}>
+                                                    Unirse
+                                                </ButtonColores>
+                                            )
+                                        ) : null}
+
                                     </div>
                                 </div>
                             </div>

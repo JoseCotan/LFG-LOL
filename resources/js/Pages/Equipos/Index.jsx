@@ -107,13 +107,13 @@ const EquiposIndex = () => {
                     <div className="flex flex-wrap justify-center sm:justify-start ml-4">
                         {equipos.data.map((equipo) => (
                             <div key={equipo.id} className={`bg-gray-900 overflow-hidden shadow-sm rounded-lg sm:rounded-lg w-full max-w-xs relative mb-4 mr-4 ${auth.user &&
-                                    (auth.user.id === equipo.lider.id || auth.user.admin ||
+                                    (auth.user.id === equipo.lider.id ||
                                     auth.user.id === equipo.miembro_1 || auth.user.id === equipo.miembro_2 ||
                                     auth.user.id === equipo.miembro_3 || auth.user.id === equipo.miembro_4 ||
                                     auth.user.id === equipo.miembro_5) ? 'border border-blue-500' : ''} ${auth.user && auth.user.id === equipo.lider.id ? 'bg-sky-950' : ''}`}>
                                 <div className="p-6">
-                                    <h3 className={`text-lg font-semibold ${auth.user &&
-                                            (auth.user.id === equipo.lider.id || auth.user.admin ||
+                                    <h3 className={`text-xl font-semibold ${auth.user &&
+                                            (auth.user.id === equipo.lider.id ||
                                             auth.user.id === equipo.miembro_1 ||
                                             auth.user.id === equipo.miembro_2 ||
                                             auth.user.id === equipo.miembro_3 ||
@@ -128,16 +128,16 @@ const EquiposIndex = () => {
                                             alt="Foto de perfil"
                                             className="h-8 w-8 rounded-full mr-2"
                                         />
-                                        <p className="text-sm text-white">{equipo.lider.name}</p>
+                                        <p className="text-lg text-white">{equipo.lider.name}</p>
                                     </div>
                                     <div className="mb-4">
-                                        <p className="text-sm text-gray-400 mb-1">Modo de Juego:</p>
-                                        <p className="text-sm text-white">{equipo.modo.nombre}</p>
+                                        <p className="text-lg text-gray-400 mb-1">Modo de Juego:</p>
+                                        <p className="text-lg text-white">{equipo.modo.nombre}</p>
                                     </div>
 
                                     <div className="flex items-center mb-4">
-                                        <p className="text-sm text-gray-400">Privacidad:</p>
-                                        <p className="text-sm text-white ml-1">{equipo.privado ? 'Privado' : 'Público'}</p>
+                                        <p className="text-lg text-gray-400">Privacidad:</p>
+                                        <p className="text-lg text-white ml-1">{equipo.privado ? 'Privado' : 'Público'}</p>
                                         <img
                                             src={`/images/${equipo.privado ? 'lock-solid.svg' : 'unlock-solid.svg'}`}
                                             alt="Candado"

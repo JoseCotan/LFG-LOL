@@ -80,7 +80,8 @@ class EventoController extends Controller
 
         $evento->save();
 
-        Session::flash('flash', ['type' => 'success', 'message' => 'Creaste el evento correctamente.']);
+        Session::flash('flash', ['type' => 'success', 'message' =>
+        'Creaste el evento correctamente.']);
         return Inertia::location(route('eventos.index'));
     }
 
@@ -118,7 +119,8 @@ class EventoController extends Controller
             }
         } else {
             // Si el usuario no está logeado, vuelve al index.
-            Session::flash('flash', ['type' => 'error', 'message' => 'Inicia sesión para poder ver algún evento.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'Inicia sesión para poder ver algún evento.']);
             return Inertia::location(route('eventos.index'));
         }
 
@@ -126,12 +128,14 @@ class EventoController extends Controller
 
         // Si el evento es público, le avisará al usuario
         if ($evento->acceso_publico && $evento->usuarios()->count() < 10) {
-            Session::flash('flash', ['type' => 'error', 'message' => 'Este evento es público, únete para verlo.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'Este evento es público, únete para verlo.']);
             return Inertia::location(route('eventos.index'));
         }
 
         // Si el usuario no es miembro del evento y el evento no es público, redirigir al índice de eventos
-        Session::flash('flash', ['type' => 'error', 'message' => 'No puedes ver este evento.']);
+        Session::flash('flash', ['type' => 'error', 'message' =>
+        'No puedes ver este evento.']);
         return Inertia::location(route('eventos.index'));
     }
 
@@ -145,7 +149,8 @@ class EventoController extends Controller
         // Verifica si el usuario logueado es el creador del evento o un administrador.
         if (Auth::user()->id !== $evento->creador_evento && !Auth::user()->admin) {
             // Si no es el creador ni un administrador, redirige de vuelta con un mensaje de error.
-            Session::flash('flash', ['type' => 'error', 'message' => 'No tienes permiso para editar este evento.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'No tienes permiso para editar este evento.']);
             return Inertia::location(route('eventos.index'));
         }
 
@@ -176,7 +181,8 @@ class EventoController extends Controller
             'acceso_miembros_equipo' => $request->input('acceso_miembros_equipo'),
         ]);
 
-        Session::flash('flash', ['type' => 'success', 'message' => 'Editaste el evento correctamente.']);
+        Session::flash('flash', ['type' => 'success', 'message' =>
+        'Editaste el evento correctamente.']);
         return Inertia::location(route('eventos.index'));
     }
 
@@ -188,13 +194,15 @@ class EventoController extends Controller
         // Verifica si el usuario logueado es el creador del evento o un administrador.
         if (Auth::user()->id !== $evento->creador_evento && !Auth::user()->admin) {
             // Si no es el creador ni un administrador, redirige de vuelta con un mensaje de error.
-            Session::flash('flash', ['type' => 'error', 'message' => 'No tienes permiso para eliminar este evento.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'No tienes permiso para eliminar este evento.']);
             return Inertia::location(route('eventos.index'));
         }
 
         $evento->delete();
 
-        Session::flash('flash', ['type' => 'success', 'message' => 'Evento eliminado con éxito.']);
+        Session::flash('flash', ['type' => 'success', 'message' =>
+        'Evento eliminado con éxito.']);
         // Si el usuario es un administrador, redirige a la ruta del administrador.
         if ($request->input('panelAdmin')) {
             return Inertia::location(route('admin.eventos.index'));
@@ -207,24 +215,33 @@ class EventoController extends Controller
 
     public function unirse(Evento $evento)
     {
+        if (!Auth::check()) {
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'Inicia sesión para poder unirte a algún evento.']);
+            return Inertia::location(back());
+        }
+
         $user_id = Auth::user()->id;
 
         // Verificar si el evento ya tiene 10 usuarios o si el usuario ya está unido
         if ($evento->usuarios()->count() >= 10 || $evento->usuarios->contains($user_id)) {
-            Session::flash('flash', ['type' => 'error', 'message' => 'El evento está lleno.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'El evento está lleno.']);
             return Inertia::location(back());
         }
 
         // Verificar si el usuario es el creador del evento
         if ($user_id === $evento->creador_evento) {
-            Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
+            Session::flash('flash', ['type' => 'success', 'message' =>
+            'Te uniste al evento correctamente.']);
             $evento->usuarios()->attach($user_id);
             return Inertia::location(back());
         }
 
         // Verificar si el evento es público
         if ($evento->acceso_publico) {
-            Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
+            Session::flash('flash', ['type' => 'success', 'message' =>
+            'Te uniste al evento correctamente.']);
             $evento->usuarios()->attach($user_id);
             return Inertia::location(back());
         }
@@ -246,7 +263,8 @@ class EventoController extends Controller
 
             if ($esAmigo) {
                 $evento->usuarios()->attach($user_id);
-                Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
+                Session::flash('flash', ['type' => 'success', 'message' =>
+                'Te uniste al evento correctamente.']);
                 return Inertia::location(back());
             }
         }
@@ -283,13 +301,15 @@ class EventoController extends Controller
 
                 if ($esMismoEquipo) {
                     $evento->usuarios()->attach($user_id);
-                    Session::flash('flash', ['type' => 'success', 'message' => 'Te uniste al evento correctamente.']);
+                    Session::flash('flash', ['type' => 'success', 'message' =>
+                    'Te uniste al evento correctamente.']);
                     return Inertia::location(route('eventos.index'));
                 }
             }
         }
 
-        Session::flash('flash', ['type' => 'error', 'message' => 'No puedes unirte al evento.']);
+        Session::flash('flash', ['type' => 'error', 'message' =>
+        'No puedes unirte al evento.']);
         // Si ninguna de las condiciones anteriores se cumple, redirigir al índice de eventos
         return Inertia::location(route('eventos.index'));
     }
@@ -302,7 +322,8 @@ class EventoController extends Controller
         // Verifica si el usuario logueado es el creador del evento o un administrador.
         if ($evento->creador_evento !== $userId && !Auth::user()->admin) {
             // Si no es el creador ni un administrador, redirige a la vista del evento.
-            Session::flash('flash', ['type' => 'error', 'message' => 'No tienes permiso para realizar esta acción.']);
+            Session::flash('flash', ['type' => 'error', 'message' =>
+            'No tienes permiso para realizar esta acción.']);
             return Inertia::location(route('eventos.show', ['evento' => $eventoId]));
         }
 
@@ -332,7 +353,8 @@ class EventoController extends Controller
             // Si el usuario está en la lista, lo elimina de la lista de usuarios del evento.
             $evento->usuarios()->detach(Auth::user()->id);
         }
-        Session::flash('flash', ['type' => 'success', 'message' => 'Abandonaste el evento correctamente.']);
+        Session::flash('flash', ['type' => 'success', 'message' =>
+        'Abandonaste el evento correctamente.']);
         return Inertia::location(back());
     }
 }

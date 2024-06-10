@@ -74,8 +74,8 @@ class ProfileController extends Controller
                 // Itera sobre los miembros para encontrar el primer miembro existente
                 $miembros = ['miembro_1', 'miembro_2', 'miembro_3', 'miembro_4', 'miembro_5'];
                 foreach ($miembros as $miembro) {
-                    // Si el miembro actual no es nulo
-                    if ($equipo->$miembro !== null) {
+                    // Si el miembro actual no es nulo y es diferente del usuario que se va a eliminar
+                    if ($equipo->$miembro !== null && $equipo->$miembro !== $user->id) {
                         // Actualiza el campo líder
                         $equipo->update(['lider_id' => $equipo->$miembro]);
                         break;
@@ -100,6 +100,7 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
 
 
     public function show($name)
