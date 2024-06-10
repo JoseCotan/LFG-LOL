@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'; ////////////////////////
 import ControladorLayout from '@/Layouts/ControladorLayout';
-import { Link, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
-import Button from '@/Components/Button';
-import DangerButton from '@/Components/DangerButton';
 import RiotData from '@/Components/RiotData';
-import InputLabel from '@/Components/InputLabel';
-import ImagenResponsive from '@/Components/ImagenResponsive';
 import EnviarMensajeForm from '@/Components/EnviarMensajeForm';
 import Comentario from '@/Components/Comentario';
-import ListaComentarios from '@/Components/ListaComentarios';
 import DesplegableComentarios from '@/Components/DesplegableComentarios';
 import DesplegableAmigos from '@/Components/DesplegableAmigos';
 import MensajeSuccess from '@/Components/MensajeSuccess';
