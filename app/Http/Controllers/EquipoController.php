@@ -34,7 +34,7 @@ class EquipoController extends Controller
             $query->where('privado', $request->privacidad === 'privado');
         }
 
-        $equipos = $query->paginate(20);
+        $equipos = $query->paginate(12);
 
         return Inertia::render('Equipos/Index', [
             'equipos' => $equipos,

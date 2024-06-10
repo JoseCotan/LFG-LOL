@@ -6,7 +6,9 @@ use App\Http\Requests\StoreRangoRequest;
 use App\Http\Requests\UpdateRangoRequest;
 use App\Models\Rango;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -18,17 +20,26 @@ class RangoController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Rangos/Index', [
-            'rangos' => Rango::all()
-        ]);
+        if (Auth::check() && Auth::user()->admin) {
+            return Inertia::render('Rangos/Index', [
+                'rangos' => Rango::all()
+            ]);
+        }
+        Session::flash('flash', ['type' => 'error', 'message' => 'Acceso restringido.']);
+        return Inertia::location(route(('inicio')));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return Inertia::render('Rangos/Create');
+        if (Auth::check() && Auth::user()->admin) {
+            return Inertia::render('Rangos/Create');
+        }
+        Session::flash('flash', ['type' => 'error', 'message' => 'Acceso restringido.']);
+        return Inertia::location(route(('inicio')));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -100,9 +111,13 @@ class RangoController extends Controller
      */
     public function edit(Rango $rango)
     {
-        return Inertia::render('Rangos/Edit', [
-            'rango' => $rango,
-        ]);
+        if (Auth::check() && Auth::user()->admin) {
+            return Inertia::render('Rangos/Edit', [
+                'rango' => $rango,
+            ]);
+        }
+        Session::flash('flash', ['type' => 'error', 'message' => 'Acceso restringido.']);
+        return Inertia::location(route(('inicio')));
     }
 
     /**
