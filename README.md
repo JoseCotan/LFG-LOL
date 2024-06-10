@@ -1,4 +1,4 @@
-<p align="center"><img src="https://i.ibb.co/T1GNXRd/logo.png" width="400" alt="Logo LFG-LOL"></a></p>
+<p align="center"><img src="https://i.ibb.co/T1GNXRd/logo.png" width="300" alt="Logo LFG-LOL"></a></p>
 
 <h1 align="center">LFG-LOL</h1>
 
