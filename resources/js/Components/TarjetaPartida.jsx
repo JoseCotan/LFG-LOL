@@ -20,7 +20,7 @@ const TarjetaPartida = ({ imagenCampeon, imagenesHechizos, estadisticas1, estadi
                 <p className="text-lg">{estadisticas3}</p>
             </div>
             <div className="w-32 flex flex-col justify-center items-center">
-                <img src={`/images/posiciones/${posicion}.webp`} alt={posicion} className="h-24" />
+                <img src={posicion ? `/images/posiciones/${posicion}.webp` : '/images/posiciones/arena.webp'} alt={posicion || 'Arena'} className="h-24" />
             </div>
         </div>
     );

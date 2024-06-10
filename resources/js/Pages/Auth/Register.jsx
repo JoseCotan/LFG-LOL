@@ -32,8 +32,8 @@ export default function Register() {
         // Valida si el campo de nombre está vacío
         if (!data.name) {
             setError('name', 'El nombre de usuario es obligatorio.');
-        } else if (data.name.length > 16) { // Valida la longitud del nombre de usuario
-            setError('name', 'El nombre de usuario no puede exceder los 16 caracteres.');
+        } else if (data.name.length > 20) { // Valida la longitud del nombre de usuario
+            setError('name', 'El nombre de usuario no puede exceder los 20 caracteres.');
         } else if (!namePattern.test(data.name)) { // Valida el formato del nombre de usuario
             setError('name', 'El nombre de usuario solo puede contener letras y números.');
         } else {
@@ -46,6 +46,8 @@ export default function Register() {
         // Valida si el campo de correo electrónico está vacío
         if (!data.email) {
             setError('email', 'El correo electrónico es obligatorio.');
+        } else if (data.email.length > 40) { // Valida la longitud del correo electrónico
+            setError('email', 'El correo electrónico no puede exceder los 40 caracteres.');
         } else if (!emailPattern.test(data.email)) { // Valida el formato del correo electrónico
             setError('email', 'Por favor ingresa un correo electrónico válido.');
         } else {
@@ -119,7 +121,6 @@ export default function Register() {
                         isFocused={true}
                         pattern='[A-Za-z0-9]+'
                         title='El nombre de usuario solo puede contener letras y números'
-                        maxLength={16}
                         onBlur={validateName}
                         onChange={(e) => setData('name', e.target.value)}
                         required

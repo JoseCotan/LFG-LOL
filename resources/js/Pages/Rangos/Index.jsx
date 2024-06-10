@@ -4,6 +4,7 @@ import { Link, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DangerButton from '@/Components/DangerButton';
 import ImagenResponsive from '@/Components/ImagenResponsive';
+import ButtonColores from '@/Components/ButtonColores';
 
 
 const RangosIndex = () => {
@@ -23,16 +24,20 @@ const RangosIndex = () => {
                         <table className="min-w-full divide-y divide-gray-600">
                             <thead className="bg-gray-900 text-white">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs
+                                    font-medium text-white uppercase tracking-wider">
                                         Imagen
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs
+                                    font-medium text-white uppercase tracking-wider">
                                         Rango
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs
+                                    font-medium text-white uppercase tracking-wider">
                                         Editar
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs
+                                    font-medium text-white uppercase tracking-wider">
                                         Eliminar
                                     </th>
                                 </tr>
@@ -53,18 +58,26 @@ const RangosIndex = () => {
                                             <div className="text-sm text-white">{rango.nombre}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <Link href={route('rangos.edit', rango.id)} className="text-green-500 hover:text-green-200">Editar</Link>
+                                            <Link href={route('rangos.edit', rango.id)}>
+                                                <ButtonColores color="green">
+                                                    Editar
+                                                </ButtonColores>
+                                            </Link>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <DangerButton onClick={() => handleDelete(rango.id)} className="text-red-600 hover:text-red-400">Eliminar</DangerButton>
+                                            <ButtonColores color="red" onClick={() => handleDelete(rango.id)}>
+                                                Eliminar
+                                            </ButtonColores>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                         <div className="flex justify-center mt-4 mb-4">
-                            <Link href={route('rangos.create')} className="inline-flex items-center px-4 py-2 bg-green-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-600 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 disabled:opacity-25 transition">
-                                Añadir Nuevo Rango
+                            <Link href={route('rangos.create')}>
+                                <ButtonColores color="green">
+                                    Añadir Nuevo Rango
+                                </ButtonColores>
                             </Link>
                         </div>
                     </div>

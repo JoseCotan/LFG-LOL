@@ -61,7 +61,8 @@ export default function DeleteUserForm({ className = '' }) {
                     </h2>
                     {!auth.user.google_id && (
                         <p className="mt-1 text-sm text-gray-600">
-                            Por favor, ingrese su contraseña para confirmar que desea eliminar permanentemente su cuenta.
+                            Por favor, ingrese su contraseña para confirmar
+                            que desea eliminar permanentemente su cuenta.
                         </p>
                     )}
                     {!auth.user.google_id && (

@@ -83,7 +83,7 @@ class AdminController extends Controller
     public function usuarios(Request $request)
     {
         if (Auth::check() && Auth::user()->admin) {
-            $query = User::query();
+            $query = User::where('admin', false);
 
             if ($request->filled('buscarPalabra')) {
                 $query->where(function ($query) use ($request) {

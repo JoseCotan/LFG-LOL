@@ -108,11 +108,11 @@ export default function GuestLayout({ header, children }) {
                     <div className="space-y-1">
                             <ResponsiveNavLink href={route('login')} className="flex items-center justify-between">
                                 <span>Iniciar sesión</span>
-                                <img src="/images/right-to-bracket-solid-white.svg" alt="Icono perfil" className="ml-2 w-4 h-4" />
+                                <img src="/images/right-to-bracket-solid-white.svg" alt="Icono perfil" className="ml-2 w-7 h-7" />
                             </ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('register')} as="button" className="flex items-center justify-between">
                                 <span>Registrarse</span>
-                                <img src="/images/right-from-bracket-solid-white.svg" alt="Icono cerrar sesión" className="ml-2 w-4 h-4" />
+                                <img src="/images/right-from-bracket-solid-white.svg" alt="Icono cerrar sesión" className="ml-2 w-7 h-7" />
                             </ResponsiveNavLink>
                         </div>
                     </div>

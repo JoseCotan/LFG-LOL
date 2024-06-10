@@ -50,7 +50,7 @@ const CarouselUsuarios = ({ usuarios }) => {
                                 />
                             </div>
                             <div>
-                                <p className="font-semibold text-lg text-gray-800">{usuario.name}</p>
+                                <p className="font-semibold text-lg text-gray-800 max-w-40 break-words">{usuario.name}</p>
                                 <p className="text-sm text-gray-600">{usuario.nombreLOL}</p>
                             </div>
                             <div className="ml-auto flex items-center">

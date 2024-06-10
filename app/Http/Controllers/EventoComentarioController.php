@@ -27,7 +27,8 @@ class EventoComentarioController extends Controller
         $comentario->comentable_type = Evento::class;
         $comentario->save();
 
-        Session::flash('flash', ['type' => 'success', 'message' => 'Creaste el comentario correctamente.']);
+        Session::flash('flash', ['type' => 'success', 'message' =>
+        'Creaste el comentario correctamente.']);
         return Inertia::location(back());
     }
 }

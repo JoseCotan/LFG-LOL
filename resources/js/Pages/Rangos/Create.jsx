@@ -4,6 +4,7 @@ import { Link, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import ButtonColores from '@/Components/ButtonColores';
 
 
 
@@ -33,20 +34,27 @@ const RangosCreate = () => {
         <AuthenticatedLayout
             user={auth.user}
         >
-        <div className="max-w-4xl mx-auto p-8">
-            <form onSubmit={handleSubmit}>
-                <div className="mb-6">
-                <InputLabel value="Nombre del rango" />
-                    <TextInput type="text" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-                </div>
-                <div className="mb-6">
-                <InputLabel value="Imagen del rango" />
-                    <TextInput type="file" id="imagen" required onChange={(e) => setImagen(e.target.files[0])} />
-                </div>
-                <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Crear Rango</button>
-                <Link href={route('rangos.index')} className="text-white bg-gray-500 hover:bg-gray-600 ml-4 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cancelar</Link>
-            </form>
-        </div>
+            <div className="max-w-4xl mx-auto p-8">
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-6">
+                        <InputLabel value="Nombre del rango" />
+                        <TextInput type="text" id="nombre"
+                            value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                    </div>
+                    <div className="mb-6">
+                        <InputLabel value="Imagen del rango" />
+                        <TextInput type="file" id="imagen" required onChange={(e) => setImagen(e.target.files[0])} />
+                    </div>
+                    <ButtonColores color="green" type="submit">
+                        Crear Rango
+                    </ButtonColores>
+                    <ButtonColores color="red">
+                        <Link href={route('rangos.index')}>
+                            Cancelar
+                        </Link>
+                    </ButtonColores>
+                </form>
+            </div>
         </AuthenticatedLayout>
     );
 };

@@ -57,7 +57,8 @@ const EventoShow = () => {
     return (
         <ControladorLayout>
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8 mb-4">
-                <div className="bg-sky-950 ml-2 mr-2 shadow-lg rounded-xl p-6 space-y-6" style={{ fontFamily: 'Spiegel' }}>
+                <div className="bg-sky-950 ml-2 mr-2 shadow-lg rounded-xl p-6 space-y-6"
+                style={{ fontFamily: 'Spiegel' }}>
                     {success && (
                         <MensajeSuccess message={success} onClose={() => setSuccess('')} />
                     )}
@@ -66,7 +67,8 @@ const EventoShow = () => {
                     )}
 
                     <div className="bg-gradient-to-r from-white to-sky-200 p-4 rounded-xl shadow-sm">
-                        <h3 className="text-4xl max-w-80 break-words font-semibold text-gray-800 mb-2">{evento.titulo}</h3>
+                        <h3 className="text-4xl max-w-80 break-words font-semibold text-gray-800 mb-2">
+                            {evento.titulo}</h3>
                         <div className="flex items-center space-x-4">
                             <ImagenResponsive
                                 srcPC={evento.creador.foto_perfil_PC}

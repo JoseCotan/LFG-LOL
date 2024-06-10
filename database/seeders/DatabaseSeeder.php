@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             RangoSeeder::class,
             ModoSeeder::class,
             RolSeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }

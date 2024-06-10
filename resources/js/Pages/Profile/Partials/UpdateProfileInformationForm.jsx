@@ -1,23 +1,43 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import ButtonColores from '@/Components/ButtonColores';
+import { useEffect } from 'react';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, patch, errors, setError, clearErrors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,
     });
 
+    const validateName = () => {
+        const namePattern = /^[A-Za-z0-9]+$/;
+        // Valida si el campo de nombre está vacío
+        if (!data.name) {
+            setError('name', 'El nombre de usuario es obligatorio.');
+        } else if (data.name.length > 20) { // Valida la longitud del nombre de usuario
+            setError('name', 'El nombre de usuario no puede exceder los 20 caracteres.');
+        } else if (!namePattern.test(data.name)) { // Valida el formato del nombre de usuario
+            setError('name', 'El nombre de usuario solo puede contener letras y números.');
+        } else {
+            clearErrors('name');
+        }
+    };
+
+    useEffect(() => {
+        validateName();
+    }, [data.name]);
+
     const submit = (e) => {
         e.preventDefault();
-
-        patch(route('profile.update'));
+        validateName();
+        if (!errors.name) {
+            patch(route('profile.update'));
+        }
     };
 
     return (
@@ -62,7 +82,6 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         style={{ color: 'gray' }}
                     />
 
-
                     <InputError className="mt-2" message={errors.email} />
                 </div>
 
@@ -74,7 +93,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                                 href={route('verification.send')}
                                 method="post"
                                 as="button"
-                                className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="underline text-sm text-gray-600 hover:text-gray-900
+                                rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Click here to re-send the verification email.
                             </Link>

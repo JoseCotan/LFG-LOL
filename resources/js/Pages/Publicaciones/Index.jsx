@@ -77,8 +77,8 @@ const PublicacionesIndex = () => {
                         }}
                     />
                 </div>
-                <div className="w-full p-6">
-                    <div className="ml-2 mb-4 flex justify-center sm:justify-start">
+                <div className="w-full mt-2 p-6">
+                    <div className="ml-2 flex justify-center sm:justify-start">
                         {success && (
                             <MensajeSuccess message={success} onClose={() => setSuccess('')} />
                         )}
@@ -93,7 +93,7 @@ const PublicacionesIndex = () => {
                             </ButtonColores>
                         </Link>
                     </div>
-                    <div className="mt-6 flex flex-wrap justify-center sm:justify-start">
+                    <div className="mt-2 flex flex-wrap justify-center sm:justify-start">
                         {publicaciones.data.map((publicacion) => (
                             <div key={publicacion.id} className="m-2">
                                 <TarjetaPublicacion publicacion={publicacion} />

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import ListaComentarios from './ListaComentarios';
-import { Link } from '@inertiajs/react';
 import Paginacion from '@/Components/Paginacion';
-import ButtonColores from '@/Components/ButtonColores';
 
-const DesplegableComentarios = ({ comentarios, totalComentarios, paginacion, haComentado, authUser, handleEliminarComentario }) => {
+const DesplegableComentarios = ({ comentarios, totalComentarios, paginacion, handleEliminarComentario }) => {
     const [visible, setVisible] = useState(false);
 
     const toggleVisible = () => {
