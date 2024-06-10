@@ -8,6 +8,7 @@ import ImagenResponsive from '@/Components/ImagenResponsive';
 import MensajeError from '@/Components/MensajeError';
 import MensajeSuccess from '@/Components/MensajeSuccess';
 import Paginacion from '@/Components/Paginacion';
+import '../../../css/Spiegel.css';
 
 const EventosIndex = () => {
     const { eventos, auth, flash, filtros } = usePage().props;
@@ -98,24 +99,26 @@ const EventosIndex = () => {
                             </ButtonColores>
                         </Link>
                     </div>
-                    <div className="flex gap-4 flex-wrap justify-center sm:justify-start ml-4">
+                    <div className="flex gap-4 flex-wrap justify-center sm:justify-start ml-4" style={{ fontFamily: 'Spiegel' }}>
                         {eventos.data.map(evento => (
                             <div key={evento.id} className={`${usuarioEnEvento(evento.usuarios) ?
                             'border border-blue-500 bg-sky-950' : 'bg-gray-900'} overflow-hidden
                             shadow-sm rounded-lg sm:rounded-lg w-full max-w-sm relative mb-4`}>
                                 <div className="p-6">
                                     <h3 className={`text-xl font-semibold ${usuarioEnEvento(evento.usuarios) ?
-                                        'text-blue-500' : 'text-white'} mb-2 max-w-80 break-words`}>{evento.titulo}</h3>
-                                    <div className="flex items-center mb-4">
-                                        <p className="text-lg text-gray-400">Creador:</p>
-                                        <p className="text-lg text-white ml-2 m">{evento.creador.name}</p>
-                                        <ImagenResponsive
+                                        'text-blue-100' : 'text-white'} mb-2 max-w-80 break-words`}>{evento.titulo}</h3>
+                                    <div className="flex items-center">
+                                        <p className="text-2xl text-gray-400 mr-2">Creador:</p>
+                                    </div>
+                                    <div className="flex items-center mb-6">
+                                    <ImagenResponsive
                                             srcPC={evento.creador.foto_perfil_PC}
                                             srcTablet={evento.creador.foto_perfil_Tablet}
                                             srcMobile={evento.creador.foto_perfil_Movil}
                                             alt="Foto de perfil"
-                                            className="h-8 w-8 rounded-full mr-2"
+                                            className="h-16 w-16 rounded-full mr-2"
                                         />
+                                        <p className="text-xl text-white">{evento.creador.name}</p>
                                     </div>
                                     <div className="mb-4">
                                         <p className="text-lg text-gray-400 mb-1">Número de miembros:</p>
